@@ -10,7 +10,12 @@ const userProfile = {
     discountsEarned: 12,
     businessesSupported: 6,
     causesSupported: 8,
-    btcAddress: "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
+    btcAddress: "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+    // Tax Information
+    taxBracket: 24, // 24% federal tax bracket
+    totalCharitableDonations: 590, // Total qualifying charitable donations
+    estimatedTaxSavings: 141.60, // 24% of charitable donations
+    taxYear: 2024
 };
 
 // BTC Rewards History
@@ -239,4 +244,98 @@ function formatDate(dateString) {
         month: 'short', 
         day: 'numeric' 
     });
+}
+
+// Tax Deductible Donations Data
+const taxDeductibleDonations = [
+    {
+        businessId: 1,
+        businessName: "Mama Rosa's Italian Kitchen",
+        businessIcon: "MR",
+        donationAmount: 150,
+        cause: "Education Fund (501c3)",
+        organizationName: "Local Schools Foundation",
+        taxId: "12-3456789",
+        date: "2024-09-15",
+        taxSavings: 36, // 24% tax bracket
+        receiptNumber: "EDU-2024-0915-001"
+    },
+    {
+        businessId: 3,
+        businessName: "Fix-It Frank's Repair Shop",
+        businessIcon: "FF",
+        donationAmount: 120,
+        cause: "Environmental Conservation (501c3)",
+        organizationName: "Green Future Initiative",
+        taxId: "98-7654321",
+        date: "2024-09-10",
+        taxSavings: 28.80,
+        receiptNumber: "ENV-2024-0910-003"
+    },
+    {
+        businessId: 5,
+        businessName: "The Book Nook",
+        businessIcon: "BN",
+        donationAmount: 100,
+        cause: "Literacy Programs (501c3)",
+        organizationName: "Reading for All Foundation",
+        taxId: "45-6789012",
+        date: "2024-09-05",
+        taxSavings: 24,
+        receiptNumber: "LIT-2024-0905-007"
+    },
+    {
+        businessId: 1,
+        businessName: "Mama Rosa's Italian Kitchen",
+        businessIcon: "MR",
+        donationAmount: 75,
+        cause: "Emergency Relief Fund (501c3)",
+        organizationName: "Community Crisis Center",
+        taxId: "67-8901234",
+        date: "2024-08-28",
+        taxSavings: 18,
+        receiptNumber: "EMR-2024-0828-012"
+    },
+    {
+        businessId: 2,
+        businessName: "Green Thumb Garden Center",
+        businessIcon: "GT",
+        donationAmount: 85,
+        cause: "Environmental Education (501c3)",
+        organizationName: "Nature Learning Center",
+        taxId: "23-4567890",
+        date: "2024-08-15",
+        taxSavings: 20.40,
+        receiptNumber: "NAT-2024-0815-005"
+    },
+    {
+        businessId: 5,
+        businessName: "The Book Nook",
+        businessIcon: "BN",
+        donationAmount: 60,
+        cause: "Homeless Shelter Support (501c3)",
+        organizationName: "Safe Haven Shelter",
+        taxId: "34-5678901",
+        date: "2024-07-20",
+        taxSavings: 14.40,
+        receiptNumber: "SHE-2024-0720-009"
+    }
+];
+
+// Tax calculation functions
+function calculateTaxSavings(donationAmount, taxBracket) {
+    return (donationAmount * taxBracket / 100);
+}
+
+function getTotalTaxDeductions() {
+    return taxDeductibleDonations.reduce((total, donation) => total + donation.donationAmount, 0);
+}
+
+function getTotalTaxSavings() {
+    return taxDeductibleDonations.reduce((total, donation) => total + donation.taxSavings, 0);
+}
+
+function getQualifiedOrganizations() {
+    const orgs = [...new Set(taxDeductibleDonations.map(d => d.organizationName))];
+    return orgs;
 }

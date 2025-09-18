@@ -107,6 +107,10 @@
     background: linear-gradient(135deg, #74b9ff, #0984e3);
 }
 
+.tax-icon {
+    background: linear-gradient(135deg, #00b894, #00cec9);
+}
+
 .stat-number {
     font-size: 2rem;
     font-weight: bold;
@@ -415,6 +419,78 @@
 
 .discount-badge {
     background: #667eea;
+}
+
+/* Tax Benefits Styles */
+.tax-benefits {
+    background: linear-gradient(135deg, #00b894, #00cec9);
+    color: white;
+    padding: 2rem;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.tax-benefits::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: taxShine 4s infinite;
+}
+
+@keyframes taxShine {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.tax-savings {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.tax-year {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.tax-bracket {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 1;
+}
+
+.tax-item {
+    border-left-color: #00b894;
+}
+
+.tax-amount {
+    background: #00b894;
+}
+
+.tax-receipt {
+    background: rgba(0, 184, 148, 0.1);
+    border: 1px solid #00b894;
+    padding: 0.3rem 0.6rem;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: #00b894;
+    margin-top: 0.5rem;
 }
 
 /* Mobile Responsive */

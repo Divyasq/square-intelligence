@@ -37,6 +37,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="stat-label">Active Discounts</div>
                 </div>
                 <div class="stat-card">
+                    <div class="stat-icon tax-icon">📋</div>
+                    <div class="stat-number">$${getTotalTaxSavings().toFixed(0)}</div>
+                    <div class="stat-label">Tax Savings</div>
+                </div>
+                <div class="stat-card">
                     <div class="stat-icon support-icon">💰</div>
                     <div class="stat-number">$${userProfile.totalSupported.toLocaleString()}</div>
                     <div class="stat-label">Total Supported</div>
@@ -78,6 +83,66 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                         </div>
                     `).join('')}
+                </div>
+            </div>
+
+            <!-- Tax Benefits Section -->
+            <div class="rewards-section">
+                <div class="section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg, #00b894, #00cec9);">📋</div>
+                    <div>
+                        <h3 class="section-title">Tax Benefits</h3>
+                        <p class="section-subtitle">Charitable deductions from cause support</p>
+                    </div>
+                </div>
+
+                <div class="tax-benefits">
+                    <div class="tax-savings">$${getTotalTaxSavings().toFixed(2)}</div>
+                    <div class="tax-year">Estimated Tax Savings for ${userProfile.taxYear}</div>
+                    <div class="tax-bracket">Tax Bracket: ${userProfile.taxBracket}% Federal</div>
+                </div>
+
+                <div class="rewards-grid">
+                    ${taxDeductibleDonations.map(donation => `
+                        <div class="reward-item tax-item">
+                            <div class="reward-business-icon">${donation.businessIcon}</div>
+                            <div class="reward-content">
+                                <div class="reward-header">
+                                    <span class="reward-business">${donation.businessName}</span>
+                                    <span class="reward-amount tax-amount">$${donation.taxSavings.toFixed(2)} saved</span>
+                                </div>
+                                <div class="reward-description">
+                                    $${donation.donationAmount} donation to ${donation.cause}<br>
+                                    <strong>${donation.organizationName}</strong> (EIN: ${donation.taxId})
+                                </div>
+                                <div class="reward-date">
+                                    Donated on ${formatDate(donation.date)}
+                                    <div class="tax-receipt">Receipt: ${donation.receiptNumber}</div>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div style="background: rgba(0, 184, 148, 0.1); padding: 1.5rem; border-radius: 12px; margin-top: 1.5rem;">
+                    <h4 style="color: #00b894; margin-bottom: 1rem;">💡 Tax Deduction Summary</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <div>
+                            <strong>Total Charitable Donations:</strong><br>
+                            <span style="color: #00b894; font-size: 1.2rem; font-weight: bold;">$${getTotalTaxDeductions()}</span>
+                        </div>
+                        <div>
+                            <strong>Estimated Tax Savings:</strong><br>
+                            <span style="color: #00b894; font-size: 1.2rem; font-weight: bold;">$${getTotalTaxSavings().toFixed(2)}</span>
+                        </div>
+                        <div>
+                            <strong>Qualified Organizations:</strong><br>
+                            <span style="color: #00b894; font-size: 1.2rem; font-weight: bold;">${getQualifiedOrganizations().length}</span>
+                        </div>
+                    </div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #636e72;">
+                        <em>* Consult your tax professional. Deductions subject to IRS limitations and require itemizing.</em>
+                    </p>
                 </div>
             </div>
 
