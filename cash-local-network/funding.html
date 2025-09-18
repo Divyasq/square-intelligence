@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Funding - Cash Local Network</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/funding.css">
+    <link rel="stylesheet" href="css/payment-modal.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <button id="backBtn" class="back-btn">← Back to Business</button>
+            </nav>
+            <h1>🚀 Community Funding</h1>
+            <p class="subtitle">Invest in your neighborhood's future</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="funding-dashboard" id="fundingDashboard">
+            <!-- Funding content will be dynamically loaded -->
+        </div>
+    </main>
+
+    <!-- Payment Modal -->
+    <div class="payment-modal-overlay" id="paymentModal">
+        <div class="payment-modal">
+            <div class="modal-header">
+                <button class="modal-close" id="closeModal">&times;</button>
+                <h2 class="modal-title">Support This Business</h2>
+                <p class="modal-subtitle">Choose your preferred payment method</p>
+            </div>
+            
+            <div class="payment-methods">
+                <!-- Cash App Payment -->
+                <div class="payment-method" data-method="cashapp">
+                    <div class="payment-method-header">
+                        <div class="payment-method-icon cashapp-icon">$</div>
+                        <div class="payment-method-info">
+                            <h3>Cash App</h3>
+                            <p class="payment-method-description">Quick and secure payment with Cash App</p>
+                        </div>
+                        <div class="payment-method-badge">Popular</div>
+                    </div>
+                </div>
+
+                <!-- Cash Pool Payment -->
+                <div class="payment-method" data-method="cashpool">
+                    <div class="payment-method-header">
+                        <div class="payment-method-icon cashpool-icon">👥</div>
+                        <div class="payment-method-info">
+                            <h3>Cash Pool</h3>
+                            <p class="payment-method-description">Join a community funding pool</p>
+                        </div>
+                        <div class="payment-method-badge">Community</div>
+                    </div>
+                    
+                    <!-- Cash Pool Interface -->
+                    <div class="cashpool-interface" id="cashpoolInterface">
+                        <div class="cashpool-header">
+                            <h3 class="cashpool-title" id="cashpoolBusinessName">Business Funding Pool</h3>
+                            <p class="cashpool-organizer">By Community Network</p>
+                            
+                            <div class="cashpool-contributors">
+                                <div class="contributor-avatar">SC</div>
+                                <div class="contributor-avatar">MR</div>
+                                <div class="contributor-avatar">LP</div>
+                                <div class="contributor-avatar">DK</div>
+                                <div class="contributor-count">+7</div>
+                            </div>
+                        </div>
+                        
+                        <div class="cashpool-progress">
+                            <div class="cashpool-amount" id="cashpoolAmount">$0</div>
+                            <div class="cashpool-goal" id="cashpoolGoal">of $500 goal</div>
+                        </div>
+                        
+                        <div class="cashpool-buttons">
+                            <button class="cashpool-btn secondary">Add people</button>
+                            <button class="cashpool-btn primary" onclick="showAmountSelection()">Contribute</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Credit Card Payment -->
+                <div class="payment-method" data-method="creditcard">
+                    <div class="payment-method-header">
+                        <div class="payment-method-icon creditcard-icon">💳</div>
+                        <div class="payment-method-info">
+                            <h3>Credit Card</h3>
+                            <p class="payment-method-description">Pay with your credit or debit card</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Credit Card Form -->
+                    <div class="credit-card-form" id="creditCardForm">
+                        <div class="form-group">
+                            <label class="form-label">Card Number</label>
+                            <input type="text" class="form-input" placeholder="1234 5678 9012 3456" maxlength="19">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Expiry Date</label>
+                                <input type="text" class="form-input" placeholder="MM/YY" maxlength="5">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">CVV</label>
+                                <input type="text" class="form-input" placeholder="123" maxlength="4">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Cardholder Name</label>
+                            <input type="text" class="form-input" placeholder="John Doe">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Amount Selection -->
+            <div class="amount-selection" id="amountSelection">
+                <h3 style="margin-bottom: 1rem; color: #2d3436;">Choose Amount</h3>
+                <div class="amount-options">
+                    <div class="amount-option" data-amount="25">$25</div>
+                    <div class="amount-option" data-amount="50">$50</div>
+                    <div class="amount-option" data-amount="100">$100</div>
+                    <div class="amount-option" data-amount="250">$250</div>
+                    <div class="amount-option" data-amount="500">$500</div>
+                    <div class="amount-option custom-option">Custom</div>
+                </div>
+                <div class="custom-amount">
+                    <input type="number" placeholder="Enter amount" min="1" max="10000">
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="action-btn primary" id="processPayment" disabled>
+                    Complete Payment
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/businesses.js"></script>
+    <script src="js/funding-data.js"></script>
+    <script src="js/funding.js"></script>
+</body>
+</html>

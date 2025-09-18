@@ -1,0 +1,447 @@
+/* Payment Modal Styles */
+
+.payment-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.payment-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.payment-modal {
+    background: white;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    transform: scale(0.8) translateY(50px);
+    transition: all 0.3s ease;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.payment-modal-overlay.active .payment-modal {
+    transform: scale(1) translateY(0);
+}
+
+.modal-header {
+    padding: 2rem 2rem 1rem;
+    text-align: center;
+    border-bottom: 1px solid #e9ecef;
+    position: relative;
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #636e72;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+    background: #f8f9fa;
+    color: #2d3436;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2d3436;
+    margin-bottom: 0.5rem;
+}
+
+.modal-subtitle {
+    color: #636e72;
+    font-size: 0.9rem;
+}
+
+.payment-methods {
+    padding: 2rem;
+}
+
+.payment-method {
+    border: 2px solid #e9ecef;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.payment-method:hover {
+    border-color: #00d4aa;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 212, 170, 0.15);
+}
+
+.payment-method.selected {
+    border-color: #00d4aa;
+    background: rgba(0, 212, 170, 0.05);
+}
+
+.payment-method-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.payment-method-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.cashapp-icon {
+    background: linear-gradient(135deg, #00d632, #00b82c);
+    color: white;
+}
+
+.cashpool-icon {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+.creditcard-icon {
+    background: linear-gradient(135deg, #ffecd2, #fcb69f);
+    color: #d63031;
+}
+
+.payment-method-info h3 {
+    margin: 0 0 0.3rem 0;
+    color: #2d3436;
+    font-size: 1.1rem;
+}
+
+.payment-method-description {
+    color: #636e72;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.payment-method-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: #00d4aa;
+    color: white;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Cash Pool Specific Styles */
+.cashpool-interface {
+    display: none;
+    margin-top: 1rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+}
+
+.cashpool-interface.active {
+    display: block;
+}
+
+.cashpool-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.cashpool-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #2d3436;
+    margin-bottom: 0.5rem;
+}
+
+.cashpool-organizer {
+    color: #636e72;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.cashpool-contributors {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: -8px;
+    margin-bottom: 1.5rem;
+}
+
+.contributor-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid white;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 0.8rem;
+    margin-left: -8px;
+}
+
+.contributor-count {
+    background: #636e72;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-left: -8px;
+}
+
+.cashpool-progress {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.cashpool-amount {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #2d3436;
+    margin-bottom: 0.5rem;
+}
+
+.cashpool-goal {
+    color: #636e72;
+    font-size: 1rem;
+}
+
+.cashpool-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.cashpool-btn {
+    flex: 1;
+    padding: 1rem;
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cashpool-btn.primary {
+    background: #2d3436;
+    color: white;
+}
+
+.cashpool-btn.primary:hover {
+    background: #636e72;
+}
+
+.cashpool-btn.secondary {
+    background: #e9ecef;
+    color: #2d3436;
+}
+
+.cashpool-btn.secondary:hover {
+    background: #ddd;
+}
+
+/* Amount Selection */
+.amount-selection {
+    display: none;
+    margin-top: 1.5rem;
+}
+
+.amount-selection.active {
+    display: block;
+}
+
+.amount-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.amount-option {
+    padding: 1rem;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    color: #2d3436;
+}
+
+.amount-option:hover,
+.amount-option.selected {
+    border-color: #00d4aa;
+    background: rgba(0, 212, 170, 0.1);
+    color: #00d4aa;
+}
+
+.custom-amount {
+    position: relative;
+}
+
+.custom-amount input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.custom-amount input:focus {
+    border-color: #00d4aa;
+}
+
+.custom-amount::before {
+    content: "$";
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.1rem;
+    color: #636e72;
+    pointer-events: none;
+}
+
+/* Credit Card Form */
+.credit-card-form {
+    display: none;
+    margin-top: 1.5rem;
+}
+
+.credit-card-form.active {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #2d3436;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+    border-color: #00d4aa;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+/* Action Buttons */
+.modal-actions {
+    padding: 1.5rem 2rem 2rem;
+    border-top: 1px solid #e9ecef;
+}
+
+.action-btn {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.action-btn.primary {
+    background: linear-gradient(135deg, #00d4aa, #00b894);
+    color: white;
+}
+
+.action-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 212, 170, 0.3);
+}
+
+.action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .payment-modal {
+        width: 95%;
+        margin: 1rem;
+    }
+    
+    .modal-header,
+    .payment-methods,
+    .modal-actions {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .amount-options {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}

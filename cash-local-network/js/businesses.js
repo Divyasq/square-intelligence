@@ -15,7 +15,24 @@ const businesses = [
         services: ["Dine-in", "Takeout", "Delivery", "Catering"],
         specialties: ["Homemade Pasta", "Wood-fired Pizza", "Tiramisu"],
         priceRange: "$$",
-        acceptsCash: true
+        acceptsCash: true,
+        acceptingFunding: true,
+        fundingGoal: "$25,000",
+        fundingPurpose: "Kitchen expansion and new wood-fired oven",
+        supportedCauses: [
+            {
+                name: "Education",
+                icon: "🎓",
+                monthlyContribution: 8,
+                description: "Supporting local school meal programs and culinary scholarships"
+            },
+            {
+                name: "Emergency",
+                icon: "🚨",
+                monthlyContribution: 5,
+                description: "Emergency meal assistance for families in need"
+            }
+        ]
     },
     {
         id: 2,
@@ -32,7 +49,22 @@ const businesses = [
         services: ["Plant Care Consultation", "Landscaping", "Delivery", "Workshops"],
         specialties: ["Native Plants", "Organic Fertilizers", "Garden Design"],
         priceRange: "$",
-        acceptsCash: true
+        acceptsCash: true,
+        acceptingFunding: false,
+        supportedCauses: [
+            {
+                name: "Environmental",
+                icon: "🌱",
+                monthlyContribution: 10,
+                description: "Sustainable gardening practices and native plant conservation"
+            },
+            {
+                name: "Education",
+                icon: "🎓",
+                monthlyContribution: 5,
+                description: "Free gardening workshops for schools and community groups"
+            }
+        ]
     },
     {
         id: 3,
@@ -49,7 +81,24 @@ const businesses = [
         services: ["Electronics Repair", "Appliance Service", "Small Engine Repair", "Diagnostics"],
         specialties: ["iPhone/iPad Repair", "Laptop Service", "Lawn Mower Repair"],
         priceRange: "$$",
-        acceptsCash: true
+        acceptsCash: true,
+        acceptingFunding: true,
+        fundingGoal: "$15,000",
+        fundingPurpose: "New diagnostic equipment and shop expansion",
+        supportedCauses: [
+            {
+                name: "Environmental",
+                icon: "🌱",
+                monthlyContribution: 12,
+                description: "Electronics recycling and sustainable repair practices"
+            },
+            {
+                name: "Education",
+                icon: "🎓",
+                monthlyContribution: 6,
+                description: "Teaching repair skills to local youth and vocational programs"
+            }
+        ]
     },
     {
         id: 4,
@@ -66,7 +115,8 @@ const businesses = [
         services: ["Group Classes", "Private Sessions", "Workshops", "Teacher Training"],
         specialties: ["Hatha Yoga", "Vinyasa Flow", "Meditation", "Prenatal Yoga"],
         priceRange: "$$",
-        acceptsCash: true
+        acceptsCash: true,
+        acceptingFunding: false
     },
     {
         id: 5,
@@ -83,7 +133,24 @@ const businesses = [
         services: ["Book Orders", "Reading Groups", "Author Events", "Gift Wrapping"],
         specialties: ["Local Authors", "Rare Books", "Children's Section", "Coffee Corner"],
         priceRange: "$",
-        acceptsCash: true
+        acceptsCash: true,
+        acceptingFunding: true,
+        fundingGoal: "$8,500",
+        fundingPurpose: "Expand children's section and add community reading space",
+        supportedCauses: [
+            {
+                name: "Education",
+                icon: "🎓",
+                monthlyContribution: 15,
+                description: "Literacy programs and free books for underprivileged children"
+            },
+            {
+                name: "Charity",
+                icon: "🤝",
+                monthlyContribution: 7,
+                description: "Supporting local homeless shelter with reading materials"
+            }
+        ]
     },
     {
         id: 6,
@@ -100,7 +167,8 @@ const businesses = [
         services: ["Hair Styling", "Coloring", "Manicures", "Pedicures", "Facials"],
         specialties: ["Bridal Packages", "Color Correction", "Extensions", "Eyebrow Threading"],
         priceRange: "$$",
-        acceptsCash: true
+        acceptsCash: true,
+        acceptingFunding: false
     },
     {
         id: 7,
@@ -117,7 +185,8 @@ const businesses = [
         services: ["Deli Counter", "Catering", "Grocery Items", "Coffee Bar"],
         specialties: ["Pastrami Sandwich", "Fresh Salads", "Local Produce", "Artisan Breads"],
         priceRange: "$",
-        acceptsCash: true
+        acceptsCash: true,
+        acceptingFunding: false
     },
     {
         id: 8,
@@ -134,7 +203,8 @@ const businesses = [
         services: ["Swedish Massage", "Deep Tissue", "Hot Stone", "Prenatal Massage"],
         specialties: ["Sports Massage", "Aromatherapy", "Couples Massage", "Reflexology"],
         priceRange: "$$$",
-        acceptsCash: true
+        acceptsCash: true,
+        acceptingFunding: false
     }
 ];
 

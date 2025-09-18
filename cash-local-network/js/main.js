@@ -32,13 +32,29 @@ document.addEventListener('DOMContentLoaded', function() {
                      (business.rating % 1 >= 0.5 ? '☆' : '') + 
                      '☆'.repeat(5 - Math.ceil(business.rating));
 
+        const causesHtml = business.supportedCauses ? `
+            <div class="causes-section">
+                <div style="font-size: 0.8rem; color: #636e72; margin-bottom: 0.5rem;">🤝 Supporting Community Causes:</div>
+                <div class="causes-grid">
+                    ${business.supportedCauses.map(cause => `
+                        <div class="cause-badge">
+                            <span class="cause-icon">${cause.icon}</span>
+                            <span>${cause.name}</span>
+                            <span class="cause-percentage">${cause.monthlyContribution}%</span>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        ` : '';
+
         card.innerHTML = `
-            <h3>${business.name}</h3>
+            <h3>${business.name}${business.acceptingFunding ? '<span class="funding-badge">Seeking Funding</span>' : ''}</h3>
             <span class="business-category">${business.category.charAt(0).toUpperCase() + business.category.slice(1)}</span>
             <p>${business.description}</p>
             <p><strong>📍</strong> ${business.address}</p>
             <p><strong>📞</strong> ${business.phone}</p>
             <p><strong>💰</strong> ${business.priceRange} • ${business.acceptsCash ? '💵 Cash Accepted' : '💳 Card Only'}</p>
+            ${causesHtml}
             <div class="business-rating">
                 <span class="stars">${stars}</span>
                 <span class="rating-text">${business.rating} (${business.reviews} reviews)</span>

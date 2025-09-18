@@ -74,6 +74,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
 
+            ${business.acceptingFunding ? `
+            <div class="funding-info" onclick="openFundingPage(${business.id})" style="cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                <div class="funding-header">
+                    <h4>🚀 Seeking Community Funding</h4>
+                </div>
+                <div class="funding-details">
+                    <div class="funding-goal">Goal: ${business.fundingGoal}</div>
+                    <div class="funding-purpose">${business.fundingPurpose}</div>
+                    <div style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.9;">
+                        💡 Click to view funding details and community supporters
+                    </div>
+                </div>
+            </div>
+            ` : ''}
+
             <div class="business-info">
                 <div class="info-section">
                     <h4>Hours of Operation</h4>
@@ -102,6 +117,36 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
 
+            ${business.supportedCauses ? `
+            <div class="causes-info">
+                <div class="causes-header">
+                    <h4 style="color: #74b9ff; margin: 0;">🤝 Community Causes We Support</h4>
+                </div>
+                <p style="color: #636e72; margin-bottom: 1rem;">
+                    ${business.name} believes in giving back to the community. Here's how we contribute monthly:
+                </p>
+                <div class="causes-list">
+                    ${business.supportedCauses.map(cause => `
+                        <div class="cause-item">
+                            <div class="cause-item-icon">${cause.icon}</div>
+                            <div class="cause-item-content">
+                                <div class="cause-item-header">
+                                    <span class="cause-item-name">${cause.name}</span>
+                                    <span class="cause-item-contribution">${cause.monthlyContribution}% of monthly revenue</span>
+                                </div>
+                                <div class="cause-item-description">${cause.description}</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div style="margin-top: 1rem; padding: 1rem; background: rgba(116, 185, 255, 0.1); border-radius: 8px; text-align: center;">
+                    <p style="color: #74b9ff; font-weight: bold; margin: 0;">
+                        💡 When you support ${business.name}, you're also supporting these important community causes!
+                    </p>
+                </div>
+            </div>
+            ` : ''}
+
             <div style="text-align: center; margin-top: 2rem; padding: 2rem; background: #f8f9fa; border-radius: 10px;">
                 <h4 style="color: #00d4aa; margin-bottom: 1rem;">Ready to Visit?</h4>
                 <p style="margin-bottom: 1rem;">Support your local community by visiting ${business.name} today!</p>
@@ -113,3 +158,8 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
     }
 });
+
+// Function to open funding page
+function openFundingPage(businessId) {
+    window.location.href = `funding.html?id=${businessId}`;
+}

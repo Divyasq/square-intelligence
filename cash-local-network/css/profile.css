@@ -1,0 +1,447 @@
+/* Profile Page Styles */
+
+.profile-dashboard {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.profile-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 3rem 2rem;
+    border-radius: 20px;
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-hero::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: heroShine 4s infinite;
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff9a9e, #fecfef);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #2d3436;
+    margin: 0 auto 1rem;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    z-index: 1;
+}
+
+.profile-name {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.profile-title {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.profile-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.stat-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin: 0 auto 1rem;
+    color: white;
+}
+
+.btc-icon {
+    background: linear-gradient(135deg, #f7931e, #ff6b35);
+}
+
+.discount-icon {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.support-icon {
+    background: linear-gradient(135deg, #00d4aa, #00b894);
+}
+
+.causes-icon {
+    background: linear-gradient(135deg, #74b9ff, #0984e3);
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2d3436;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: #636e72;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.rewards-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    margin: 2rem 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.section-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.btc-rewards {
+    background: linear-gradient(135deg, #f7931e, #ff6b35);
+}
+
+.discount-rewards {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.section-title {
+    font-size: 1.5rem;
+    color: #2d3436;
+    margin: 0;
+}
+
+.section-subtitle {
+    color: #636e72;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.btc-wallet {
+    background: linear-gradient(135deg, #f7931e, #ff6b35);
+    color: white;
+    padding: 2rem;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.btc-wallet::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: btcShine 3s infinite;
+}
+
+@keyframes btcShine {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.btc-balance {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.btc-usd {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.btc-address {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    font-family: monospace;
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 1;
+}
+
+.rewards-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.reward-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border-left: 4px solid;
+    transition: transform 0.3s ease;
+}
+
+.reward-item:hover {
+    transform: translateX(5px);
+}
+
+.reward-item.btc-reward {
+    border-left-color: #f7931e;
+}
+
+.reward-item.discount-reward {
+    border-left-color: #667eea;
+}
+
+.reward-business-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.reward-content {
+    flex: 1;
+}
+
+.reward-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.reward-business {
+    font-weight: bold;
+    color: #2d3436;
+    font-size: 1.1rem;
+}
+
+.reward-amount {
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: white;
+}
+
+.btc-amount {
+    background: #f7931e;
+}
+
+.discount-amount {
+    background: #667eea;
+}
+
+.reward-description {
+    color: #636e72;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.reward-date {
+    color: #636e72;
+    font-size: 0.8rem;
+}
+
+.supported-businesses {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    margin: 2rem 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.business-support-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.support-card {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border-left: 4px solid #00d4aa;
+    transition: transform 0.3s ease;
+}
+
+.support-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 212, 170, 0.15);
+}
+
+.support-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.support-business-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00d4aa, #00b894);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.support-info h4 {
+    margin: 0 0 0.3rem 0;
+    color: #2d3436;
+}
+
+.support-category {
+    font-size: 0.8rem;
+    color: #636e72;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.support-details {
+    margin-bottom: 1rem;
+}
+
+.support-amount {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #00d4aa;
+    margin-bottom: 0.3rem;
+}
+
+.support-causes {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.support-cause {
+    background: #74b9ff;
+    color: white;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.support-rewards {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.reward-badge {
+    padding: 0.3rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: white;
+}
+
+.btc-badge {
+    background: #f7931e;
+}
+
+.discount-badge {
+    background: #667eea;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .profile-hero {
+        padding: 2rem 1rem;
+    }
+    
+    .profile-name {
+        font-size: 1.5rem;
+    }
+    
+    .profile-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .business-support-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .reward-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .support-header {
+        flex-direction: column;
+        text-align: center;
+    }
+}
