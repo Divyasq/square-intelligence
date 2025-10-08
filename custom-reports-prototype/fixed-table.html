@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Reports - Fixed Table</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        .table-container {
+            background-color: white;
+            border-radius: 12px;
+            border: 1px solid #dee2e6;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .reports-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .reports-table th {
+            background-color: #f8f9fa;
+            padding: 16px 12px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .reports-table th:nth-child(1) { width: 35%; }
+        .reports-table th:nth-child(2) { width: 10%; }
+        .reports-table th:nth-child(3) { width: 8%; }
+        .reports-table th:nth-child(4) { width: 12%; }
+        .reports-table th:nth-child(5) { width: 12%; }
+        .reports-table th:nth-child(6) { width: 10%; }
+        .reports-table th:nth-child(7) { width: 13%; }
+
+        .reports-table td {
+            padding: 20px 12px;
+            border-bottom: 1px solid #f1f3f4;
+            vertical-align: top;
+        }
+
+        .reports-table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .migrated-report {
+            background: linear-gradient(90deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            position: relative;
+        }
+
+        .migrated-report::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .report-info {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .report-icon {
+            color: #4f46e5;
+            font-size: 16px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .report-name {
+            font-weight: 600;
+            color: #212529;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .report-description {
+            color: #6c757d;
+            font-size: 13px;
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+
+        .report-meta {
+            color: #adb5bd;
+            font-size: 12px;
+        }
+
+        .migrated-badge {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .ai-badge {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            color: #7b1fa2;
+            border: 1px solid #ce93d8;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .type-badge {
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .type-badge.report {
+            background-color: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .type-badge.dashboard {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .type-badge.table {
+            background-color: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .type-badge.chart {
+            background-color: #fff3e0;
+            color: #f57c00;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .status-badge.active {
+            background-color: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .status-badge.draft {
+            background-color: #fff3e0;
+            color: #f57c00;
+        }
+
+        .user-info, .date-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #6c757d;
+            font-size: 13px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            padding: 6px;
+            border: none;
+            background: none;
+            color: #6c757d;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background-color: #f8f9fa;
+            color: #495057;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #212529;
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <h1>Custom Reports - Fixed Table Alignment</h1>
+    
+    <div class="table-container">
+        <table class="reports-table">
+            <thead>
+                <tr>
+                    <th>REPORT</th>
+                    <th>TYPE</th>
+                    <th>STATUS</th>
+                    <th>CREATED BY</th>
+                    <th>LAST MODIFIED</th>
+                    <th>LAST RUN</th>
+                    <th>ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Migrated Template Reports -->
+                <tr class="migrated-report">
+                    <td>
+                        <div class="report-info">
+                            <i class="fas fa-cube report-icon"></i>
+                            <div>
+                                <div class="report-name">
+                                    Custom Item Report Template
+                                    <span class="migrated-badge">Migrated</span>
+                                </div>
+                                <div class="report-description">Analyze individual item performance and trends</div>
+                                <div class="report-meta">5 metrics • 3 filters • 1,247 uses</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="type-badge report">Report</span></td>
+                    <td><span class="status-badge active">Active</span></td>
+                    <td>
+                        <div class="user-info">
+                            <i class="fas fa-robot"></i>
+                            <span>System</span>
+                        </div>
+                    </td>
+                    <td>Auto-migrated</td>
+                    <td>2 hours ago</td>
+                    <td>
+                        <div class="actions">
+                            <button class="action-btn"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn"><i class="fas fa-copy"></i></button>
+                            <button class="action-btn"><i class="fas fa-ellipsis-h"></i></button>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="migrated-report">
+                    <td>
+                        <div class="report-info">
+                            <i class="fas fa-receipt report-icon"></i>
+                            <div>
+                                <div class="report-name">
+                                    Custom Order Report Template
+                                    <span class="migrated-badge">Migrated</span>
+                                </div>
+                                <div class="report-description">Track order patterns and customer behavior</div>
+                                <div class="report-meta">4 metrics • 4 filters • 892 uses</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="type-badge report">Report</span></td>
+                    <td><span class="status-badge active">Active</span></td>
+                    <td>
+                        <div class="user-info">
+                            <i class="fas fa-robot"></i>
+                            <span>System</span>
+                        </div>
+                    </td>
+                    <td>Auto-migrated</td>
+                    <td>1 day ago</td>
+                    <td>
+                        <div class="actions">
+                            <button class="action-btn"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn"><i class="fas fa-copy"></i></button>
+                            <button class="action-btn"><i class="fas fa-ellipsis-h"></i></button>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="migrated-report">
+                    <td>
+                        <div class="report-info">
+                            <i class="fas fa-credit-card report-icon"></i>
+                            <div>
+                                <div class="report-name">
+                                    Custom Payments Report Template
+                                    <span class="migrated-badge">Migrated</span>
+                                </div>
+                                <div class="report-description">Monitor payment methods and financial flows</div>
+                                <div class="report-meta">6 metrics • 2 filters • 654 uses</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="type-badge report">Report</span></td>
+                    <td><span class="status-badge active">Active</span></td>
+                    <td>
+                        <div class="user-info">
+                            <i class="fas fa-robot"></i>
+                            <span>System</span>
+                        </div>
+                    </td>
+                    <td>Auto-migrated</td>
+                    <td>3 hours ago</td>
+                    <td>
+                        <div class="actions">
+                            <button class="action-btn"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn"><i class="fas fa-copy"></i></button>
+                            <button class="action-btn"><i class="fas fa-ellipsis-h"></i></button>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- New Custom Reports -->
+                <tr>
+                    <td>
+                        <div class="report-info">
+                            <i class="fas fa-chart-line report-icon"></i>
+                            <div>
+                                <div class="report-name">
+                                    Weekly Performance Dashboard
+                                    <span class="ai-badge">AI Assisted</span>
+                                </div>
+                                <div class="report-description">Comprehensive weekly sales and performance metrics</div>
+                                <div class="report-meta">4 metrics • 3 filters</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="type-badge dashboard">Dashboard</span></td>
+                    <td><span class="status-badge active">Active</span></td>
+                    <td>
+                        <div class="user-info">
+                            <i class="fas fa-user-circle"></i>
+                            <span>John Doe</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="date-info">
+                            <i class="fas fa-calendar"></i>
+                            <span>2025-01-20</span>
+                        </div>
+                    </td>
+                    <td>2 hours ago</td>
+                    <td>
+                        <div class="actions">
+                            <button class="action-btn"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn"><i class="fas fa-ellipsis-h"></i></button>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="report-info">
+                            <i class="fas fa-chart-pie report-icon"></i>
+                            <div>
+                                <div class="report-name">
+                                    Product Mix Analysis
+                                    <span class="ai-badge">AI Assisted</span>
+                                </div>
+                                <div class="report-description">Advanced product mix optimization insights</div>
+                                <div class="report-meta">7 metrics • 5 filters</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="type-badge chart">Chart</span></td>
+                    <td><span class="status-badge active">Active</span></td>
+                    <td>
+                        <div class="user-info">
+                            <i class="fas fa-user-circle"></i>
+                            <span>Jane Smith</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="date-info">
+                            <i class="fas fa-calendar"></i>
+                            <span>2025-01-18</span>
+                        </div>
+                    </td>
+                    <td>1 day ago</td>
+                    <td>
+                        <div class="actions">
+                            <button class="action-btn"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn"><i class="fas fa-ellipsis-h"></i></button>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="report-info">
+                            <i class="fas fa-filter report-icon"></i>
+                            <div>
+                                <div class="report-name">Customer Segmentation Report</div>
+                                <div class="report-description">Customer behavior and segmentation analysis</div>
+                                <div class="report-meta">3 metrics • 2 filters</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="type-badge table">Table</span></td>
+                    <td><span class="status-badge draft">Draft</span></td>
+                    <td>
+                        <div class="user-info">
+                            <i class="fas fa-user-circle"></i>
+                            <span>Mike Johnson</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="date-info">
+                            <i class="fas fa-calendar"></i>
+                            <span>2025-01-25</span>
+                        </div>
+                    </td>
+                    <td>Never</td>
+                    <td>
+                        <div class="actions">
+                            <button class="action-btn"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn"><i class="fas fa-ellipsis-h"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

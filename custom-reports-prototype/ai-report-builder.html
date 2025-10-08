@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Report Builder - Financial Suite</title>
+    <link rel="stylesheet" href="ai-builder-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <button class="back-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="header-title">
+                    <h1>Create Report</h1>
+                    <p>Build custom reports with AI assistance</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="btn btn-secondary" onclick="saveDraft()">
+                    <i class="fas fa-save"></i> Save Draft
+                </button>
+                <button class="btn btn-primary" onclick="createReport()">
+                    <i class="fas fa-plus"></i> Create Report
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Step 1: Template Selection -->
+            <div class="step-container active" id="templateStep">
+                <div class="step-header">
+                    <div class="step-indicator">
+                        <span class="step-number">1</span>
+                        <span class="step-title">Choose Template</span>
+                    </div>
+                    <div class="step-actions">
+                        <button class="btn btn-outline" onclick="skipToBuilder()">
+                            <i class="fas fa-tools"></i> Skip to Builder
+                        </button>
+                    </div>
+                </div>
+
+                <div class="template-section">
+                    <!-- AI Suggestions -->
+                    <div class="section-header">
+                        <h2><i class="fas fa-magic"></i> AI Suggested Templates</h2>
+                        <p>Based on your data and usage patterns</p>
+                    </div>
+                    
+                    <div class="template-grid">
+                        <div class="template-card ai-suggested" onclick="selectTemplate('sales-forecast')">
+                            <div class="template-header">
+                                <div class="template-icon ai">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="ai-badge">
+                                    <i class="fas fa-sparkles"></i> AI Suggested
+                                </div>
+                            </div>
+                            <h3>Sales Forecasting Dashboard</h3>
+                            <p>Predict future sales trends with ML-powered forecasting</p>
+                            <div class="template-stats">
+                                <div class="stat">
+                                    <i class="fas fa-users"></i>
+                                    <span>1,247 users</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.8 rating</span>
+                                </div>
+                                <div class="confidence-score">
+                                    <span class="confidence-label">Confidence</span>
+                                    <div class="confidence-bar">
+                                        <div class="confidence-fill" style="width: 92%"></div>
+                                    </div>
+                                    <span class="confidence-value">92%</span>
+                                </div>
+                            </div>
+                            <div class="template-features">
+                                <span class="feature-tag">Revenue Forecasting</span>
+                                <span class="feature-tag">Trend Analysis</span>
+                                <span class="feature-tag">Seasonality</span>
+                            </div>
+                        </div>
+
+                        <div class="template-card ai-suggested" onclick="selectTemplate('customer-insights')">
+                            <div class="template-header">
+                                <div class="template-icon ai">
+                                    <i class="fas fa-user-chart"></i>
+                                </div>
+                                <div class="ai-badge">
+                                    <i class="fas fa-sparkles"></i> AI Suggested
+                                </div>
+                            </div>
+                            <h3>Customer Behavior Analytics</h3>
+                            <p>Deep insights into customer patterns and segmentation</p>
+                            <div class="template-stats">
+                                <div class="stat">
+                                    <i class="fas fa-users"></i>
+                                    <span>892 users</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.6 rating</span>
+                                </div>
+                                <div class="confidence-score">
+                                    <span class="confidence-label">Confidence</span>
+                                    <div class="confidence-bar">
+                                        <div class="confidence-fill" style="width: 88%"></div>
+                                    </div>
+                                    <span class="confidence-value">88%</span>
+                                </div>
+                            </div>
+                            <div class="template-features">
+                                <span class="feature-tag">RFM Analysis</span>
+                                <span class="feature-tag">Churn Prediction</span>
+                                <span class="feature-tag">Lifetime Value</span>
+                            </div>
+                        </div>
+
+                        <div class="template-card ai-suggested" onclick="selectTemplate('inventory-optimization')">
+                            <div class="template-header">
+                                <div class="template-icon ai">
+                                    <i class="fas fa-boxes"></i>
+                                </div>
+                                <div class="ai-badge">
+                                    <i class="fas fa-sparkles"></i> AI Suggested
+                                </div>
+                            </div>
+                            <h3>Inventory Optimization</h3>
+                            <p>Smart inventory management with demand forecasting</p>
+                            <div class="template-stats">
+                                <div class="stat">
+                                    <i class="fas fa-users"></i>
+                                    <span>654 users</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.7 rating</span>
+                                </div>
+                                <div class="confidence-score">
+                                    <span class="confidence-label">Confidence</span>
+                                    <div class="confidence-bar">
+                                        <div class="confidence-fill" style="width: 85%"></div>
+                                    </div>
+                                    <span class="confidence-value">85%</span>
+                                </div>
+                            </div>
+                            <div class="template-features">
+                                <span class="feature-tag">Stock Levels</span>
+                                <span class="feature-tag">Reorder Points</span>
+                                <span class="feature-tag">Demand Forecast</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Popular Templates -->
+                    <div class="section-header">
+                        <h2><i class="fas fa-fire"></i> Popular Templates</h2>
+                        <p>Most used templates by the community</p>
+                    </div>
+                    
+                    <div class="template-grid">
+                        <div class="template-card popular" onclick="selectTemplate('sales-performance')">
+                            <div class="template-header">
+                                <div class="template-icon">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                                <div class="popular-badge">
+                                    <i class="fas fa-fire"></i> Popular
+                                </div>
+                            </div>
+                            <h3>Sales Performance Report</h3>
+                            <p>Comprehensive sales metrics and KPI tracking</p>
+                            <div class="template-stats">
+                                <div class="stat">
+                                    <i class="fas fa-users"></i>
+                                    <span>2,156 users</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-download"></i>
+                                    <span>5,432 reports</span>
+                                </div>
+                            </div>
+                            <div class="template-features">
+                                <span class="feature-tag">Revenue Tracking</span>
+                                <span class="feature-tag">Goal Comparison</span>
+                                <span class="feature-tag">Team Performance</span>
+                            </div>
+                        </div>
+
+                        <div class="template-card popular" onclick="selectTemplate('financial-overview')">
+                            <div class="template-header">
+                                <div class="template-icon">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                                <div class="popular-badge">
+                                    <i class="fas fa-fire"></i> Popular
+                                </div>
+                            </div>
+                            <h3>Financial Overview Dashboard</h3>
+                            <p>Complete financial health monitoring</p>
+                            <div class="template-stats">
+                                <div class="stat">
+                                    <i class="fas fa-users"></i>
+                                    <span>1,789 users</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-download"></i>
+                                    <span>3,245 reports</span>
+                                </div>
+                            </div>
+                            <div class="template-features">
+                                <span class="feature-tag">P&L Summary</span>
+                                <span class="feature-tag">Cash Flow</span>
+                                <span class="feature-tag">Expense Analysis</span>
+                            </div>
+                        </div>
+
+                        <div class="template-card popular" onclick="selectTemplate('labor-analytics')">
+                            <div class="template-header">
+                                <div class="template-icon">
+                                    <i class="fas fa-users-cog"></i>
+                                </div>
+                                <div class="popular-badge">
+                                    <i class="fas fa-fire"></i> Popular
+                                </div>
+                            </div>
+                            <h3>Labor Analytics Report</h3>
+                            <p>Workforce productivity and cost analysis</p>
+                            <div class="template-stats">
+                                <div class="stat">
+                                    <i class="fas fa-users"></i>
+                                    <span>1,234 users</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-download"></i>
+                                    <span>2,891 reports</span>
+                                </div>
+                            </div>
+                            <div class="template-features">
+                                <span class="feature-tag">Labor Costs</span>
+                                <span class="feature-tag">Productivity</span>
+                                <span class="feature-tag">Scheduling</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Custom Templates -->
+                    <div class="section-header">
+                        <h2><i class="fas fa-tools"></i> Build from Scratch</h2>
+                        <p>Create a completely custom report</p>
+                    </div>
+                    
+                    <div class="custom-template-card" onclick="selectTemplate('custom')">
+                        <div class="custom-icon">
+                            <i class="fas fa-plus-circle"></i>
+                        </div>
+                        <h3>Start with Blank Canvas</h3>
+                        <p>Build your report from the ground up with full customization</p>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-tools"></i> Open Builder
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: AI Report Builder -->
+            <div class="step-container" id="builderStep">
+                <div class="step-header">
+                    <div class="step-indicator">
+                        <span class="step-number">2</span>
+                        <span class="step-title">Build Report</span>
+                    </div>
+                    <div class="step-actions">
+                        <button class="btn btn-outline" onclick="showDataInsights()">
+                            <i class="fas fa-lightbulb"></i> Summarize My Data
+                        </button>
+                        <button class="btn btn-outline" onclick="toggleAIAssistant()">
+                            <i class="fas fa-robot"></i> AI Assistant
+                        </button>
+                    </div>
+                </div>
+
+                <div class="builder-layout">
+                    <!-- Left Panel - Data Sources & Components -->
+                    <div class="builder-sidebar">
+                        <div class="sidebar-tabs">
+                            <button class="tab-btn active" onclick="showTab('data')">
+                                <i class="fas fa-database"></i> Data
+                            </button>
+                            <button class="tab-btn" onclick="showTab('widgets')">
+                                <i class="fas fa-chart-pie"></i> Widgets
+                            </button>
+                            <button class="tab-btn" onclick="showTab('filters')">
+                                <i class="fas fa-filter"></i> Filters
+                            </button>
+                        </div>
+
+                        <!-- Data Tab -->
+                        <div class="tab-content active" id="dataTab">
+                            <div class="section-title">Data Objects</div>
+                            <div class="data-sources">
+                                <div class="data-source" draggable="true" data-source="orders">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <div class="source-info">
+                                        <span class="source-name">Orders</span>
+                                        <span class="source-count">50 metrics</span>
+                                    </div>
+                                </div>
+                                <div class="data-source" draggable="true" data-source="items">
+                                    <i class="fas fa-cube"></i>
+                                    <div class="source-info">
+                                        <span class="source-name">Items</span>
+                                        <span class="source-count">32 metrics</span>
+                                    </div>
+                                </div>
+                                <div class="data-source" draggable="true" data-source="customers">
+                                    <i class="fas fa-users"></i>
+                                    <div class="source-info">
+                                        <span class="source-name">Customers</span>
+                                        <span class="source-count">28 metrics</span>
+                                    </div>
+                                </div>
+                                <div class="data-source" draggable="true" data-source="payments">
+                                    <i class="fas fa-credit-card"></i>
+                                    <div class="source-info">
+                                        <span class="source-name">Payments</span>
+                                        <span class="source-count">45 metrics</span>
+                                    </div>
+                                </div>
+                                <div class="data-source" draggable="true" data-source="employees">
+                                    <i class="fas fa-user-tie"></i>
+                                    <div class="source-info">
+                                        <span class="source-name">Employees</span>
+                                        <span class="source-count">22 metrics</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="section-title">Available Metrics</div>
+                            <div class="field-list" id="fieldList">
+                                <!-- Metrics will be populated based on selected data objects -->
+                            </div>
+                        </div>
+
+                        <!-- Widgets Tab -->
+                        <div class="tab-content" id="widgetsTab">
+                            <div class="section-title">KPI Widgets</div>
+                            <div class="widget-grid">
+                                <div class="widget-item" draggable="true" data-widget="metric">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    <span>Metric Card</span>
+                                </div>
+                                <div class="widget-item" draggable="true" data-widget="chart">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Line Chart</span>
+                                </div>
+                                <div class="widget-item" draggable="true" data-widget="bar">
+                                    <i class="fas fa-chart-bar"></i>
+                                    <span>Bar Chart</span>
+                                </div>
+                                <div class="widget-item" draggable="true" data-widget="pie">
+                                    <i class="fas fa-chart-pie"></i>
+                                    <span>Pie Chart</span>
+                                </div>
+                                <div class="widget-item" draggable="true" data-widget="table">
+                                    <i class="fas fa-table"></i>
+                                    <span>Data Table</span>
+                                </div>
+                                <div class="widget-item" draggable="true" data-widget="gauge">
+                                    <i class="fas fa-gauge-high"></i>
+                                    <span>Gauge</span>
+                                </div>
+                            </div>
+
+                            <div class="section-title">Forecasting Widgets</div>
+                            <div class="widget-grid">
+                                <div class="widget-item forecast" draggable="true" data-widget="sales-forecast">
+                                    <i class="fas fa-crystal-ball"></i>
+                                    <span>Sales Forecast</span>
+                                </div>
+                                <div class="widget-item forecast" draggable="true" data-widget="demand-forecast">
+                                    <i class="fas fa-chart-area"></i>
+                                    <span>Demand Forecast</span>
+                                </div>
+                                <div class="widget-item forecast" draggable="true" data-widget="customer-forecast">
+                                    <i class="fas fa-user-clock"></i>
+                                    <span>Customer Forecast</span>
+                                </div>
+                                <div class="widget-item forecast" draggable="true" data-widget="labor-forecast">
+                                    <i class="fas fa-users-gear"></i>
+                                    <span>Labor Forecast</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Filters Tab -->
+                        <div class="tab-content" id="filtersTab">
+                            <div class="section-title">Quick Filters</div>
+                            <div class="filter-list">
+                                <div class="filter-item" draggable="true" data-filter="date">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>Date Range</span>
+                                </div>
+                                <div class="filter-item" draggable="true" data-filter="category">
+                                    <i class="fas fa-tags"></i>
+                                    <span>Category</span>
+                                </div>
+                                <div class="filter-item" draggable="true" data-filter="location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Location</span>
+                                </div>
+                                <div class="filter-item" draggable="true" data-filter="status">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Status</span>
+                                </div>
+                            </div>
+
+                            <div class="section-title">Custom Filters</div>
+                            <button class="btn btn-outline btn-full" onclick="addCustomFilter()">
+                                <i class="fas fa-plus"></i> Add Custom Filter
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Center Panel - Report Canvas -->
+                    <div class="report-canvas">
+                        <div class="canvas-header">
+                            <div class="canvas-title">
+                                <input type="text" placeholder="Report Title" class="title-input" value="Sales Forecasting Dashboard">
+                            </div>
+                            <div class="canvas-actions">
+                                <button class="btn btn-sm" onclick="previewReport()">
+                                    <i class="fas fa-eye"></i> Preview
+                                </button>
+                                <button class="btn btn-sm" onclick="saveReport()">
+                                    <i class="fas fa-save"></i> Save
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="canvas-area" id="reportCanvas">
+                            <div class="drop-zone">
+                                <div class="drop-message">
+                                    <i class="fas fa-mouse-pointer"></i>
+                                    <h3>Drag components here to build your report</h3>
+                                    <p>Start by dragging data sources, widgets, or filters from the left panel</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Panel - Properties & AI Assistant -->
+                    <div class="properties-panel">
+                        <div class="panel-tabs">
+                            <button class="tab-btn active" onclick="showPropertiesTab('properties')">
+                                <i class="fas fa-cog"></i> Properties
+                            </button>
+                            <button class="tab-btn" onclick="showPropertiesTab('ai')">
+                                <i class="fas fa-robot"></i> AI Assistant
+                            </button>
+                        </div>
+
+                        <!-- Properties Tab -->
+                        <div class="tab-content active" id="propertiesTab">
+                            <div class="properties-content">
+                                <div class="no-selection">
+                                    <i class="fas fa-mouse-pointer"></i>
+                                    <p>Select a component to edit its properties</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- AI Assistant Tab -->
+                        <div class="tab-content" id="aiTab">
+                            <div class="ai-assistant">
+                                <div class="ai-header">
+                                    <i class="fas fa-robot"></i>
+                                    <span>AI Assistant</span>
+                                </div>
+                                <div class="ai-suggestions">
+                                    <div class="suggestion-card" onclick="applySuggestion('returning-customers-top-items')">
+                                        <i class="fas fa-sync-alt"></i>
+                                        <div class="suggestion-content">
+                                            <h4>Returning Customers' Top Items</h4>
+                                            <p>Combine customers and items data to find popular items among repeat customers</p>
+                                        </div>
+                                    </div>
+                                    <div class="suggestion-card" onclick="applySuggestion('customer-lifetime-value')">
+                                        <i class="fas fa-chart-line"></i>
+                                        <div class="suggestion-content">
+                                            <h4>Customer Lifetime Value Analysis</h4>
+                                            <p>Group customers by purchase patterns and calculate CLV metrics</p>
+                                        </div>
+                                    </div>
+                                    <div class="suggestion-card" onclick="applySuggestion('payment-method-trends')">
+                                        <i class="fas fa-credit-card"></i>
+                                        <div class="suggestion-content">
+                                            <h4>Payment Method Trends</h4>
+                                            <p>Analyze payment preferences grouped by customer segments and time periods</p>
+                                        </div>
+                                    </div>
+                                    <div class="suggestion-card" onclick="applySuggestion('item-performance-by-location')">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <div class="suggestion-content">
+                                            <h4>Item Performance by Location</h4>
+                                            <p>Cross-analyze items and orders data to identify location-specific trends</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ai-chat">
+                                    <div class="chat-input">
+                                        <input type="text" placeholder="Ask AI to help build your report..." id="aiInput">
+                                        <button onclick="sendAIMessage()">
+                                            <i class="fas fa-paper-plane"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Data Insights Modal -->
+        <div class="modal" id="dataInsightsModal">
+            <div class="modal-content large">
+                <div class="modal-header">
+                    <h2><i class="fas fa-lightbulb"></i> Data Insights</h2>
+                    <button class="close-btn" onclick="closeModal('dataInsightsModal')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="insights-container">
+                        <div class="insight-card">
+                            <div class="insight-icon">
+                                <i class="fas fa-trending-up"></i>
+                            </div>
+                            <div class="insight-content">
+                                <h3>Revenue Growth Trend</h3>
+                                <p>Your revenue has increased by 23% over the last quarter, with the strongest growth in the Electronics category.</p>
+                                <div class="insight-actions">
+                                    <button class="btn btn-sm" onclick="addInsightToReport('revenue-trend')">
+                                        <i class="fas fa-plus"></i> Add to Report
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="insight-card">
+                            <div class="insight-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="insight-content">
+                                <h3>Customer Behavior Pattern</h3>
+                                <p>Peak ordering times are between 2-4 PM on weekdays. Consider targeted promotions during these hours.</p>
+                                <div class="insight-actions">
+                                    <button class="btn btn-sm" onclick="addInsightToReport('customer-pattern')">
+                                        <i class="fas fa-plus"></i> Add to Report
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="insight-card">
+                            <div class="insight-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="insight-content">
+                                <h3>Inventory Alert</h3>
+                                <p>3 items are running low on stock and may need reordering within the next week based on current sales velocity.</p>
+                                <div class="insight-actions">
+                                    <button class="btn btn-sm" onclick="addInsightToReport('inventory-alert')">
+                                        <i class="fas fa-plus"></i> Add to Report
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="insight-card">
+                            <div class="insight-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="insight-content">
+                                <h3>Sales Forecast</h3>
+                                <p>Based on historical data, next month's sales are projected to reach $125,000 with 95% confidence.</p>
+                                <div class="insight-actions">
+                                    <button class="btn btn-sm" onclick="addInsightToReport('sales-forecast')">
+                                        <i class="fas fa-plus"></i> Add to Report
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-content">
+                <div class="loading-spinner"></div>
+                <h3>AI is analyzing your data...</h3>
+                <p>This may take a few moments</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="ai-builder-script.js"></script>
+</body>
+</html>

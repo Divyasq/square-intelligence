@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Reports - Financial Suite</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-arrow-left"></i>
+                <span>Financial Suite</span>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                    <li><a href="#"><i class="fas fa-shopping-cart"></i> Order Hub</a></li>
+                    <li class="active"><a href="#"><i class="fas fa-chart-bar"></i> Custom Reports</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="content-header">
+                <div class="header-left">
+                    <h1>Custom Reports</h1>
+                    <p>Create and manage your custom analytics reports</p>
+                </div>
+                <div class="header-right">
+                    <button class="btn btn-primary" id="createReportBtn">
+                        <i class="fas fa-plus"></i> Create Report
+                    </button>
+                </div>
+            </header>
+
+            <div class="content-body">
+                <!-- Search and Filters -->
+                <div class="controls">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search reports...">
+                    </div>
+                    <div class="filter-dropdown">
+                        <select>
+                            <option>All Status</option>
+                            <option>Active</option>
+                            <option>Draft</option>
+                            <option>Inactive</option>
+                        </select>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="report-count">
+                        4 of 4 reports
+                    </div>
+                </div>
+
+                <!-- Reports Table -->
+                <div class="table-container">
+                    <table class="reports-table">
+                        <thead>
+                            <tr>
+                                <th>REPORT</th>
+                                <th>TYPE</th>
+                                <th>STATUS</th>
+                                <th>CREATED BY</th>
+                                <th>LAST MODIFIED</th>
+                                <th>LAST RUN</th>
+                                <th>ACTIONS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="report-info">
+                                        <i class="fas fa-chart-line report-icon"></i>
+                                        <div>
+                                            <div class="report-name">
+                                                Weekly Performance Dashboard
+                                                <span class="shared-badge">Shared</span>
+                                                <span class="ai-badge">AI Assisted</span>
+                                            </div>
+                                            <div class="report-description">Comprehensive weekly sales and performance metrics</div>
+                                            <div class="report-meta">4 metrics • 3 filters</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="type-badge dashboard">Dashboard</span></td>
+                                <td><span class="status-badge active">Active</span></td>
+                                <td>
+                                    <div class="user-info">
+                                        <i class="fas fa-user-circle"></i>
+                                        <span>John Doe</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="date-info">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>2025-01-20</span>
+                                    </div>
+                                </td>
+                                <td>2 hours ago</td>
+                                <td>
+                                    <div class="actions">
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="action-btn"><i class="fas fa-ellipsis-h"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="report-info">
+                                        <i class="fas fa-filter report-icon"></i>
+                                        <div>
+                                            <div class="report-name">
+                                                Product Category Analysis
+                                                <span class="ai-badge">AI Assisted</span>
+                                            </div>
+                                            <div class="report-description">Deep dive into product category performance</div>
+                                            <div class="report-meta">3 metrics • 5 filters</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="type-badge table">Table</span></td>
+                                <td><span class="status-badge active">Active</span></td>
+                                <td>
+                                    <div class="user-info">
+                                        <i class="fas fa-user-circle"></i>
+                                        <span>Jane Smith</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="date-info">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>2025-01-18</span>
+                                    </div>
+                                </td>
+                                <td>1 day ago</td>
+                                <td>
+                                    <div class="actions">
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="action-btn"><i class="fas fa-ellipsis-h"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="report-info">
+                                        <i class="fas fa-chart-line report-icon"></i>
+                                        <div>
+                                            <div class="report-name">Customer Behavior Trends</div>
+                                            <div class="report-description">Analysis of customer purchasing patterns</div>
+                                            <div class="report-meta">3 metrics • 2 filters</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="type-badge chart">Chart</span></td>
+                                <td><span class="status-badge draft">Draft</span></td>
+                                <td>
+                                    <div class="user-info">
+                                        <i class="fas fa-user-circle"></i>
+                                        <span>Mike Johnson</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="date-info">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>2025-01-25</span>
+                                    </div>
+                                </td>
+                                <td>Never</td>
+                                <td>
+                                    <div class="actions">
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="action-btn"><i class="fas fa-ellipsis-h"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="report-info">
+                                        <i class="fas fa-chart-line report-icon"></i>
+                                        <div>
+                                            <div class="report-name">
+                                                Monthly Revenue Breakdown
+                                                <span class="shared-badge">Shared</span>
+                                            </div>
+                                            <div class="report-description">Detailed monthly revenue analysis with comparisons</div>
+                                            <div class="report-meta">3 metrics • 4 filters</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="type-badge dashboard">Dashboard</span></td>
+                                <td><span class="status-badge active">Active</span></td>
+                                <td>
+                                    <div class="user-info">
+                                        <i class="fas fa-user-circle"></i>
+                                        <span>Sarah Wilson</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="date-info">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>2025-01-23</span>
+                                    </div>
+                                </td>
+                                <td>3 hours ago</td>
+                                <td>
+                                    <div class="actions">
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="action-btn"><i class="fas fa-ellipsis-h"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Create Report Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Create New Report</h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Choose a template to get started:</p>
+                <div class="template-grid">
+                    <div class="template-card" data-template="category">
+                        <div class="template-icon">
+                            <i class="fas fa-tags"></i>
+                        </div>
+                        <h3>Create Category Report</h3>
+                        <p>Analyze sales performance by product categories</p>
+                        <span class="ai-badge">AI Assisted</span>
+                    </div>
+                    <div class="template-card" data-template="item-sales">
+                        <div class="template-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <h3>Create Item Sales Report</h3>
+                        <p>Track individual item performance and trends</p>
+                        <span class="ai-badge">AI Assisted</span>
+                    </div>
+                    <div class="template-card" data-template="pmix">
+                        <div class="template-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h3>Create PMIX Report</h3>
+                        <p>Product mix analysis and optimization insights</p>
+                        <span class="ai-badge">AI Assisted</span>
+                    </div>
+                    <div class="template-card" data-template="weekly-sales">
+                        <div class="template-icon">
+                            <i class="fas fa-calendar-week"></i>
+                        </div>
+                        <h3>Create Weekly Sales Report</h3>
+                        <p>Weekly sales summary and performance metrics</p>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                    <button class="btn btn-primary" id="createFromTemplate" disabled>Create Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
