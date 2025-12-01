@@ -1,0 +1,12 @@
+Priority,Enhancement,Metrics Improved,Dimensions Added,Business Value,Technical Effort,Timeline
+P1 - CRITICAL,Add order_name to Orders cube,All Orders metrics (16 measures),Order Name dimension,Universal order identification,Medium,2-4 weeks
+P1 - CRITICAL,Add customer_name lookup to Orders,All Orders metrics,Readable customer names,Report readability,Low,1 week
+P1 - CRITICAL,Add employee_name lookup to Orders,All Orders metrics,Readable employee names,Report readability,Low,1 week
+P2 - HIGH,Create Sections cube + relationships,All transactional metrics,Section/Department analysis,Departmental reporting,High,6-8 weeks
+P2 - HIGH,Enhance ItemTransactions with joins,All ItemTransactions metrics (22 measures),"Device, Employee, Customer Type",Complete product analysis,Medium,3-4 weeks
+P2 - HIGH,Pre-calculate customer visit frequency,All customer-related metrics,Visit frequency dimension,Customer behavior insights,Medium,2-3 weeks
+P3 - MEDIUM,Add device context to item metrics,"ItemTransactions, ModifiersTransacted","Device, Device Nickname",Device performance by product,Medium,3-4 weeks
+P3 - MEDIUM,Add customer context to payment metrics,PaymentAndRefunds metrics,"Customer, Customer Type",Payment behavior analysis,Medium,2-3 weeks
+P3 - MEDIUM,Add channel context to all cubes,All transactional metrics,Channel consistency,Omnichannel analysis,Medium,4-5 weeks
+P4 - LOW,Add device context to fees,Fees metrics,Device information,Device cost analysis,Low,1-2 weeks
+P4 - LOW,Enhanced void analysis,Voids metrics,"Device, Channel context",Complete operational analysis,Low,2 weeks

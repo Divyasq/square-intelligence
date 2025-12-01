@@ -1,0 +1,8 @@
+Enhancement,Metrics Improved,Business Value,Technical Complexity,Priority,Timeline,Implementation Notes
+Add Employee context to ItemTransactions,All item metrics (22 measures),"Staff performance on item sales, upselling tracking",Medium,HIGH,3-4 weeks,Join ItemTransactions to Orders on order_id to get team_member_collected
+Add Customer Type to ItemTransactions,All item metrics,"Customer segment preferences, targeted marketing",Medium,HIGH,3-4 weeks,Join ItemTransactions to CustomerSnapshots via order_id
+Add Device context to ItemTransactions,All item metrics,"Device performance by product, POS optimization",Medium,MEDIUM,4-5 weeks,Join ItemTransactions to PaymentAndRefunds via order_id
+Add Order Completion time to ItemTransactions,All item metrics,Item fulfillment time analysis,Low,MEDIUM,1-2 weeks,Join to Orders cube for sale_timestamp
+Add Section/Department to ItemTransactions,All item metrics,Departmental item performance,High,HIGH,6-8 weeks,Requires new Sections cube + business logic
+Add Customer Visit Frequency to item analysis,All item metrics,Item preferences by customer loyalty,Medium,MEDIUM,2-3 weeks,Calculate from customer order history
+Add Order Name to ItemTransactions,All item metrics,Named order identification in item reports,Medium,LOW,2-3 weeks,Requires order_name field in Orders cube first

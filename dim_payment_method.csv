@@ -1,0 +1,13 @@
+payment_method_sk,payment_method_id,payment_method_name,payment_type,card_brand,processing_fee_rate,is_contactless,is_online_capable,is_active
+1,PAY_001,Visa Credit Card,CARD,Visa,0.029,TRUE,TRUE,TRUE
+2,PAY_002,Mastercard Credit Card,CARD,Mastercard,0.029,TRUE,TRUE,TRUE
+3,PAY_003,American Express,CARD,Amex,0.035,TRUE,TRUE,TRUE
+4,PAY_004,Discover Card,CARD,Discover,0.029,TRUE,TRUE,TRUE
+5,PAY_005,Cash,CASH,,0.000,FALSE,FALSE,TRUE
+6,PAY_006,Apple Pay,DIGITAL_WALLET,Various,0.025,TRUE,TRUE,TRUE
+7,PAY_007,Google Pay,DIGITAL_WALLET,Various,0.025,TRUE,TRUE,TRUE
+8,PAY_008,Samsung Pay,DIGITAL_WALLET,Various,0.025,TRUE,TRUE,TRUE
+9,PAY_009,Gift Card,GIFT_CARD,,0.000,FALSE,TRUE,TRUE
+10,PAY_010,Visa Debit Card,CARD,Visa,0.022,TRUE,TRUE,TRUE
+11,PAY_011,Mastercard Debit Card,CARD,Mastercard,0.022,TRUE,TRUE,TRUE
+12,PAY_012,PayPal,DIGITAL_WALLET,,0.030,FALSE,TRUE,TRUE

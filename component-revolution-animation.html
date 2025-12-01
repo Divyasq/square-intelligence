@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Component Revolution - One Update, Multiple Places</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
+            color: #2c3e50;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 200px;
+            background: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            overflow-y: auto;
+        }
+
+        .sidebar h3 {
+            padding: 15px 20px 10px;
+            color: #ecf0f1;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            padding: 8px 20px;
+            color: #bdc3c7;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 13px;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar li:hover {
+            background: #34495e;
+            color: #ffffff;
+        }
+
+        .sidebar li.active {
+            background: #3498db;
+            color: #ffffff;
+            border-left-color: #2980b9;
+        }
+
+        .sidebar li.updating {
+            background: #e67e22;
+            color: #ffffff;
+            border-left-color: #d35400;
+            animation: pulse-orange 1s infinite;
+        }
+
+        @keyframes pulse-orange {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-bar {
+            background: white;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e1e8ed;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .update-badge {
+            background: #e74c3c;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s;
+        }
+
+        .update-badge.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .update-badge.complete {
+            background: #27ae60;
+        }
+
+        .dashboard-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 20px;
+            padding: 20px;
+            overflow: auto;
+        }
+
+        .widget {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .widget.updating {
+            border: 2px solid #f39c12;
+            background: #fff8e1;
+            transform: scale(1.02);
+            box-shadow: 0 4px 16px rgba(243, 156, 18, 0.3);
+        }
+
+        .widget.updated {
+            border: 2px solid #27ae60;
+            background: #f1f8e9;
+            animation: pulse-success 0.8s ease;
+        }
+
+        @keyframes pulse-success {
+            0% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(39, 174, 96, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0); }
+        }
+
+        .widget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .widget-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .widget-type {
+            font-size: 11px;
+            color: #7f8c8d;
+            background: #ecf0f1;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
+        .chart-container {
+            height: 150px;
+            display: flex;
+            align-items: end;
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .bar {
+            background: #3498db;
+            border-radius: 2px 2px 0 0;
+            min-width: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .bar.updating {
+            background: #f39c12;
+            animation: bar-update 1s ease-in-out;
+        }
+
+        .bar.updated {
+            background: #27ae60;
+        }
+
+        @keyframes bar-update {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(1.1); }
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .metric-item {
+            text-align: center;
+            padding: 10px;
+            border-radius: 6px;
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+
+        .metric-item.updating {
+            background: #fff3cd;
+            border: 1px solid #f39c12;
+        }
+
+        .metric-item.updated {
+            background: #d4edda;
+            border: 1px solid #27ae60;
+        }
+
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+
+        .table-container {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        .data-table th {
+            background: #f8f9fa;
+            padding: 8px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .data-table td {
+            padding: 6px 8px;
+            border-bottom: 1px solid #f1f3f4;
+        }
+
+        .data-table tr.updating {
+            background: #fff3cd;
+        }
+
+        .data-table tr.updated {
+            background: #d4edda;
+        }
+
+        .component-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #95a5a6;
+            transition: all 0.3s;
+        }
+
+        .component-indicator.shared {
+            background: #3498db;
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+        }
+
+        .component-indicator.updating {
+            background: #f39c12;
+            animation: indicator-pulse 1s infinite;
+        }
+
+        .component-indicator.updated {
+            background: #27ae60;
+        }
+
+        @keyframes indicator-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        .progress-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 14px;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .progress-spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #ffffff30;
+            border-top: 2px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+
+
+        .code-flow {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.9);
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 12px;
+            max-width: 300px;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.5s ease;
+        }
+
+        .code-flow.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .code-line {
+            margin: 2px 0;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .typing-effect {
+            border-right: 1px solid #00ff00;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { border-right-color: #00ff00; }
+            51%, 100% { border-right-color: transparent; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h3>Reports</h3>
+            <ul id="reports-nav">
+                <li data-report="items" class="active">Item Sales</li>
+                <li data-report="discounts">Discounts</li>
+                <li data-report="performance">Performance</li>
+                <li data-report="locations">Locations</li>
+                <li data-report="categories">Categories</li>
+                <li data-report="trends">Orders</li>
+            </ul>
+            <h3>Components</h3>
+            <ul>
+                <li style="color: #3498db;">📊 Chart Widget</li>
+                <li style="color: #3498db;">📈 Metric Widget</li>
+                <li style="color: #3498db;">📋 Data Table</li>
+                <li style="color: #3498db;">🗓️ Date Filter</li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <div class="header-bar">
+                <div class="header-title" id="page-title">Item Sales Report</div>
+                <div class="update-badge" id="update-badge">Updating Components...</div>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Chart Widget -->
+                <div class="widget" id="chart-widget">
+                    <div class="component-indicator shared" id="chart-indicator"></div>
+                    <div class="widget-header">
+                        <div class="widget-title">Sales by Item</div>
+                        <div class="widget-type">Chart Component</div>
+                    </div>
+                    <div class="chart-container" id="chart-bars">
+                        <div class="bar" style="height: 120px;"></div>
+                        <div class="bar" style="height: 80px;"></div>
+                        <div class="bar" style="height: 60px;"></div>
+                        <div class="bar" style="height: 45px;"></div>
+                        <div class="bar" style="height: 35px;"></div>
+                        <div class="bar" style="height: 30px;"></div>
+                        <div class="bar" style="height: 25px;"></div>
+                        <div class="bar" style="height: 20px;"></div>
+                    </div>
+                    <div style="font-size: 12px; color: #7f8c8d;">Invoice Item, Massage, Online Site Item...</div>
+                </div>
+
+                <!-- Metrics Widget -->
+                <div class="widget" id="metrics-widget">
+                    <div class="component-indicator shared" id="metrics-indicator"></div>
+                    <div class="widget-header">
+                        <div class="widget-title">Key Metrics</div>
+                        <div class="widget-type">Metrics Component</div>
+                    </div>
+                    <div class="metric-grid">
+                        <div class="metric-item" id="metric-1">
+                            <div class="metric-value">$18.2K</div>
+                            <div class="metric-label">Gross Sales</div>
+                        </div>
+                        <div class="metric-item" id="metric-2">
+                            <div class="metric-value">247</div>
+                            <div class="metric-label">Transactions</div>
+                        </div>
+                        <div class="metric-item" id="metric-3">
+                            <div class="metric-value">$73.75</div>
+                            <div class="metric-label">Avg Sale</div>
+                        </div>
+                        <div class="metric-item" id="metric-4">
+                            <div class="metric-value">15.2%</div>
+                            <div class="metric-label">Growth</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Table Widget -->
+                <div class="widget" id="table-widget">
+                    <div class="component-indicator shared" id="table-indicator"></div>
+                    <div class="widget-header">
+                        <div class="widget-title">Detailed Data</div>
+                        <div class="widget-type">Table Component</div>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Sales</th>
+                                    <th>Qty</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body">
+                                <tr>
+                                    <td>Invoice Item</td>
+                                    <td>$18,200</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td>Massage</td>
+                                    <td>$3,000</td>
+                                    <td>11</td>
+                                </tr>
+                                <tr>
+                                    <td>Online Site Item</td>
+                                    <td>$2,700</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td>Chicken Fajita Plate</td>
+                                    <td>$968</td>
+                                    <td>47</td>
+                                </tr>
+                                <tr>
+                                    <td>Chicken Sandwich</td>
+                                    <td>$802</td>
+                                    <td>44</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Performance Widget -->
+                <div class="widget" id="performance-widget">
+                    <div class="component-indicator shared" id="performance-indicator"></div>
+                    <div class="widget-header">
+                        <div class="widget-title">Performance Overview</div>
+                        <div class="widget-type">Mixed Components</div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <div>
+                            <div class="metric-value" style="font-size: 20px;">$18,200</div>
+                            <div class="metric-label">Net Sales</div>
+                        </div>
+                        <div style="font-size: 12px; color: #27ae60;">↗ +15.2%</div>
+                    </div>
+                    <div style="height: 60px; background: linear-gradient(90deg, #3498db 0%, #2ecc71 100%); border-radius: 4px; position: relative;">
+                        <div style="position: absolute; bottom: 5px; left: 10px; font-size: 10px; color: white;">Today vs Yesterday</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-indicator" id="progress">
+        <div class="progress-spinner"></div>
+        <span id="progress-text">Ready to demonstrate component revolution...</span>
+    </div>
+
+    <div class="code-flow" id="code-flow">
+        <div class="code-line">// Framework Update Detected</div>
+        <div class="code-line">updateReportingFramework() {</div>
+        <div class="code-line">&nbsp;&nbsp;// Schema-driven widgets</div>
+        <div class="code-line">&nbsp;&nbsp;chartWidget.readSchema()</div>
+        <div class="code-line">&nbsp;&nbsp;metricsWidget.readSchema()</div>
+        <div class="code-line">&nbsp;&nbsp;tableWidget.readSchema()</div>
+        <div class="code-line">&nbsp;&nbsp;// Works across groupings:</div>
+        <div class="code-line">&nbsp;&nbsp;// - Items grouped by item</div>
+        <div class="code-line">&nbsp;&nbsp;// - Discounts grouped by discount</div>
+        <div class="code-line">&nbsp;&nbsp;// - Orders grouped by order</div>
+        <div class="code-line">}</div>
+        <div class="code-line typing-effect">// ✅ All reports updated!</div>
+    </div>
+
+    <script>
+        let isAnimating = false;
+        let currentReport = 'items';
+
+        const reports = [
+            { id: 'items', name: 'Item Sales Report', groupBy: 'item', widgets: ['chart', 'metrics', 'table', 'performance'] },
+            { id: 'discounts', name: 'Discounts Report', groupBy: 'discount', widgets: ['chart', 'metrics', 'table'] },
+            { id: 'performance', name: 'Performance Dashboard', groupBy: 'time', widgets: ['metrics', 'performance'] },
+            { id: 'locations', name: 'Locations Report', groupBy: 'location', widgets: ['chart', 'table', 'performance'] },
+            { id: 'categories', name: 'Categories Report', groupBy: 'category', widgets: ['chart', 'metrics', 'table'] },
+            { id: 'trends', name: 'Orders Report', groupBy: 'order', widgets: ['chart', 'metrics', 'performance'] }
+        ];
+
+        const widgetMap = {
+            'chart': 'chart-widget',
+            'metrics': 'metrics-widget', 
+            'table': 'table-widget',
+            'performance': 'performance-widget'
+        };
+
+        function updateProgress(message, showSpinner = true) {
+            document.getElementById('progress-text').textContent = message;
+            document.querySelector('.progress-spinner').style.display = showSpinner ? 'block' : 'none';
+        }
+
+        function showUpdateBadge(text, complete = false) {
+            const badge = document.getElementById('update-badge');
+            badge.textContent = text;
+            badge.className = 'update-badge show' + (complete ? ' complete' : '');
+        }
+
+        function hideUpdateBadge() {
+            document.getElementById('update-badge').className = 'update-badge';
+        }
+
+        async function animateWidgetUpdate(widgetId, delay = 0) {
+            await new Promise(resolve => setTimeout(resolve, delay));
+            
+            const widget = document.getElementById(widgetId);
+            const indicator = document.getElementById(widgetId.replace('-widget', '-indicator'));
+            
+            // Start updating
+            widget.classList.add('updating');
+            indicator.classList.add('updating');
+            
+            // Update specific widget content
+            if (widgetId === 'chart-widget') {
+                const bars = document.querySelectorAll('.bar');
+                bars.forEach((bar, index) => {
+                    setTimeout(() => bar.classList.add('updating'), index * 100);
+                });
+            } else if (widgetId === 'metrics-widget') {
+                const metrics = document.querySelectorAll('.metric-item');
+                metrics.forEach((metric, index) => {
+                    setTimeout(() => metric.classList.add('updating'), index * 150);
+                });
+            } else if (widgetId === 'table-widget') {
+                const rows = document.querySelectorAll('#table-body tr');
+                rows.forEach((row, index) => {
+                    setTimeout(() => row.classList.add('updating'), index * 100);
+                });
+            }
+            
+            // Wait for animation
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            
+            // Complete update
+            widget.classList.remove('updating');
+            widget.classList.add('updated');
+            indicator.classList.remove('updating');
+            indicator.classList.add('updated');
+            
+            // Clean up specific elements
+            setTimeout(() => {
+                document.querySelectorAll('.updating').forEach(el => {
+                    el.classList.remove('updating');
+                    el.classList.add('updated');
+                });
+            }, 200);
+            
+            // Reset after delay
+            setTimeout(() => {
+                widget.classList.remove('updated');
+                indicator.classList.remove('updated');
+                document.querySelectorAll('.updated').forEach(el => {
+                    el.classList.remove('updated');
+                });
+            }, 1000);
+        }
+
+        async function simulateComponentUpdate() {
+            if (isAnimating) return;
+            isAnimating = true;
+            
+            updateProgress('Detecting component change...', true);
+            showUpdateBadge('Analyzing shared components...');
+            
+            // Show code flow
+            document.getElementById('code-flow').classList.add('show');
+            
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            updateProgress('Propagating update to all widgets...', true);
+            showUpdateBadge('Updating 4 widgets simultaneously...');
+            
+            // Get current report's widgets
+            const report = reports.find(r => r.id === currentReport);
+            const activeWidgets = report.widgets.map(w => widgetMap[w]).filter(id => document.getElementById(id));
+            
+            // Animate all widgets simultaneously
+            const animations = activeWidgets.map((widgetId, index) => 
+                animateWidgetUpdate(widgetId, index * 200)
+            );
+            
+            await Promise.all(animations);
+            
+            updateProgress('All components updated successfully!', false);
+            showUpdateBadge('✅ Update Complete', true);
+            
+            // Hide code flow and complete
+            setTimeout(() => {
+                document.getElementById('code-flow').classList.remove('show');
+                hideUpdateBadge();
+                updateProgress(`Framework updated across ${activeWidgets.length} widgets! Click any report to see schema-driven components.`, false);
+                isAnimating = false;
+            }, 2000);
+        }
+
+        function switchReport(reportId) {
+            if (isAnimating) return;
+            
+            currentReport = reportId;
+            const report = reports.find(r => r.id === reportId);
+            
+            // Update sidebar
+            document.querySelectorAll('.sidebar li[data-report]').forEach(li => {
+                li.classList.remove('active');
+            });
+            document.querySelector(`[data-report="${reportId}"]`).classList.add('active');
+            
+            // Update title
+            document.getElementById('page-title').textContent = report.name;
+            
+            // Show/hide widgets based on report
+            Object.values(widgetMap).forEach(widgetId => {
+                const widget = document.getElementById(widgetId);
+                if (widget) {
+                    const widgetType = widgetId.replace('-widget', '');
+                    if (report.widgets.includes(widgetType)) {
+                        widget.style.display = 'block';
+                    } else {
+                        widget.style.display = 'none';
+                    }
+                }
+            });
+            
+            // Trigger component update after short delay
+            setTimeout(simulateComponentUpdate, 800);
+        }
+
+        // Add click handlers
+        document.querySelectorAll('.sidebar li[data-report]').forEach(li => {
+            li.addEventListener('click', (e) => {
+                const reportId = e.target.dataset.report;
+                switchReport(reportId);
+            });
+        });
+
+        // Auto-start demo
+        setTimeout(() => {
+            updateProgress('Component architecture ready. Click any report!', false);
+        }, 1000);
+
+        // Auto-cycle through reports for demo
+        let autoDemo = true;
+        setTimeout(() => {
+            if (autoDemo) {
+                simulateComponentUpdate();
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

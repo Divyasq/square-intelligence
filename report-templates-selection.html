@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Report - Template Selection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .template-card {
+            transition: all 0.3s ease;
+            border: 2px solid #e5e7eb;
+        }
+        .template-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border-color: #3b82f6;
+        }
+        .template-selected {
+            border-color: #3b82f6 !important;
+            background-color: #eff6ff !important;
+        }
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .grain-pattern {
+            background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.15) 1px, transparent 0);
+            background-size: 20px 20px;
+        }
+        .preview-chart {
+            background: linear-gradient(45deg, #f3f4f6 25%, transparent 25%), 
+                        linear-gradient(-45deg, #f3f4f6 25%, transparent 25%), 
+                        linear-gradient(45deg, transparent 75%, #f3f4f6 75%), 
+                        linear-gradient(-45deg, transparent 75%, #f3f4f6 75%);
+            background-size: 4px 4px;
+            background-position: 0 0, 0 2px, 2px -2px, -2px 0px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Modal Backdrop -->
+    <div class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4">
+        <!-- Modal Container -->
+        <div class="bg-white rounded-lg shadow-xl max-w-6xl w-full max-h-[90vh] overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between p-6 border-b border-gray-200">
+                <div>
+                    <h2 class="text-2xl font-semibold text-gray-900">Create a Report</h2>
+                    <p class="text-sm text-gray-600 mt-1">Choose a template to get started quickly, or build from scratch</p>
+                </div>
+                <button class="text-gray-400 hover:text-gray-600 transition-colors" onclick="closeModal()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Content -->
+            <div class="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
+                <!-- Quick Start Templates -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                        Quick Start Templates
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Best Sellers Template -->
+                        <div class="template-card p-6 rounded-lg cursor-pointer bg-white" data-template="best-sellers">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="p-2 bg-green-100 rounded-lg">
+                                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Popular</span>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-2">Best Selling Items</h4>
+                            <p class="text-sm text-gray-600 mb-4">Track your top-performing products by quantity sold and revenue generated</p>
+                            <div class="preview-chart h-20 rounded mb-4 flex items-center justify-center">
+                                <div class="flex space-x-1">
+                                    <div class="w-4 bg-green-400 rounded-t" style="height: 60px;"></div>
+                                    <div class="w-4 bg-green-300 rounded-t" style="height: 45px;"></div>
+                                    <div class="w-4 bg-green-200 rounded-t" style="height: 35px;"></div>
+                                    <div class="w-4 bg-green-100 rounded-t" style="height: 25px;"></div>
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap gap-1">
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Items</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Quantity</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Revenue</span>
+                            </div>
+                        </div>
+
+                        <!-- Sales Performance Template -->
+                        <div class="template-card p-6 rounded-lg cursor-pointer bg-white" data-template="sales-performance">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="p-2 bg-blue-100 rounded-lg">
+                                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">Trending</span>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-2">Sales Performance</h4>
+                            <p class="text-sm text-gray-600 mb-4">Monitor daily, weekly, and monthly sales trends with key performance indicators</p>
+                            <div class="preview-chart h-20 rounded mb-4 flex items-center justify-center">
+                                <svg class="w-16 h-12" viewBox="0 0 64 48">
+                                    <polyline fill="none" stroke="#3b82f6" stroke-width="2" points="0,40 16,30 32,35 48,20 64,25"/>
+                                    <circle cx="16" cy="30" r="2" fill="#3b82f6"/>
+                                    <circle cx="32" cy="35" r="2" fill="#3b82f6"/>
+                                    <circle cx="48" cy="20" r="2" fill="#3b82f6"/>
+                                </svg>
+                            </div>
+                            <div class="flex flex-wrap gap-1">
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Orders</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Revenue</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Trends</span>
+                            </div>
+                        </div>
+
+                        <!-- Customer Analysis Template -->
+                        <div class="template-card p-6 rounded-lg cursor-pointer bg-white" data-template="customer-analysis">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="p-2 bg-purple-100 rounded-lg">
+                                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded-full">Insights</span>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-2">Customer Analysis</h4>
+                            <p class="text-sm text-gray-600 mb-4">Understand customer behavior, repeat purchases, and demographic patterns</p>
+                            <div class="preview-chart h-20 rounded mb-4 flex items-center justify-center">
+                                <div class="w-16 h-16 rounded-full border-4 border-purple-200 flex items-center justify-center relative">
+                                    <div class="absolute inset-0 rounded-full border-4 border-purple-400" style="clip-path: polygon(0 0, 75% 0, 75% 100%, 0 100%);"></div>
+                                    <span class="text-xs font-semibold text-purple-600">75%</span>
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap gap-1">
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Customers</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Retention</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Demographics</span>
+                            </div>
+                        </div>
+
+                        <!-- Inventory Overview Template -->
+                        <div class="template-card p-6 rounded-lg cursor-pointer bg-white" data-template="inventory-overview">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="p-2 bg-orange-100 rounded-lg">
+                                    <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full">Essential</span>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-2">Inventory Overview</h4>
+                            <p class="text-sm text-gray-600 mb-4">Track stock levels, low inventory alerts, and product turnover rates</p>
+                            <div class="preview-chart h-20 rounded mb-4 flex items-center justify-center space-x-2">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-8 h-12 bg-orange-400 rounded-t mb-1"></div>
+                                    <div class="text-xs text-gray-500">High</div>
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <div class="w-8 h-8 bg-orange-300 rounded-t mb-1"></div>
+                                    <div class="text-xs text-gray-500">Med</div>
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <div class="w-8 h-4 bg-red-400 rounded-t mb-1"></div>
+                                    <div class="text-xs text-gray-500">Low</div>
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap gap-1">
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Stock</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Turnover</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Alerts</span>
+                            </div>
+                        </div>
+
+                        <!-- Payment Methods Template -->
+                        <div class="template-card p-6 rounded-lg cursor-pointer bg-white" data-template="payment-methods">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="p-2 bg-indigo-100 rounded-lg">
+                                    <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full">Financial</span>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-2">Payment Methods</h4>
+                            <p class="text-sm text-gray-600 mb-4">Analyze payment preferences, transaction fees, and processing times</p>
+                            <div class="preview-chart h-20 rounded mb-4 flex items-center justify-center">
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div class="w-8 h-8 bg-indigo-400 rounded"></div>
+                                    <div class="w-8 h-8 bg-indigo-300 rounded"></div>
+                                    <div class="w-8 h-8 bg-indigo-200 rounded"></div>
+                                    <div class="w-8 h-8 bg-indigo-100 rounded"></div>
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap gap-1">
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Payments</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Fees</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Methods</span>
+                            </div>
+                        </div>
+
+                        <!-- Discount Effectiveness Template -->
+                        <div class="template-card p-6 rounded-lg cursor-pointer bg-white" data-template="discount-effectiveness">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="p-2 bg-yellow-100 rounded-lg">
+                                    <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">ROI</span>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-2">Discount Effectiveness</h4>
+                            <p class="text-sm text-gray-600 mb-4">Measure the impact of discounts on sales volume and profit margins</p>
+                            <div class="preview-chart h-20 rounded mb-4 flex items-center justify-center">
+                                <div class="flex items-end space-x-1">
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-6 h-8 bg-yellow-400 rounded-t"></div>
+                                        <div class="w-6 h-4 bg-yellow-200 rounded-b"></div>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-6 h-12 bg-yellow-400 rounded-t"></div>
+                                        <div class="w-6 h-6 bg-yellow-200 rounded-b"></div>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-6 h-6 bg-yellow-400 rounded-t"></div>
+                                        <div class="w-6 h-3 bg-yellow-200 rounded-b"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap gap-1">
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Discounts</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Impact</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Margins</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom Options -->
+                <div class="border-t border-gray-200 pt-8">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
+                        </svg>
+                        Custom Options
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Build from Scratch -->
+                        <div class="template-card p-6 rounded-lg cursor-pointer bg-white border-dashed" data-template="custom-build">
+                            <div class="text-center">
+                                <div class="p-3 bg-gray-100 rounded-lg inline-flex mb-4">
+                                    <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                                    </svg>
+                                </div>
+                                <h4 class="text-lg font-semibold text-gray-900 mb-2">Build from Scratch</h4>
+                                <p class="text-sm text-gray-600 mb-4">Start with a blank canvas and create a completely custom report</p>
+                                <button class="text-blue-600 text-sm font-medium hover:text-blue-700">Start Building →</button>
+                            </div>
+                        </div>
+
+                        <!-- Import Template -->
+                        <div class="template-card p-6 rounded-lg cursor-pointer bg-white border-dashed" data-template="import-template">
+                            <div class="text-center">
+                                <div class="p-3 bg-gray-100 rounded-lg inline-flex mb-4">
+                                    <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
+                                    </svg>
+                                </div>
+                                <h4 class="text-lg font-semibold text-gray-900 mb-2">Import Template</h4>
+                                <p class="text-sm text-gray-600 mb-4">Upload an existing report template or configuration file</p>
+                                <button class="text-blue-600 text-sm font-medium hover:text-blue-700">Choose File →</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="flex items-center justify-between p-6 border-t border-gray-200 bg-gray-50">
+                <div class="text-sm text-gray-600">
+                    <span id="selectedTemplate">No template selected</span>
+                </div>
+                <div class="flex space-x-3">
+                    <button class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors" onclick="closeModal()">
+                        Cancel
+                    </button>
+                    <button id="continueBtn" class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled onclick="continueWithTemplate()">
+                        Continue with Template
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedTemplate = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const templateCards = document.querySelectorAll('.template-card');
+            const selectedTemplateText = document.getElementById('selectedTemplate');
+            const continueBtn = document.getElementById('continueBtn');
+
+            templateCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Remove selection from all cards
+                    templateCards.forEach(c => c.classList.remove('template-selected'));
+                    
+                    // Add selection to clicked card
+                    this.classList.add('template-selected');
+                    
+                    // Update selected template
+                    selectedTemplate = this.dataset.template;
+                    const templateName = this.querySelector('h4').textContent;
+                    selectedTemplateText.textContent = `Selected: ${templateName}`;
+                    
+                    // Enable continue button
+                    continueBtn.disabled = false;
+                    
+                    // Add selection animation
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+        });
+
+        function closeModal() {
+            // In a real app, this would close the modal
+            console.log('Closing modal...');
+            alert('Modal would close here');
+        }
+
+        function continueWithTemplate() {
+            if (!selectedTemplate) return;
+            
+            console.log('Continuing with template:', selectedTemplate);
+            
+            // Show different actions based on template type
+            if (selectedTemplate === 'custom-build') {
+                alert('Redirecting to custom report builder...');
+            } else if (selectedTemplate === 'import-template') {
+                alert('Opening file picker...');
+            } else {
+                alert(`Creating report from template: ${selectedTemplate}`);
+            }
+        }
+
+        // Template data for future use
+        const templateConfigs = {
+            'best-sellers': {
+                name: 'Best Selling Items',
+                metrics: ['Item Name', 'Quantity', 'Gross Sales', 'Net Sales'],
+                groupBy: ['Item Name'],
+                sortBy: 'Quantity DESC',
+                chartType: 'bar'
+            },
+            'sales-performance': {
+                name: 'Sales Performance',
+                metrics: ['Orders', 'Gross Sales', 'Net Sales', 'Transaction Count'],
+                groupBy: ['Date'],
+                sortBy: 'Date ASC',
+                chartType: 'line'
+            },
+            'customer-analysis': {
+                name: 'Customer Analysis',
+                metrics: ['Customer Count', 'Repeat Customers', 'Average Order Value'],
+                groupBy: ['Customer Segment'],
+                sortBy: 'Customer Count DESC',
+                chartType: 'pie'
+            },
+            'inventory-overview': {
+                name: 'Inventory Overview',
+                metrics: ['Item Name', 'Stock Level', 'Turnover Rate'],
+                groupBy: ['Category'],
+                sortBy: 'Stock Level ASC',
+                chartType: 'bar'
+            },
+            'payment-methods': {
+                name: 'Payment Methods',
+                metrics: ['Payment Method', 'Transaction Count', 'Total Amount', 'Fees'],
+                groupBy: ['Payment Method'],
+                sortBy: 'Transaction Count DESC',
+                chartType: 'pie'
+            },
+            'discount-effectiveness': {
+                name: 'Discount Effectiveness',
+                metrics: ['Discount Type', 'Amount Discounted', 'Sales Impact', 'Margin Impact'],
+                groupBy: ['Discount Type'],
+                sortBy: 'Amount Discounted DESC',
+                chartType: 'bar'
+            }
+        };
+    </script>
+</body>
+</html>

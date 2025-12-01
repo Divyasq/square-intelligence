@@ -1,0 +1,9 @@
+Gap,Impact,Business Need,Recommendation,Priority
+No Employee context in discount metrics,Cannot track staff discount usage,Which employees use discounts most?,Add joins from ItemDiscountsAndComps to Orders cube,HIGH
+No Customer Type in discount metrics,Cannot analyze discount effectiveness by customer segment,Do discounts work better for new vs loyal customers?,Add joins from ItemDiscountsAndComps to CustomerSnapshots,HIGH
+No Comp Reason tracking,Cannot understand why comps are given,Why are items being comped?,Add comp_reason field to ItemDiscountsAndComps cube,MEDIUM
+No Item Name in discount cubes,Cannot see which items are discounted most,Which products get discounted most often?,Add joins from ItemDiscountsAndComps to ItemTransactions,HIGH
+No Device context in discount metrics,Cannot track discount usage by POS device,Which devices/locations use discounts most?,Add joins from ItemDiscountsAndComps to PaymentAndRefunds,MEDIUM
+No Section/Department concept,Cannot do departmental discount analysis,Discount usage by restaurant section?,Create Sections cube + add relationships,HIGH
+No Discount Categories/Types,Cannot group discounts by type,Percentage vs dollar discounts analysis?,Add discount_category field to ItemDiscountsAndComps,MEDIUM
+Limited Gift Card discount tracking,Cannot fully analyze gift card promotions,Gift card promotion effectiveness?,Enhance gift card discount tracking,LOW

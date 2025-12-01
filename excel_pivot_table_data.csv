@@ -1,0 +1,18 @@
+Customer_Segment,Category,Gross_Sales_Amount,Sales_Percentage,Customer_Count,Customer_Percentage,Transaction_Count,Average_Margin_Percent,Top_Item_1,Top_Item_1_Revenue,Top_Item_2,Top_Item_2_Revenue,Performance_Rating,Avg_Per_Customer
+VIP,Espresso,17.05,11.6,4,26.7,6,74.4,Cappuccino,10.20,Mocha,5.25,Underperform,7.17
+Inactive,Coffee Beans,15.95,10.8,1,6.7,1,59.5,Coffee Beans 1lb,15.95,,0.00,Excellent,24.90
+Regular,Espresso,15.15,10.3,4,26.7,5,71.2,Latte,9.50,Cappuccino,4.25,Underperform,8.14
+New,Ice Cream,12.95,8.8,1,6.7,1,65.9,Vanilla Ice Cream,12.95,,0.00,Excellent,14.45
+Regular,Cold Drinks,11.25,7.6,2,13.3,2,71.8,Frappuccino,7.50,Iced Coffee,3.75,Underperform,8.14
+New,Espresso,10.00,6.8,1,6.7,2,72.1,Mocha,5.25,Latte,4.75,Excellent,14.45
+Regular,Sandwiches,8.95,6.1,1,6.7,1,63.7,Club Sandwich,8.95,,0.00,Underperform,8.14
+Inactive,Sandwiches,8.95,6.1,1,6.7,1,63.7,Club Sandwich,8.95,,0.00,Excellent,24.90
+Regular,Pastries,7.75,5.3,2,13.3,2,67.7,Muffin,4.25,Croissant,3.50,Underperform,8.14
+Regular,Salads,7.50,5.1,1,6.7,1,63.3,Caesar Salad,7.50,,0.00,Underperform,8.14
+Regular,Brewed Coffee,7.00,4.7,2,13.3,2,75.7,Americano,7.00,,0.00,Underperform,8.14
+New,Cold Drinks,5.95,4.0,1,6.7,1,68.9,Frappuccino,5.95,,0.00,Excellent,14.45
+Regular,Mugs & Cups,4.25,2.9,1,6.7,1,59.2,Logo Mug,4.25,,0.00,Underperform,8.14
+VIP,Salads,3.95,2.7,1,6.7,1,63.3,Caesar Salad,3.95,,0.00,Underperform,7.17
+VIP,Pastries,3.95,2.7,1,6.7,1,68.3,Croissant,3.95,,0.00,Underperform,7.17
+VIP,Brewed Coffee,3.75,2.5,1,6.7,1,75.7,Americano,3.75,,0.00,Underperform,7.17
+Regular,Tea,3.25,2.2,1,6.7,1,76.9,Green Tea,3.25,,0.00,Underperform,8.14

@@ -1,0 +1,8 @@
+Metric Category,Available Metrics,Missing Metrics,Best Coverage,Typical Coverage,Average Coverage
+Discount Metrics,6/6 (100%),0/6,Order-level: 17%,Item-level: 13%,14%
+Dimension Categories,Direct Available,Via Joins Needed,Missing Completely,Enhancement Priority,Notes
+Core Discount Info,"Discount Name, Location, Order ID, Order Created","Employee, Customer Type, Device","Comp Reason, Discount Categories",HIGH,Basic discount context available
+Operational Context,Item Type (item-level only),"Employee, Device, Payment Method","Section, Manager, Dining Option",HIGH,Most operational context missing
+Product Details,None direct,Item Name via joins,"GTIN, Vendor Info, Menu, SKU",MEDIUM,Limited product context for discounts
+Customer Context,None direct,"Customer Name, Customer Type",Customer Visit Frequency,HIGH,All customer context requires joins
+Discount Specifics,"Discount Name, Item Type",Category via joins,"Comp Reason, Discount Rules",MEDIUM,Limited discount detail available

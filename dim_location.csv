@@ -1,0 +1,9 @@
+location_sk,location_id,location_name,location_type,address_line1,city,state,postal_code,country,phone_number,manager_name,square_footage,seating_capacity,drive_thru_flag,delivery_enabled,pickup_enabled,timezone,opening_time,closing_time,is_active
+1,LOC_SF_001,Downtown Cafe,RESTAURANT,123 Market Street,San Francisco,CA,94102,USA,415-555-0101,Sarah Johnson,1200,45,FALSE,TRUE,TRUE,America/Los_Angeles,06:00:00,22:00:00,TRUE
+2,LOC_SF_002,Union Square Coffee,RESTAURANT,456 Union Square,San Francisco,CA,94108,USA,415-555-0102,Mike Chen,800,30,FALSE,TRUE,TRUE,America/Los_Angeles,06:30:00,21:30:00,TRUE
+3,LOC_NY_001,Times Square Bistro,RESTAURANT,789 Broadway,New York,NY,10019,USA,212-555-0201,Lisa Rodriguez,1500,60,FALSE,TRUE,TRUE,America/New_York,06:00:00,23:00:00,TRUE
+4,LOC_NY_002,Brooklyn Heights Cafe,RESTAURANT,321 Montague St,Brooklyn,NY,11201,USA,718-555-0202,David Kim,1000,40,FALSE,TRUE,TRUE,America/New_York,07:00:00,22:00:00,TRUE
+5,LOC_TX_001,Austin Food Truck,FOOD_TRUCK,Mobile Unit 1,Austin,TX,78701,USA,512-555-0301,Carlos Martinez,200,0,FALSE,FALSE,TRUE,America/Chicago,11:00:00,21:00:00,TRUE
+6,LOC_TX_002,Dallas Drive-Thru,RESTAURANT,654 Main Street,Dallas,TX,75201,USA,214-555-0302,Jennifer Lee,900,25,TRUE,TRUE,TRUE,America/Chicago,06:00:00,22:00:00,TRUE
+7,LOC_FL_001,Miami Beach Retail,RETAIL,987 Ocean Drive,Miami Beach,FL,33139,USA,305-555-0401,Roberto Silva,600,20,FALSE,FALSE,TRUE,America/New_York,08:00:00,20:00:00,TRUE
+8,LOC_CA_003,LA Downtown,RESTAURANT,147 Spring Street,Los Angeles,CA,90012,USA,213-555-0103,Amanda Wong,1100,50,FALSE,TRUE,TRUE,America/Los_Angeles,06:30:00,22:30:00,TRUE

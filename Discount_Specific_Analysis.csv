@@ -1,0 +1,7 @@
+Analysis Type,Current Capability,Missing Capability,Business Impact,Enhancement Priority
+Discount Usage by Employee,Cannot track directly,Employee who applied discount,Cannot identify staff discount patterns,HIGH
+Discount Effectiveness by Customer Type,Cannot track directly,Customer segment analysis,Cannot optimize discounts for customer types,HIGH
+Item-specific Discount Analysis,Limited - only item type,"Specific item names, categories",Cannot see which products get discounted most,HIGH
+Comp Reason Tracking,Not available,Why comps are given,Cannot understand comp patterns,MEDIUM
+Discount Performance by Location Section,Location only,Section/department within location,Cannot optimize discounts by restaurant area,MEDIUM
+Gift Card Promotion Analysis,Basic amount tracking,Detailed gift card promotion metrics,Limited gift card marketing insights,LOW

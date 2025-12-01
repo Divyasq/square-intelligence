@@ -1,0 +1,6 @@
+Field Name,Data Type,Description,Business Purpose,Example Values,Required/Optional,Default Value,Validation Rules,Source System,Implementation Notes
+customer_visit_frequency,INTEGER,Pre-calculated customer visit count,Customer behavior analysis,"1, 5, 15, 50",Calculated,Calculated,Must be positive integer,System Calculated,Count of orders for this customer
+customer_segment,VARCHAR(50),Customer segment classification,Advanced customer segmentation,"""NEW"", ""REGULAR"", ""VIP"", ""INACTIVE""",Calculated,Calculated,Must be valid segment,System Calculated,Based on visit frequency and spend
+customer_lifetime_value,"DECIMAL(10,2)",Customer total spend to date,Customer value analysis,"150.75, 2500.00, 89.50",Calculated,Calculated,Must be non-negative,System Calculated,Sum of all customer orders
+days_since_last_visit,INTEGER,Days since previous order,Customer recency analysis,"0, 7, 30, 365",Calculated,Calculated,Must be non-negative,System Calculated,For retention analysis
+customer_tier,VARCHAR(20),Customer tier level,Loyalty program integration,"""BRONZE"", ""SILVER"", ""GOLD"", ""PLATINUM""",Optional,"""BRONZE""",Must be valid tier,Loyalty System,Integration with loyalty program

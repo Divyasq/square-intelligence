@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineer Updates Multiple Components - Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .dashboard {
+            display: flex;
+            min-height: 600px;
+        }
+
+        .sidebar {
+            width: 200px;
+            background: #ecf0f1;
+            padding: 20px;
+            border-right: 1px solid #ddd;
+        }
+
+        .sidebar h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            padding: 8px 0;
+            color: #7f8c8d;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .sidebar li.active {
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .panel {
+            flex: 1;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .panel h2 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .date-picker {
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .date-picker.updating {
+            border-color: #f39c12;
+            background: #fff3cd;
+            transform: scale(1.02);
+            box-shadow: 0 0 10px rgba(243, 156, 18, 0.3);
+        }
+
+        .date-picker.updated {
+            border-color: #27ae60;
+            background: #d4edda;
+            animation: pulse-green 0.5s ease;
+        }
+
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(39, 174, 96, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0); }
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin: 15px 0;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .calendar.updating {
+            opacity: 1;
+            animation: highlight 1s ease-in-out;
+        }
+
+        @keyframes highlight {
+            0%, 100% { background: transparent; }
+            50% { background: rgba(52, 152, 219, 0.1); }
+        }
+
+        .calendar-day {
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #eee;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .calendar-day.selected {
+            background: #3498db;
+            color: white;
+        }
+
+        .filter-section {
+            margin: 15px 0;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .filter-section.updating {
+            border-color: #f39c12;
+            background: #fff3cd;
+        }
+
+        .filter-section.updated {
+            border-color: #27ae60;
+            background: #d4edda;
+        }
+
+        .data-table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .data-table.updating {
+            opacity: 0.6;
+            transform: translateY(5px);
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .data-table th {
+            background: #f8f9fa;
+        }
+
+        .engineer-cursor {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #e74c3c;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1000;
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 0;
+        }
+
+        .engineer-cursor::after {
+            content: '👨‍💻';
+            position: absolute;
+            top: -25px;
+            left: -10px;
+            font-size: 16px;
+        }
+
+        .engineer-cursor.active {
+            opacity: 1;
+        }
+
+        .update-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #f39c12;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s;
+        }
+
+        .update-indicator.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .update-indicator.complete {
+            background: #27ae60;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: #3498db;
+            transition: width 0.3s ease;
+            z-index: 1001;
+        }
+
+        .legend {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            margin-right: 8px;
+        }
+
+        .restart-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .restart-btn:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Engineer Updates Multiple Components</h1>
+            <p>Watch how updating a date picker feature requires changes across multiple parts of the application</p>
+        </div>
+        
+        <div class="dashboard">
+            <div class="sidebar">
+                <h3>Reports</h3>
+                <ul>
+                    <li class="active">Sales</li>
+                    <li>Sales summary</li>
+                    <li>Item sales</li>
+                    <li>Sales trends</li>
+                    <li>Category sales</li>
+                    <li>Team sales</li>
+                </ul>
+                <h3>Accounting</h3>
+                <ul>
+                    <li>Payments</li>
+                    <li>Operations</li>
+                    <li>Online</li>
+                </ul>
+            </div>
+            
+            <div class="main-content">
+                <div class="panel" id="sales-panel">
+                    <div class="update-indicator" id="sales-indicator">Updating...</div>
+                    <h2>Sales Summary</h2>
+                    
+                    <div class="date-picker" id="sales-date-picker">
+                        <strong>📅 Wed, January 01 - Wed, December 31, 2025</strong>
+                        <div>Metrics: Gross sales & 30 others</div>
+                    </div>
+                    
+                    <div class="filter-section" id="sales-filters">
+                        <label>Filter by Timeframe: Reporting day</label>
+                        <select style="margin-left: 10px;">
+                            <option>Today</option>
+                            <option>Yesterday</option>
+                            <option>This week</option>
+                            <option>Last week</option>
+                        </select>
+                    </div>
+                    
+                    <div class="calendar" id="sales-calendar">
+                        <div class="calendar-day">Sun</div>
+                        <div class="calendar-day">Mon</div>
+                        <div class="calendar-day">Tue</div>
+                        <div class="calendar-day">Wed</div>
+                        <div class="calendar-day">Thu</div>
+                        <div class="calendar-day">Fri</div>
+                        <div class="calendar-day">Sat</div>
+                        <div class="calendar-day">1</div>
+                        <div class="calendar-day selected">2</div>
+                        <div class="calendar-day">3</div>
+                        <div class="calendar-day">4</div>
+                        <div class="calendar-day">5</div>
+                        <div class="calendar-day">6</div>
+                        <div class="calendar-day">7</div>
+                    </div>
+                    
+                    <table class="data-table" id="sales-table">
+                        <thead>
+                            <tr>
+                                <th>Period</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Today</td>
+                                <td>$2,450.00</td>
+                            </tr>
+                            <tr>
+                                <td>Yesterday</td>
+                                <td>$1,890.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="panel" id="payments-panel">
+                    <div class="update-indicator" id="payments-indicator">Updating...</div>
+                    <h2>Payment Methods</h2>
+                    
+                    <div class="date-picker" id="payments-date-picker">
+                        <strong>📅 Wed, January 01 - Wed, December 31, 2025</strong>
+                        <div>Metrics: Payment amount & 9 others</div>
+                    </div>
+                    
+                    <div class="filter-section" id="payments-filters">
+                        <label>Filter by Timeframe: Reporting day</label>
+                        <select style="margin-left: 10px;">
+                            <option>Today</option>
+                            <option>Yesterday</option>
+                            <option>This week</option>
+                            <option>Last week</option>
+                        </select>
+                    </div>
+                    
+                    <div class="calendar" id="payments-calendar">
+                        <div class="calendar-day">Sun</div>
+                        <div class="calendar-day">Mon</div>
+                        <div class="calendar-day">Tue</div>
+                        <div class="calendar-day">Wed</div>
+                        <div class="calendar-day">Thu</div>
+                        <div class="calendar-day">Fri</div>
+                        <div class="calendar-day">Sat</div>
+                        <div class="calendar-day">1</div>
+                        <div class="calendar-day selected">2</div>
+                        <div class="calendar-day">3</div>
+                        <div class="calendar-day">4</div>
+                        <div class="calendar-day">5</div>
+                        <div class="calendar-day">6</div>
+                        <div class="calendar-day">7</div>
+                    </div>
+                    
+                    <table class="data-table" id="payments-table">
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Amount</th>
+                                <th>Fees</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Credit Card</td>
+                                <td>$16,250.89</td>
+                                <td>$487</td>
+                            </tr>
+                            <tr>
+                                <td>Cash</td>
+                                <td>$1,445.15</td>
+                                <td>$0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="engineer-cursor" id="cursor"></div>
+    <div class="progress-bar" id="progress"></div>
+    
+    <button class="restart-btn" onclick="startAnimation()">🔄 Restart Animation</button>
+    
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color" style="background: #f39c12;"></div>
+            <span>Currently Updating</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #27ae60;"></div>
+            <span>Update Complete</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #e74c3c;"></div>
+            <span>Engineer Focus</span>
+        </div>
+    </div>
+
+    <script>
+        let animationStep = 0;
+        let isAnimating = false;
+
+        const updateSequence = [
+            {
+                element: 'sales-date-picker',
+                cursor: { x: 300, y: 200 },
+                duration: 2000,
+                description: 'Updating Sales Date Picker Component'
+            },
+            {
+                element: 'sales-filters',
+                cursor: { x: 300, y: 280 },
+                duration: 1500,
+                description: 'Updating Sales Filter Logic'
+            },
+            {
+                element: 'sales-calendar',
+                cursor: { x: 300, y: 350 },
+                duration: 2000,
+                description: 'Updating Sales Calendar Widget'
+            },
+            {
+                element: 'sales-table',
+                cursor: { x: 300, y: 450 },
+                duration: 1500,
+                description: 'Refreshing Sales Data Table'
+            },
+            {
+                element: 'payments-date-picker',
+                cursor: { x: 800, y: 200 },
+                duration: 2000,
+                description: 'Updating Payments Date Picker Component'
+            },
+            {
+                element: 'payments-filters',
+                cursor: { x: 800, y: 280 },
+                duration: 1500,
+                description: 'Updating Payments Filter Logic'
+            },
+            {
+                element: 'payments-calendar',
+                cursor: { x: 800, y: 350 },
+                duration: 2000,
+                description: 'Updating Payments Calendar Widget'
+            },
+            {
+                element: 'payments-table',
+                cursor: { x: 800, y: 450 },
+                duration: 1500,
+                description: 'Refreshing Payments Data Table'
+            }
+        ];
+
+        function moveCursor(x, y) {
+            const cursor = document.getElementById('cursor');
+            cursor.style.left = x + 'px';
+            cursor.style.top = y + 'px';
+            cursor.classList.add('active');
+        }
+
+        function updateProgress(step) {
+            const progress = document.getElementById('progress');
+            const percentage = (step / updateSequence.length) * 100;
+            progress.style.width = percentage + '%';
+        }
+
+        function showUpdateIndicator(panelId, show = true, complete = false) {
+            const indicator = document.getElementById(panelId + '-indicator');
+            if (show) {
+                indicator.classList.add('show');
+                indicator.textContent = complete ? 'Updated ✓' : 'Updating...';
+                if (complete) {
+                    indicator.classList.add('complete');
+                }
+            } else {
+                indicator.classList.remove('show');
+                indicator.classList.remove('complete');
+            }
+        }
+
+        async function animateUpdate(step) {
+            if (step >= updateSequence.length) {
+                // Animation complete
+                document.getElementById('cursor').classList.remove('active');
+                updateProgress(updateSequence.length);
+                isAnimating = false;
+                return;
+            }
+
+            const update = updateSequence[step];
+            const element = document.getElementById(update.element);
+            
+            // Move cursor to element
+            moveCursor(update.cursor.x, update.cursor.y);
+            
+            // Show updating state
+            element.classList.add('updating');
+            
+            // Show indicator for the panel
+            const panelId = update.element.includes('sales') ? 'sales' : 'payments';
+            showUpdateIndicator(panelId, true, false);
+            
+            // Update progress
+            updateProgress(step + 0.5);
+            
+            // Wait for update duration
+            await new Promise(resolve => setTimeout(resolve, update.duration));
+            
+            // Show completed state
+            element.classList.remove('updating');
+            element.classList.add('updated');
+            showUpdateIndicator(panelId, true, true);
+            
+            // Wait a bit before next update
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            // Remove completed state and hide indicator
+            element.classList.remove('updated');
+            showUpdateIndicator(panelId, false);
+            
+            // Update progress
+            updateProgress(step + 1);
+            
+            // Continue to next step
+            animateUpdate(step + 1);
+        }
+
+        function startAnimation() {
+            if (isAnimating) return;
+            
+            isAnimating = true;
+            animationStep = 0;
+            
+            // Reset all states
+            document.querySelectorAll('.updating, .updated').forEach(el => {
+                el.classList.remove('updating', 'updated');
+            });
+            
+            document.querySelectorAll('.update-indicator').forEach(el => {
+                el.classList.remove('show', 'complete');
+            });
+            
+            updateProgress(0);
+            
+            // Start animation
+            animateUpdate(0);
+        }
+
+        // Auto-start animation when page loads
+        window.addEventListener('load', () => {
+            setTimeout(startAnimation, 1000);
+        });
+
+        // Restart animation every 20 seconds
+        setInterval(() => {
+            if (!isAnimating) {
+                startAnimation();
+            }
+        }, 20000);
+    </script>
+</body>
+</html>

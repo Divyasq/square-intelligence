@@ -1,0 +1,11 @@
+Cube Name,Dimension Name,Title,Description,Type,Primary Key,Business Use Case
+Orders,Orders.merchant_id,Merchant Id,The current merchant token for the order,string,FALSE,Multi-tenant filtering
+Orders,Orders.location_id,Location Id,The seller location that this order is associated with,string,FALSE,Location-based analysis
+Orders,Orders.sales_channel_id,Sales Channel Id,The sales channel associated with the order,string,FALSE,Channel performance analysis
+Orders,Orders.created_at,Created At,The timestamp when the order was created,time,FALSE,Time-based analysis
+Orders,Orders.customer_id,Customer Id,The customer associated with the order,string,FALSE,Customer analysis
+ItemTransactions,ItemTransactions.item_name,Item Name,Name of the item,string,FALSE,Product performance
+ItemTransactions,ItemTransactions.category_name,Category Name,Name of the category of the item,string,FALSE,Category analysis
+PaymentAndRefunds,PaymentAndRefunds.payment_method,Payment Method,The method of payment,string,FALSE,Payment method analysis
+Channel,Channel.channel_category,Channel Category,"High-level channel category (IN-STORE, ONLINE, INVOICE, OTHER)",string,FALSE,Sales channel grouping
+Location,Location.location_name,Location Name,Display name/nickname of the location,string,FALSE,Location identification

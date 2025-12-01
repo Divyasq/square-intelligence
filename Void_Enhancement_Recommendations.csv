@@ -1,0 +1,9 @@
+Enhancement,Business Value,Technical Complexity,Priority,Timeline,Implementation
+Add Customer Context,Understand customer impact of voids,Medium,HIGH,3-4 weeks,Join Voids to Orders to CustomerSnapshots
+Add Device Context,Identify device-related void issues,Medium,MEDIUM,2-3 weeks,Join Voids to Orders to PaymentAndRefunds
+Add Employee Names,Readable void reports with staff names,Low,HIGH,1 week,Add employee name lookup
+Add Location Names,Readable location void analysis,Low,HIGH,1 week,Add location name lookup
+Add Section/Department Context,Departmental void analysis,High,MEDIUM,6-8 weeks,Create Sections cube + relationships
+Add Manager Approval Tracking,Void approval workflow analysis,Medium,LOW,2-3 weeks,Add manager_approved_by field
+Add Void Reason Categories,Group void reasons for analysis,Low,MEDIUM,1-2 weeks,Add void_reason_category field
+Add Item Cost Context,True financial impact of voids,Medium,MEDIUM,3-4 weeks,Add cost information to void analysis

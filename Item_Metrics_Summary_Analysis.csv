@@ -1,0 +1,8 @@
+Metric Category,Available Metrics,Missing Metrics,Best Coverage,Worst Coverage,Average Coverage
+Item Sales Metrics,11/12 (92%),1/12 (Variation Unit Cost),Voids: 24%,Most others: 13%,14%
+Dimension Categories,Direct Available,Via Joins Needed,Missing Completely,Enhancement Priority,Notes
+Core Item Info,"Item Name, Category, Location, Order ID","Customer Name, Employee, Device","Item Notes, Custom Attributes",HIGH,Basic item context available
+Operational Context,Void Reason (Voids only),"Employee, Device, Payment Method","Section, Manager, Dining Option",HIGH,Most operational context missing
+Product Details,"Item Type, SKU (Voids only)",Item Variation via joins,"GTIN, Vendor Info, Menu",MEDIUM,Limited product detail
+Customer Context,None direct,"Customer Name, Customer Type",Customer Visit Frequency,HIGH,All customer context requires joins
+Modifier Context,Discount Name (discounts only),Modifier Name via separate cube,"Modifier Sets, Unit Prices",MEDIUM,Limited modifier context

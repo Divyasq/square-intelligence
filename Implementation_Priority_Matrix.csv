@@ -1,0 +1,12 @@
+Enhancement,Business Impact,Technical Complexity,Data Availability,User Demand,Overall Priority,Recommended Timeline
+Order Names,HIGH,MEDIUM,HIGH,HIGH,HIGH,Sprint 1 (2-4 weeks)
+Customer Names,HIGH,LOW,HIGH,HIGH,HIGH,Sprint 1 (1-2 weeks)
+Employee Names,HIGH,LOW,HIGH,HIGH,HIGH,Sprint 1 (1-2 weeks)
+Section/Department,HIGH,HIGH,MEDIUM,HIGH,HIGH,Sprint 2-3 (6-8 weeks)
+Customer Visit Frequency,MEDIUM,MEDIUM,HIGH,MEDIUM,MEDIUM,Sprint 2 (3-4 weeks)
+Order Tags,MEDIUM,MEDIUM,LOW,MEDIUM,MEDIUM,Sprint 3 (3-4 weeks)
+Device Type,MEDIUM,LOW,MEDIUM,LOW,MEDIUM,Sprint 2 (1-2 weeks)
+Fulfillment Method,MEDIUM,MEDIUM,MEDIUM,MEDIUM,MEDIUM,Sprint 3 (2-3 weeks)
+Order Duration,LOW,LOW,HIGH,LOW,LOW,Sprint 4 (1 week)
+Order Notes,LOW,LOW,LOW,MEDIUM,LOW,Sprint 4 (1-2 weeks)
+Order Priority,LOW,LOW,LOW,LOW,LOW,Future Release

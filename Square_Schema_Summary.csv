@@ -1,0 +1,17 @@
+Metric,Value,Description
+Total Cubes,12,Total number of data cubes in the schema
+Total Measures,105,Total aggregatable metrics across all cubes
+Total Dimensions,163,Total attributes for filtering and grouping
+Total Segments,19,Total pre-defined filters across all cubes
+Core Transaction Cubes,4,"Orders, OrdersLive, PaymentAndRefunds, Fees"
+Item-Level Cubes,3,"ItemTransactions, ItemDiscountsAndComps, ModifiersTransacted"
+Configuration Cubes,3,"Catalog, Location, Channel"
+Operations Cubes,2,"CustomerSnapshots, Voids"
+,,
+Key Business Metrics Available,,
+Revenue Tracking,YES,"Net sales, gross sales, total collected"
+Customer Analytics,YES,"New vs returning, loyalty analysis"
+Product Performance,YES,"Item sales, category analysis, modifier tracking"
+Payment Analysis,YES,"Payment methods, fees, refunds"
+Operational Metrics,YES,"Voids, discounts, channel performance"
+Real-time Data,YES,OrdersLive cube for real-time monitoring

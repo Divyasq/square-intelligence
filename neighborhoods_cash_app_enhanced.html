@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neighborhoods on Cash App - Enhanced Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            line-height: 1.4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #000000;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 14px;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Top Metrics Row - Matching Neighborhoods page exactly */
+        .top-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .metric-card {
+            background: #ffffff;
+            border: 1px solid #e1e5e9;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 6px;
+            font-weight: 400;
+        }
+
+        .metric-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #000000;
+            margin-bottom: 2px;
+        }
+
+        .metric-change {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .metric-change.positive {
+            color: #666;
+        }
+
+        .metric-change.negative {
+            color: #666;
+        }
+
+        /* Dashboard Widgets */
+        .dashboard-section {
+            margin-bottom: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #000000;
+        }
+
+        .calendar-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f8f9fa;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid #e1e5e9;
+            font-size: 14px;
+            color: #1a1a1a;
+            cursor: pointer;
+        }
+
+        .widget-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 16px;
+        }
+
+        .widget {
+            background: #ffffff;
+            border: 1px solid #e1e5e9;
+            border-radius: 8px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .widget:hover {
+            background: #f0f1f2;
+            border-color: #e1e5e9;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .widget-header {
+            margin-bottom: 20px;
+        }
+
+        .widget-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #000000;
+            margin-bottom: 2px;
+        }
+
+        .widget-subtitle {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .widget-subtitle::after {
+            content: " →";
+            color: #999;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .widget:hover .widget-subtitle::after {
+            opacity: 1;
+        }
+
+        /* Channel Breakdown */
+        .channel-breakdown {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .channel-item {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .channel-value {
+            font-size: 20px;
+            font-weight: 600;
+            color: #000000;
+            margin-bottom: 2px;
+        }
+
+        .channel-label {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 2px;
+        }
+
+        .channel-percentage {
+            font-size: 11px;
+            font-weight: 400;
+            color: #666;
+        }
+
+        /* Revenue Bar */
+        .revenue-bar-container {
+            margin: 20px 0;
+        }
+
+        .revenue-bar {
+            display: flex;
+            height: 32px;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .bar-segment {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .cash-local-bar {
+            background: #666666;
+        }
+
+        .other-channels-bar {
+            background: #e1e5e9;
+            color: #666;
+        }
+
+        /* Fee Comparison */
+        .fee-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .fee-item {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .fee-type {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .fee-amount {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .fee-rate {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .fee-rate.high {
+            color: #666666;
+        }
+
+        .fee-rate.low {
+            color: #666666;
+        }
+
+        /* Savings Highlight */
+        .savings-highlight {
+            background: #f8f9fa;
+            border: 1px solid #e1e5e9;
+            padding: 16px;
+            border-radius: 6px;
+            margin: 16px 0;
+            text-align: center;
+        }
+
+        .savings-amount {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .savings-label {
+            font-size: 12px;
+            color: #666666;
+            font-weight: 600;
+        }
+
+        /* Customer Metrics */
+        .customer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .customer-metric {
+            background: white;
+            padding: 16px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .customer-number {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .customer-label {
+            font-size: 11px;
+            color: #666;
+        }
+
+        /* Spend Comparison */
+        .spend-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .spend-item {
+            background: white;
+            padding: 16px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .spend-amount {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .spend-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .spend-change {
+            font-size: 11px;
+            font-weight: 600;
+            color: #666666;
+        }
+
+        /* Visit Frequency Chart */
+        .visit-chart {
+            margin: 20px 0;
+        }
+
+        .chart-bars {
+            display: flex;
+            gap: 8px;
+            height: 60px;
+            align-items: end;
+            margin-bottom: 8px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: #666666;
+            border-radius: 2px;
+            opacity: 0.8;
+        }
+
+        .chart-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: #666;
+        }
+
+        /* Cash Activity */
+        .cash-activity {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .cash-item {
+            background: white;
+            padding: 16px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .cash-amount {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .cash-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .cash-trend {
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .cash-trend.up {
+            color: #666666;
+        }
+
+        .cash-trend.neutral {
+            color: #666666;
+        }
+
+        /* Action Buttons */
+        .action-btn {
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 16px;
+            width: 100%;
+        }
+
+        .action-btn:hover {
+            background: #333;
+        }
+
+        /* Campaign Section - Matching existing style */
+        .campaign-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 24px;
+            margin: 40px 0;
+        }
+
+        .campaign-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .campaign-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .campaign-status {
+            background: #e1e5e9;
+            color: #666;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .campaign-subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .campaign-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .campaign-metric {
+            text-align: left;
+        }
+
+        .campaign-metric-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .campaign-metric-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .resume-btn {
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .insight-box {
+            background: #f8f9fa;
+            border: 1px solid #e1e5e9;
+            padding: 16px;
+            border-radius: 6px;
+            margin: 16px 0;
+        }
+
+        .insight-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .insight-text {
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Neighborhoods on Cash App</h1>
+            <p>Track how followers engage with your business and manage your outreach.</p>
+        </div>
+
+        <!-- Enhanced Top Metrics -->
+        <div class="top-metrics">
+            <div class="metric-card">
+                <div class="metric-label">Total Followers</div>
+                <div class="metric-value">987</div>
+                <div class="metric-change positive">↗ +23 this week</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Redeemed coupons</div>
+                <div class="metric-value">0</div>
+                <div class="metric-change">Campaign paused</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Attributed follower sales</div>
+                <div class="metric-value">$0.00</div>
+                <div class="metric-change">Ready to activate</div>
+            </div>
+        </div>
+
+        <!-- Performance Analytics Section -->
+        <div class="dashboard-section">
+            <div class="section-header">
+                <div class="section-title">Performance Analytics</div>
+                <div class="calendar-selector">
+                    📅 Last 7 days ▼
+                </div>
+            </div>
+
+            <div class="widget-grid">
+                <!-- Sales Performance Widget -->
+                <div class="widget">
+                    <div class="widget-header">
+                        <div class="widget-title">Sales by Channel</div>
+                        <div class="widget-subtitle">Revenue breakdown across channels</div>
+                    </div>
+
+                    <div class="channel-breakdown">
+                        <div class="channel-item">
+                            <div class="channel-value">$1,895</div>
+                            <div class="channel-label">Cash Local</div>
+                            <div class="channel-percentage">66.5%</div>
+                        </div>
+                        <div class="channel-item">
+                            <div class="channel-value">$952</div>
+                            <div class="channel-label">Other Channels</div>
+                            <div class="channel-percentage">33.5%</div>
+                        </div>
+                    </div>
+
+                    <div class="revenue-bar-container">
+                        <div class="revenue-bar">
+                            <div class="bar-segment cash-local-bar" style="width: 66.5%;">Cash Local</div>
+                            <div class="bar-segment other-channels-bar" style="width: 33.5%;">Other</div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!-- Fee Analysis Widget -->
+                <div class="widget">
+                    <div class="widget-header">
+                        <div class="widget-title">Fee Comparison</div>
+                        <div class="widget-subtitle">Platform fees and savings</div>
+                    </div>
+
+                    <div class="fee-comparison">
+                        <div class="fee-item">
+                            <div class="fee-type">3rd Party Delivery</div>
+                            <div class="fee-amount">$143</div>
+                            <div class="fee-rate high">15.0% avg fee</div>
+                        </div>
+                        <div class="fee-item">
+                            <div class="fee-type">Cash Local</div>
+                            <div class="fee-amount">$57</div>
+                            <div class="fee-rate low">3.0% avg fee</div>
+                        </div>
+                    </div>
+
+                    <div class="savings-highlight">
+                        <div class="savings-amount">$86 Saved</div>
+                        <div class="savings-label">12% fee reduction with Cash App</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer Insights Section -->
+        <div class="dashboard-section">
+            <div class="section-header">
+                <div class="section-title">Customer Insights</div>
+            </div>
+
+            <div class="widget-grid">
+                <!-- Customer Behavior Widget -->
+                <div class="widget">
+                    <div class="widget-header">
+                        <div class="widget-title">Customer Segments</div>
+                        <div class="widget-subtitle">Sales % by customer type</div>
+                    </div>
+
+                    <div style="margin: 16px 0;">
+                        <div style="font-size: 13px; font-weight: 600; color: #1a1a1a; margin-bottom: 12px;">% of Total Sales</div>
+                        <div class="channel-breakdown">
+                            <div class="channel-item">
+                                <div class="channel-value">34%</div>
+                                <div class="channel-label">New Cash Local Sellers</div>
+                                <div class="channel-percentage" style="color: #666;">$968</div>
+                            </div>
+                            <div class="channel-item">
+                                <div class="channel-value">66%</div>
+                                <div class="channel-label">Other Segments</div>
+                                <div class="channel-percentage" style="color: #666;">$1,879</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin: 16px 0;">
+                        <div class="channel-breakdown">
+                            <div class="channel-item">
+                                <div class="channel-value">28%</div>
+                                <div class="channel-label">Returning Cash Local Sellers</div>
+                                <div class="channel-percentage" style="color: #666;">$796</div>
+                            </div>
+                            <div class="channel-item">
+                                <div class="channel-value">72%</div>
+                                <div class="channel-label">Other Segments</div>
+                                <div class="channel-percentage" style="color: #666;">$2,051</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Local Cash Activity Widget -->
+                <div class="widget">
+                    <div class="widget-header">
+                        <div class="widget-title">Local Cash Activity</div>
+                        <div class="widget-subtitle">Cash earned, redeemed & outstanding</div>
+                    </div>
+
+                    <div class="cash-activity">
+                        <div class="cash-item">
+                            <div class="cash-amount">$485</div>
+                            <div class="cash-label">Cash Earned</div>
+                            <div class="cash-trend up">↗ +8.5%</div>
+                        </div>
+                        <div class="cash-item">
+                            <div class="cash-amount">$312</div>
+                            <div class="cash-label">Cash Redeemed</div>
+                            <div class="cash-trend neutral">64% usage</div>
+                        </div>
+                        <div class="cash-item">
+                            <div class="cash-amount">$173</div>
+                            <div class="cash-label">Outstanding</div>
+                            <div class="cash-trend neutral">36% balance</div>
+                        </div>
+                    </div>
+
+                    <div class="insight-box">
+                        <div class="insight-title">💡 Insight</div>
+                        <div class="insight-text">Weekend cash redemption is 40% higher. Consider weekend-specific promotions to maximize engagement.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Campaign Section -->
+        <div class="campaign-section">
+            <div class="campaign-header">
+                <div>
+                    <div class="campaign-title">Campaign</div>
+                    <div class="campaign-subtitle">Test subject</div>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: center;">
+                    <div class="campaign-status">Paused</div>
+                    <button class="resume-btn">Resume</button>
+                </div>
+            </div>
+
+            <div class="campaign-metrics">
+                <div class="campaign-metric">
+                    <div class="campaign-metric-label">Total messages sent</div>
+                    <div class="campaign-metric-value">0</div>
+                </div>
+                <div class="campaign-metric">
+                    <div class="campaign-metric-label">Sent date</div>
+                    <div class="campaign-metric-value">August 13, 2025 at 3:45 PM</div>
+                </div>
+                <div class="campaign-metric">
+                    <div class="campaign-metric-label">Coupon</div>
+                    <div class="campaign-metric-value">Smart offer</div>
+                </div>
+                <div class="campaign-metric">
+                    <div class="campaign-metric-label">Audience</div>
+                    <div class="campaign-metric-value">Followers who haven't purchased recently</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

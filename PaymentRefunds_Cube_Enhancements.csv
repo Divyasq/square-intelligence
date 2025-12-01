@@ -1,0 +1,4 @@
+Field Name,Data Type,Description,Business Purpose,Example Values,Required/Optional,Default Value,Validation Rules,Source System,Implementation Notes
+device_type,VARCHAR(50),Type of payment device,Device performance analysis,"""POS_TERMINAL"", ""MOBILE"", ""ONLINE"", ""KIOSK""",Optional,"""UNKNOWN""",Must be valid device type,Device Management,Classification of device types
+device_location,VARCHAR(100),Physical location of device,Device placement analysis,"""Counter 1"", ""Drive-thru"", ""Table 5""",Optional,NULL,Max 100 characters,Device Management,Where device is physically located
+payment_processor,VARCHAR(50),Payment processing provider,Processor performance analysis,"""SQUARE"", ""STRIPE"", ""PAYPAL""",Optional,"""SQUARE""",Must be valid processor,Payment System,Which processor handled payment

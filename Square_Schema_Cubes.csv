@@ -1,0 +1,13 @@
+Cube Name,Title,Description,Is Visible,Is Public,Measures Count,Dimensions Count,Segments Count,Category
+Catalog,Catalog,"Catalog object information, used for data about specific items, modifiers, discounts, categories, etc.",TRUE,TRUE,1,9,4,Business Configuration
+Channel,Channel,"Sales channel details. A sales channel represents where an order originated (IN-STORE, ONLINE, INVOICE, OTHER).",TRUE,TRUE,1,8,2,Business Configuration
+CustomerSnapshots,Customer Snapshots,"Contains information about the customer at the time of each order, like if it was their first purchase or if they were loyalty members.",TRUE,TRUE,9,7,0,Customer & Operations
+Fees,Fees,Fees data for Payments and Refunds. Likely to see this in something like Fees report.,TRUE,TRUE,2,16,0,Core Transaction Data
+ItemDiscountsAndComps,Item Discounts and Comps,"Represents discounts and comps applied to line items. Sold items have positive amounts, returned have negative amounts.",TRUE,TRUE,16,12,6,Item-Level Data
+ItemTransactions,Item Transactions,"Transaction data for line items, including sales and returns. Sold items have positive amounts, returned item have negative amounts.",TRUE,TRUE,22,10,2,Item-Level Data
+Location,Location,"Location (unit) information including location name, timezone, and status. This cube contains the latest state of each location.",TRUE,TRUE,1,5,0,Business Configuration
+ModifiersTransacted,Modifiers Transacted,"Transaction data for modifiers, including sales and returns. Sold items have positive amounts, returned item have negative amounts.",TRUE,TRUE,12,14,2,Item-Level Data
+Orders,Orders,"Top level Order data (sales and returns), like top line product sales, net sales, etc. that you would see in something like a Sales Summary report.",TRUE,TRUE,16,18,0,Core Transaction Data
+OrdersLive,Orders Live,"Real-time order data from OpenSearch. By default, this cube returns all orders, including draft, closed, failed, canceled, fraud, and no sale orders.",TRUE,TRUE,16,16,1,Core Transaction Data
+PaymentAndRefunds,Payment and Refunds,"Top level Payments and Refunds data, including itemized payment amounts and tip amounts. Likely to see this in something like Payment Methods report.",TRUE,TRUE,5,28,2,Core Transaction Data
+Voids,Voids,"Void transactions representing canceled or voided line items in orders. Tracks void operations with attribution, reasons, and item-level details.",TRUE,TRUE,4,20,0,Customer & Operations

@@ -1,0 +1,12 @@
+Cube,Measure Name,Business Purpose,Format,Aggregation
+Orders,net_sales,Primary revenue metric after adjustments,Currency,Sum
+Orders,total_collected_amount,Actual cash collected from customers,Currency,Sum
+Orders,count,Number of orders/transactions,Number,Count
+ItemTransactions,item_gross_sales,Product-level revenue,Currency,Sum
+ItemTransactions,net_quantity,Items sold (net of returns),Number,Sum
+PaymentAndRefunds,total_amount,Payment processing amounts,Currency,Sum
+CustomerSnapshots,customers_first_purchase_at_merchant_count,New customer acquisition,Number,Sum
+CustomerSnapshots,new_customer_percentage_at_merchant,Customer acquisition rate,Percentage,Average
+Fees,amount_money,Processing costs,Currency,Sum
+ItemDiscountsAndComps,total_discount_and_comp_amount,Promotional impact,Currency,Sum
+Voids,total_amount_voided,Operational losses,Currency,Sum

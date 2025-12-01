@@ -1,0 +1,8 @@
+Gap,Impact,Business Need,Recommendation,Priority
+No Employee context in item metrics,Cannot track staff performance by item,Which employees sell which items best?,Add joins from ItemTransactions to Orders cube,HIGH
+No Customer Type in item metrics,Cannot analyze item preferences by customer segment,What do new vs loyal customers buy?,Add joins from ItemTransactions to CustomerSnapshots,HIGH
+No Device context in item metrics,Cannot track device performance by product,Which POS devices work best for specific items?,Add joins from ItemTransactions to PaymentAndRefunds,MEDIUM
+No Section/Department concept,Cannot do departmental item analysis,Item performance by restaurant section?,Create Sections cube + add relationships,HIGH
+Missing Variation Unit Cost,Cannot calculate item profitability,What's the profit margin on each item?,Add cost tracking to Catalog or ItemTransactions,MEDIUM
+No Item Notes/Custom Attributes,Cannot categorize items flexibly,Custom item groupings for analysis?,Add custom fields to Catalog cube,LOW
+No Vendor/Supplier info,Cannot track supplier performance,Which suppliers provide best-selling items?,Add vendor fields to Catalog cube,LOW

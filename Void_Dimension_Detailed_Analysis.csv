@@ -1,0 +1,43 @@
+Dimension,Available in Voids?,Field Name,Data Type,Description,Business Value,Enhancement Needed
+Categories,✅ YES,category_name,String,Name of the catalog category for the voided item,Analyze voids by product category,None
+Channel,✅ YES,sales_channel_id,String,Sales channel ID for the order containing the void,Void patterns by sales channel,None
+Employee (collected by),✅ YES,team_member_id,String,Team member who performed the void operation,Staff void patterns and training needs,Add employee name lookup
+Item name,✅ YES,item_name,String,Name of the item that was voided,Which items get voided most,None
+Item type,✅ YES,item_type,String,"Type of line item (ITEM, CUSTOM_AMOUNT, GIFT_CARD, CREDIT_PACKAGE)",Void patterns by item type,None
+Item variation,✅ YES,variation_name,String,Name of the variation that was voided,Specific variation void analysis,None
+Item variation token,✅ YES,variation_id,String,Catalog variation ID for the voided item,Technical variation tracking,None
+Location,✅ YES,location_id,String,The seller location that this void is associated with,Void patterns by location,Add location name lookup
+Order ID,✅ YES,order_id,String,Unique ID for the order that contains the voided items,Link voids to specific orders,None
+Order Created,✅ YES,void_created_at,Time,Timestamp when the void operation was performed,Void timing analysis,None
+Order Completed,✅ YES,sale_timestamp,Time,Sale timestamp from the original order,Time between sale and void,None
+SKU,✅ YES,sku,String,Stock keeping unit identifier for the voided item,SKU-level void tracking,None
+Units,✅ YES,quantity_voided,Number,Quantity of the item that was voided,Volume of voids,None
+Void reason,✅ YES,void_reason,String,Detailed reason for the void transaction,Why items are being voided,None
+Category Rollup,❌ NO,N/A,N/A,Category hierarchy not available,Category group void analysis,Add category hierarchy
+Combo name,❌ NO,N/A,N/A,No combo concept in Square,Combo void tracking,Add combo fields
+Comp reason,❌ NO,N/A,N/A,Separate from void reason,Why comps are voided,Add comp reason field
+Customer name,❌ NO,N/A,N/A,Customer info not in Voids cube,Customer void patterns,Add customer context
+Customer type,❌ NO,N/A,N/A,Customer segmentation not available,Void patterns by customer type,Add customer type context
+Customer visit frequency,❌ NO,N/A,N/A,Customer frequency not tracked,Loyal vs new customer voids,Add visit frequency calculation
+Custom attribute name,❌ NO,N/A,N/A,No custom attributes for voids,Custom void categorization,Add custom attributes
+Device,❌ NO,N/A,N/A,Device info not in Voids cube,Device-specific void patterns,Add device context
+Device Nick name,❌ NO,N/A,N/A,Device nickname not available,Readable device void analysis,Add device nickname
+Dining option name,❌ NO,N/A,N/A,No dining options in Square,Dining option void patterns,Add dining option fields
+Discount name,❌ NO,N/A,N/A,Discount info not in Voids cube,Voided discount analysis,Add discount context
+Employee (attributed to),❌ NO,N/A,N/A,Only void performer tracked,Sales attribution vs void performer,Add attribution concept
+GTIN,❌ NO,N/A,N/A,GTIN not tracked,Global item void tracking,Add GTIN field
+Item note,❌ NO,N/A,N/A,Item notes not available,Item-specific void notes,Add item notes
+Item unique modifier combination,❌ NO,N/A,N/A,Modifier combinations not tracked,Modifier combo void analysis,Add modifier combination tracking
+Itemization Type,❌ NO,N/A,N/A,Itemization type not available,Void by itemization method,Add itemization type
+Measurement unit,❌ NO,N/A,N/A,Measurement units not tracked,Unit-based void analysis,Add measurement units
+Menu,❌ NO,N/A,N/A,Menu concept not in Square,Menu-based void analysis,Add menu fields
+Manager,❌ NO,N/A,N/A,Manager info not tracked,Manager approval for voids,Add manager context
+Modifier name,❌ NO,N/A,N/A,Modifier info not in Voids cube,Voided modifier analysis,Add modifier context
+Modifier Set,❌ NO,N/A,N/A,Modifier sets not tracked,Modifier set void patterns,Add modifier set tracking
+Modifier unit price,❌ NO,N/A,N/A,Modifier pricing not in voids,Modifier price void analysis,Add modifier price context
+Payment method,❌ NO,N/A,N/A,Payment method not in Voids cube,Void patterns by payment type,Add payment method context
+Reporting category,❌ NO,N/A,N/A,Reporting categories not available,Custom reporting void analysis,Add reporting categories
+Section,❌ NO,N/A,N/A,Section concept not in Square,Departmental void analysis,Add section concept
+Source,❌ NO,N/A,N/A,Order source not in Voids cube,Void patterns by order source,Add source context
+Vendor Code,❌ NO,N/A,N/A,Vendor info not tracked,Vendor product void analysis,Add vendor fields
+Vendor Name,❌ NO,N/A,N/A,Vendor names not available,Supplier void analysis,Add vendor names

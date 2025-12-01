@@ -1,0 +1,10 @@
+Metric,Value,Details
+Overall Feasibility,🟢 HIGH (76.9%),10 out of 13 dimensions fully available
+Gross Sales Metric,✅ PERFECT MATCH,Orders.top_line_product_sales is exactly what you need
+Fully Available Dimensions,10,"Order ID, Device, Device Nickname, Channel, Employee, Location, Customer, Customer Type, Order Created, Order Completed"
+Partially Available,1,Customer visit frequency (can be calculated)
+Not Available,2,"Order Name, Section"
+Primary Cubes Needed,5,"Orders, CustomerSnapshots, PaymentAndRefunds, Location, Channel"
+Join Complexity,Medium,4-5 table joins required for complete analysis
+Real-time Capability,✅ YES,OrdersLive cube available for real-time data
+Recommended Approach,Multi-cube join,Start with Orders cube and join others as needed

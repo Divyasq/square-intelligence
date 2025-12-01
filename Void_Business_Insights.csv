@@ -1,0 +1,11 @@
+Business Question,Current Answer Capability,Data Available,Enhancement Needed,Business Value
+Which employees void items most?,✅ EXCELLENT,"Employee ID, void amounts, frequencies",Add employee names for readability,Staff training and accountability
+What items get voided most frequently?,✅ EXCELLENT,"Item name, category, variation, SKU",None - already comprehensive,Product quality and menu optimization
+Why are items being voided?,✅ EXCELLENT,Detailed void reasons,Categorize void reasons,Operational improvement insights
+Which locations have the most voids?,✅ GOOD,"Location ID, void amounts",Add location names,Location performance analysis
+What time patterns exist for voids?,✅ GOOD,"Void timestamps, order timestamps",Enhanced time dimensions,Operational timing optimization
+Do certain customers cause more voids?,❌ CANNOT ANSWER,No customer context,Add customer information,Customer service insights
+Which POS devices have void issues?,❌ CANNOT ANSWER,No device context,Add device information,Technical troubleshooting
+Which restaurant sections have most voids?,❌ CANNOT ANSWER,No section context,Add section/department info,Departmental performance
+What's the financial impact by department?,⚠️ PARTIAL,Void amounts but no departments,Add section context,Departmental cost control
+Are voids related to payment methods?,❌ CANNOT ANSWER,No payment method context,Add payment method info,Payment process optimization

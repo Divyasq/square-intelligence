@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Data Platform Roadmap</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background: #ffffff;
+            padding: 30px;
+            line-height: 1.6;
+        }
+        
+        .roadmap-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 35px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+            border-bottom: 2px solid #cccccc;
+            padding-bottom: 20px;
+        }
+        
+        .header h1 {
+            font-size: 2.1em;
+            color: #000000;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        .header p {
+            color: #666666;
+            font-size: 1.1em;
+        }
+        
+        .timeline-quarters {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .quarter {
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            color: white;
+            font-size: 0.9em;
+        }
+        
+        .q3-2025 { background: #000000; }
+        .q4-2025 { background: #333333; }
+        .q1-2026 { background: #666666; }
+        .q2-2026 { background: #999999; }
+        .q3-2026 { background: #cccccc; color: #000000; }
+        
+        .milestones {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+        
+        .milestone {
+            background: white;
+            border: 2px solid #cccccc;
+            border-radius: 10px;
+            padding: 18px;
+            text-align: center;
+            position: relative;
+            transition: all 0.2s ease;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .milestone:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .milestone.completed {
+            border-color: #000000;
+            background: #f5f5f5;
+        }
+        
+        .milestone.active {
+            border-color: #333333;
+            background: #f9f9f9;
+        }
+        
+        .milestone.upcoming {
+            border-color: #666666;
+            background: #fafafa;
+        }
+        
+        .milestone.future {
+            border-color: #999999;
+            background: #fcfcfc;
+        }
+        
+        .milestone.planning {
+            border-color: #cccccc;
+            background: #fdfdfd;
+        }
+        
+        .milestone-number {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-weight: normal;
+            color: white;
+            font-size: 1em;
+        }
+        
+        .milestone.completed .milestone-number { background: #000000; }
+        .milestone.active .milestone-number { background: #333333; }
+        .milestone.upcoming .milestone-number { background: #666666; }
+        .milestone.future .milestone-number { background: #999999; }
+        .milestone.planning .milestone-number { background: #cccccc; color: #000000; }
+        
+        .milestone-title {
+            font-size: 0.95em;
+            font-weight: bold;
+            color: #000000;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        
+        .milestone-timeline {
+            font-size: 0.8em;
+            color: #003366;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .milestone-desc {
+            font-size: 0.8em;
+            color: #000000;
+            margin-bottom: 12px;
+            flex-grow: 1;
+            line-height: 1.4;
+        }
+        
+        .milestone-status {
+            font-size: 0.75em;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-weight: normal;
+            margin-top: auto;
+        }
+        
+        .status-completed { background: #f0f0f0; color: #000000; }
+        .status-active { background: #e8e8e8; color: #000000; }
+        .status-upcoming { background: #e0e0e0; color: #000000; }
+        .status-future { background: #d8d8d8; color: #000000; }
+        .status-planning { background: #d0d0d0; color: #000000; }
+        
+        .spring-badge {
+            background: #666666;
+            color: white;
+            font-size: 0.7em;
+            padding: 3px 8px;
+            border-radius: 10px;
+            margin: 5px auto;
+            font-weight: normal;
+        }
+        
+        .disclaimer {
+            font-size: 0.7em;
+            color: #666666;
+            font-style: italic;
+            margin-top: 5px;
+        }
+        
+        .key-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+            padding-top: 25px;
+            border-top: 2px solid #cccccc;
+        }
+        
+        .metric {
+            text-align: center;
+            padding: 18px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        
+        .metric-value {
+            font-size: 1.6em;
+            font-weight: normal;
+            color: #000000;
+            margin-bottom: 5px;
+        }
+        
+        .metric-label {
+            color: #666666;
+            font-size: 0.85em;
+        }
+        
+        .risks-section {
+            background: #f5f5f5;
+            border: 2px solid #cccccc;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+        
+        .risks-title {
+            font-size: 1.1em;
+            font-weight: normal;
+            color: #000000;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .risks-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .risk-item {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 4px solid #cccccc;
+            font-size: 0.9em;
+            color: #000000;
+        }
+        
+        .timeline-bar {
+            height: 6px;
+            background: #cccccc;
+            border-radius: 3px;
+            margin: 20px 0 10px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #000000 0%, #000000 20%, #333333 20%, #333333 40%, #666666 40%, #666666 60%, #999999 60%, #999999 80%, #cccccc 80%, #cccccc 100%);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="roadmap-container">
+        <div class="header">
+            <h1>Financial Data Platform Roadmap</h1>
+            <p>Q3 2025 - Q4 2026 Project Timeline</p>
+        </div>
+        
+        <div class="timeline-quarters">
+            <div class="quarter q3-2025">Q3 2025</div>
+            <div class="quarter q4-2025">Q4 2025 - Q1 2026</div>
+            <div class="quarter q1-2026">Q1 2026</div>
+            <div class="quarter q2-2026">Q2 2026</div>
+            <div class="quarter q3-2026">Q3 - Q4 2026</div>
+        </div>
+        
+        <div class="milestones">
+            <div class="milestone completed">
+                <div class="milestone-number">M0</div>
+                <div class="milestone-title">Launch Custom Dashboard Views with Item Level Metrics</div>
+                <div class="milestone-timeline">Q3 2025</div>
+                <div class="milestone-desc">
+                    Build foundational custom reporting with Order/item level sales data
+                    <div class="disclaimer">*pending a few additional metrics</div>
+                </div>
+                <div class="milestone-status status-completed">✅ COMPLETED</div>
+            </div>
+            
+            <div class="milestone active">
+                <div class="milestone-number">M1</div>
+                <div class="milestone-title">Fast Follow Metrics and UX Iterations for Reporting IA, Saved Views and Scheduled Export</div>
+                <div class="milestone-timeline">Q4 2025 - Q1 2026</div>
+                <div class="milestone-desc">
+                    Plug into cube and have 50 sellers using the report on cube
+                </div>
+                <div class="milestone-status status-active">🔄 IN PROGRESS</div>
+            </div>
+            
+            <div class="milestone upcoming">
+                <div class="milestone-number">M2</div>
+                <div class="milestone-title">Custom Views of Order/Payments/Employee/Customer Reporting</div>
+                <div class="milestone-timeline">Q1 2026</div>
+                <div class="milestone-desc">
+                    (might include domains like KDS and other vertical specific reporting..scope for these tbd)
+                    <br><br>
+                    Scale cube adoption to all sellers. AI + Builder launch to 1000 sellers
+                </div>
+                <div class="milestone-status status-upcoming">🚀 UPCOMING</div>
+            </div>
+            
+            <div class="milestone future">
+                <div class="milestone-number">M3</div>
+                <div class="milestone-title">Profitability (by location, product, category, employee) via Insight Widgets and Cost Data</div>
+                <div class="milestone-timeline">Q2 2026</div>
+                <div class="spring-badge">🌸 SPRING RELEASE</div>
+                <div class="milestone-desc">
+                    COGS + Labor cost integration for comprehensive profitability analysis
+                    <br><br>
+                    Profitability insights by location, product, category, employee
+                </div>
+                <div class="milestone-status status-future">💰 SPRING 2026</div>
+            </div>
+            
+            <div class="milestone planning">
+                <div class="milestone-number">M4</div>
+                <div class="milestone-title">Deprecation Plan for Existing Canned Reports</div>
+                <div class="milestone-timeline">Q3 - Q4 2026</div>
+                <div class="milestone-desc">
+                    Ensure current custom report metrics are supported in auto-generatable saved views of builder
+                </div>
+                <div class="milestone-status status-planning">🔄 PLANNING</div>
+            </div>
+        </div>
+        
+        <div class="timeline-bar">
+            <div class="progress"></div>
+        </div>
+        
+        <div class="key-metrics">
+            <div class="metric">
+                <div class="metric-value">5</div>
+                <div class="metric-label">Major Milestones</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">1,000+</div>
+                <div class="metric-label">Target Users (M2)</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">15</div>
+                <div class="metric-label">Month Timeline</div>
+            </div>
+        </div>
+        
+        <div class="risks-section">
+            <div class="risks-title">
+                ⚠️ Key Risks & Dependencies
+            </div>
+            <div class="risks-list">
+                <div class="risk-item">
+                    Cube Integration: Cube infrastructure needs to be production ready for M1 & M2 scale targets
+                </div>
+                <div class="risk-item">
+                    Data Availability: Data availability from upstream teams to data warehouse for comprehensive analytics
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

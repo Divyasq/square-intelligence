@@ -1,0 +1,9 @@
+Use Case Category,Use Case,Primary Cubes,Key Measures,Key Dimensions,Description
+Sales Performance,Daily Sales Summary,Orders,"net_sales, total_collected_amount, count","created_at, location_id",Track daily sales performance across locations
+Product Analysis,Top Selling Items,ItemTransactions,"item_gross_sales, net_quantity","item_name, category_name",Identify best performing products
+Customer Insights,New vs Returning Customers,CustomerSnapshots,"customers_first_purchase_at_merchant_count, new_customer_percentage_at_merchant",order_created_at,Analyze customer acquisition and retention
+Payment Analysis,Payment Method Performance,PaymentAndRefunds,"total_amount, count","payment_method, payment_card_brand",Understand payment preferences
+Channel Performance,Sales by Channel,"Orders, Channel","net_sales, count","sales_channel_id, channel_category",Compare performance across sales channels
+Financial Reconciliation,Fee Analysis,Fees,amount_money,"fee_type, fee_category",Track processing costs
+Inventory Management,Product Movement,"ItemTransactions, ModifiersTransacted","net_quantity, count","item_name, transacted_at",Monitor inventory flow
+Operational Efficiency,Void Analysis,Voids,"total_amount_voided, count","void_reason, team_member_id",Identify operational issues

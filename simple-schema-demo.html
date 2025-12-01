@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Components - Work Anywhere</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #64748b;
+        }
+
+        .demo-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .data-source {
+            background: #f1f5f9;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .data-source.active {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+
+        .data-source-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .data-type {
+            font-size: 12px;
+            color: #6b7280;
+            background: #e5e7eb;
+            padding: 4px 8px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        .component {
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 12px 0;
+            transition: all 0.3s ease;
+        }
+
+        .component.updating {
+            border-color: #f59e0b;
+            background: #fef3c7;
+            transform: scale(1.02);
+        }
+
+        .component.updated {
+            border-color: #10b981;
+            background: #ecfdf5;
+        }
+
+        .component-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .component-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .component-type {
+            font-size: 11px;
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 2px 6px;
+            border-radius: 8px;
+        }
+
+        .chart-preview {
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            margin: 8px 0;
+        }
+
+        .table-preview {
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            font-size: 11px;
+        }
+
+        .table-header {
+            background: #f9fafb;
+            padding: 6px 8px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .table-row {
+            padding: 4px 8px;
+            border-top: 1px solid #f3f4f6;
+            color: #6b7280;
+        }
+
+        .schema-box {
+            background: #1e293b;
+            color: #e2e8f0;
+            border-radius: 6px;
+            padding: 12px;
+            font-family: 'Monaco', monospace;
+            font-size: 11px;
+            margin: 12px 0;
+            position: relative;
+        }
+
+        .schema-box::before {
+            content: "📋 Schema";
+            position: absolute;
+            top: -10px;
+            left: 8px;
+            background: #1e293b;
+            padding: 0 6px;
+            font-size: 10px;
+            color: #94a3b8;
+        }
+
+        .controls {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background: #2563eb;
+        }
+
+        .btn.active {
+            background: #10b981;
+        }
+
+        .arrow {
+            text-align: center;
+            font-size: 24px;
+            color: #94a3b8;
+            margin: 16px 0;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .explanation {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .explanation-text {
+            font-size: 14px;
+            color: #1e40af;
+            font-weight: 500;
+        }
+
+        .highlight {
+            background: #fef3c7;
+            padding: 2px 4px;
+            border-radius: 2px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="title">🧩 Smart Components</div>
+        <div class="subtitle">Same components work with any data source - they just read the schema!</div>
+    </div>
+
+    <div class="demo-container">
+        <!-- Left Side: Data Sources -->
+        <div class="section">
+            <div class="section-title">
+                🗄️ Data Sources (Cube.dev)
+            </div>
+
+            <div class="data-source" id="items-source">
+                <div class="data-source-name">Items Data</div>
+                <div class="data-type">Sales by Item</div>
+            </div>
+
+            <div class="data-source" id="discounts-source">
+                <div class="data-source-name">Discounts Data</div>
+                <div class="data-type">Discount Usage</div>
+            </div>
+
+            <div class="data-source" id="locations-source">
+                <div class="data-source-name">Locations Data</div>
+                <div class="data-type">Store Performance</div>
+            </div>
+
+            <div class="schema-box" id="schema-display">
+{
+  "title": "Items Report",
+  "chartType": "bar",
+  "columns": ["Item", "Sales", "Qty"]
+}
+            </div>
+
+            <div class="explanation">
+                <div class="explanation-text">
+                    Each data source sends a <span class="highlight">schema</span> that tells components how to display the data
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: Components -->
+        <div class="section">
+            <div class="section-title">
+                🧩 Frontend Components
+            </div>
+
+            <div class="component" id="chart-component">
+                <div class="component-header">
+                    <div class="component-name">Chart Component</div>
+                    <div class="component-type">Reusable</div>
+                </div>
+                <div class="chart-preview" id="chart-preview">
+                    📊 BAR Chart - Items Data
+                </div>
+            </div>
+
+            <div class="component" id="table-component">
+                <div class="component-header">
+                    <div class="component-name">Table Component</div>
+                    <div class="component-type">Reusable</div>
+                </div>
+                <div class="table-preview">
+                    <div class="table-header" id="table-header">Item | Sales | Qty</div>
+                    <div class="table-row">Pizza | $1,200 | 45</div>
+                    <div class="table-row">Burger | $800 | 32</div>
+                </div>
+            </div>
+
+            <div class="explanation">
+                <div class="explanation-text">
+                    Components <span class="highlight">read the schema</span> and automatically adapt to any data source
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="arrow">⬇️</div>
+
+    <div class="controls">
+        <button class="btn active" data-source="items">Show Items Data</button>
+        <button class="btn" data-source="discounts">Show Discounts Data</button>
+        <button class="btn" data-source="locations">Show Locations Data</button>
+    </div>
+
+    <script>
+        const dataSources = {
+            items: {
+                title: "Items Report",
+                chartType: "bar",
+                chartText: "📊 BAR Chart - Items Data",
+                columns: ["Item", "Sales", "Qty"],
+                schema: `{
+  "title": "Items Report",
+  "chartType": "bar", 
+  "columns": ["Item", "Sales", "Qty"]
+}`,
+                tableData: [
+                    "Pizza | $1,200 | 45",
+                    "Burger | $800 | 32"
+                ]
+            },
+            discounts: {
+                title: "Discounts Report", 
+                chartType: "pie",
+                chartText: "🥧 PIE Chart - Discount Data",
+                columns: ["Discount", "Usage", "Savings"],
+                schema: `{
+  "title": "Discounts Report",
+  "chartType": "pie",
+  "columns": ["Discount", "Usage", "Savings"] 
+}`,
+                tableData: [
+                    "10% Off | 156 | $2,400",
+                    "$5 Off | 89 | $445"
+                ]
+            },
+            locations: {
+                title: "Locations Report",
+                chartType: "map", 
+                chartText: "🗺️ MAP Chart - Location Data",
+                columns: ["Store", "Revenue", "Customers"],
+                schema: `{
+  "title": "Locations Report", 
+  "chartType": "map",
+  "columns": ["Store", "Revenue", "Customers"]
+}`,
+                tableData: [
+                    "Downtown | $45,200 | 892",
+                    "Mall | $32,100 | 654"
+                ]
+            }
+        };
+
+        function updateComponents(sourceType) {
+            const data = dataSources[sourceType];
+            
+            // Update active data source
+            document.querySelectorAll('.data-source').forEach(source => {
+                source.classList.remove('active');
+            });
+            document.getElementById(sourceType + '-source').classList.add('active');
+
+            // Update schema display
+            document.getElementById('schema-display').textContent = data.schema;
+
+            // Animate components updating
+            const chartComp = document.getElementById('chart-component');
+            const tableComp = document.getElementById('table-component');
+            
+            chartComp.classList.add('updating');
+            tableComp.classList.add('updating');
+
+            setTimeout(() => {
+                // Update chart
+                document.getElementById('chart-preview').textContent = data.chartText;
+                
+                // Update table
+                document.getElementById('table-header').textContent = data.columns.join(' | ');
+                const tableRows = document.querySelectorAll('.table-row');
+                data.tableData.forEach((rowData, index) => {
+                    if (tableRows[index]) {
+                        tableRows[index].textContent = rowData;
+                    }
+                });
+
+                // Show updated state
+                chartComp.classList.remove('updating');
+                chartComp.classList.add('updated');
+                tableComp.classList.remove('updating'); 
+                tableComp.classList.add('updated');
+
+                setTimeout(() => {
+                    chartComp.classList.remove('updated');
+                    tableComp.classList.remove('updated');
+                }, 1000);
+            }, 800);
+        }
+
+        // Add click handlers
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // Update active button
+                document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                
+                // Update components
+                const sourceType = e.target.dataset.source;
+                updateComponents(sourceType);
+            });
+        });
+
+        // Auto-demo
+        let currentIndex = 0;
+        const sources = ['items', 'discounts', 'locations'];
+        
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % sources.length;
+            const sourceType = sources[currentIndex];
+            
+            // Update button
+            document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+            document.querySelector(`[data-source="${sourceType}"]`).classList.add('active');
+            
+            // Update components
+            updateComponents(sourceType);
+        }, 4000);
+    </script>
+</body>
+</html>

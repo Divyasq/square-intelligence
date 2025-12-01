@@ -1,0 +1,10 @@
+Analysis Type,Current Capability,Missing Capability,Business Impact,Enhancement Priority
+Staff Void Patterns,✅ Can track by employee ID,"Employee names, roles, departments","Identify training needs, void abuse",HIGH
+Product Void Analysis,"✅ Item name, category, variation, SKU","Item notes, custom attributes, GTIN",Identify problematic products,MEDIUM
+Void Reason Analysis,✅ Detailed void reasons available,Categorized void reasons,Understand operational issues,LOW
+Location Void Patterns,✅ Location ID available,"Location names, sections within locations",Identify location-specific issues,MEDIUM
+Customer Void Impact,❌ No customer context,"Customer names, types, visit frequency",Understand customer impact of voids,HIGH
+Device-Specific Voids,❌ No device context,"Device info, device nicknames",Identify device-related void issues,MEDIUM
+Time-Based Void Analysis,✅ Void timing available,Enhanced time dimensions,"Peak void times, patterns",LOW
+Financial Void Impact,✅ Amount and quantity voided,"Cost basis, profit impact",True financial impact of voids,MEDIUM
+Operational Efficiency,✅ Basic void tracking,"Manager approvals, void workflows",Void approval processes,LOW

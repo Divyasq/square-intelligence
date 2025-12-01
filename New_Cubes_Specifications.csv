@@ -1,0 +1,6 @@
+Cube Name,Purpose,Key Fields,Primary Key,Relationships,Business Value,Priority,Implementation Complexity
+Sections,Master data for sections/departments,"section_id, section_name, section_description, location_id, is_active",section_id,Orders.section_id -> Sections.section_id,Departmental reporting and analysis,HIGH,MEDIUM
+Customers,Customer master data,"customer_id, customer_name, customer_email, customer_phone, customer_segment, created_at",customer_id,Orders.customer_id -> Customers.customer_id,Enhanced customer reporting,HIGH,MEDIUM
+Employees,Employee master data,"employee_id, employee_name, employee_role, employee_department, hire_date, is_active",employee_id,Orders.team_member_collected -> Employees.employee_id,Enhanced employee reporting,HIGH,MEDIUM
+OrderTags,Order tagging system,"order_id, tag_name, tag_value, created_at, created_by",order_id + tag_name,Orders.order_id -> OrderTags.order_id,Flexible order categorization,MEDIUM,LOW
+DeviceTypes,Device type master data,"device_type_id, device_type_name, device_category, capabilities",device_type_id,PaymentAndRefunds.device_type -> DeviceTypes.device_type_id,Device management and analysis,LOW,LOW

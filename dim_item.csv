@@ -1,0 +1,21 @@
+item_sk,item_id,item_name,item_description,item_type,category_sk,subcategory,brand,sku,barcode,unit_of_measure,current_price,cost_per_unit,profit_margin_percent,is_taxable,tax_rate,is_discountable,is_modifiable,preparation_time_minutes,calories,allergen_info,dietary_flags,is_active
+1,ITEM_001,Cappuccino,Classic cappuccino with steamed milk,PRODUCT,13,Espresso,House Blend,SKU_CAP_001,1234567890123,Each,4.25,1.15,72.94,TRUE,0.0875,TRUE,TRUE,3,120,Milk,Vegetarian,TRUE
+2,ITEM_002,Latte,Smooth latte with steamed milk,PRODUCT,13,Espresso,House Blend,SKU_LAT_001,1234567890124,Each,4.75,1.25,73.68,TRUE,0.0875,TRUE,TRUE,3,150,Milk,Vegetarian,TRUE
+3,ITEM_003,Americano,Bold americano coffee,PRODUCT,14,Brewed Coffee,House Blend,SKU_AME_001,1234567890125,Each,3.50,0.85,75.71,TRUE,0.0875,TRUE,TRUE,2,5,None,Vegan,TRUE
+4,ITEM_004,Mocha,Chocolate mocha latte,PRODUCT,13,Espresso,House Blend,SKU_MOC_001,1234567890126,Each,5.25,1.55,70.48,TRUE,0.0875,TRUE,TRUE,4,220,Milk,Vegetarian,TRUE
+5,ITEM_005,Green Tea,Premium green tea,PRODUCT,15,Tea,Premium,SKU_TEA_001,1234567890127,Each,3.25,0.75,76.92,TRUE,0.0875,TRUE,TRUE,4,0,None,Vegan,TRUE
+6,ITEM_006,Iced Coffee,Cold brew iced coffee,PRODUCT,6,Cold Drinks,House Blend,SKU_ICE_001,1234567890128,Each,3.75,0.95,74.67,TRUE,0.0875,TRUE,TRUE,2,10,None,Vegan,TRUE
+7,ITEM_007,Frappuccino,Blended ice coffee drink,PRODUCT,6,Cold Drinks,House Blend,SKU_FRA_001,1234567890129,Each,5.95,1.85,68.91,TRUE,0.0875,TRUE,TRUE,5,280,Milk,Vegetarian,TRUE
+8,ITEM_008,Club Sandwich,Turkey club sandwich,PRODUCT,7,Sandwiches,Deli,SKU_CLU_001,1234567890130,Each,8.95,3.25,63.69,TRUE,0.0875,TRUE,TRUE,8,450,Gluten Wheat,None,TRUE
+9,ITEM_009,Caesar Salad,Fresh caesar salad,PRODUCT,8,Salads,Fresh,SKU_CAE_001,1234567890131,Each,7.50,2.75,63.33,TRUE,0.0875,TRUE,TRUE,5,320,Dairy,Vegetarian,TRUE
+10,ITEM_010,Croissant,Butter croissant,PRODUCT,9,Pastries,Bakery,SKU_CRO_001,1234567890132,Each,3.95,1.25,68.35,TRUE,0.0875,TRUE,FALSE,0,280,Gluten Dairy,Vegetarian,TRUE
+11,ITEM_011,Muffin,Blueberry muffin,PRODUCT,9,Pastries,Bakery,SKU_MUF_001,1234567890133,Each,3.50,1.15,67.14,TRUE,0.0875,TRUE,FALSE,0,320,Gluten Dairy Eggs,Vegetarian,TRUE
+12,ITEM_012,Vanilla Ice Cream,Premium vanilla ice cream,PRODUCT,10,Ice Cream,Premium,SKU_ICE_002,1234567890134,Scoop,4.25,1.45,65.88,TRUE,0.0875,TRUE,TRUE,1,180,Dairy,Vegetarian,TRUE
+13,ITEM_013,Extra Shot,Additional espresso shot,MODIFIER,13,Espresso,House Blend,SKU_EXT_001,1234567890135,Each,0.75,0.25,66.67,TRUE,0.0875,FALSE,FALSE,0,75,None,Vegan,TRUE
+14,ITEM_014,Soy Milk,Soy milk substitute,MODIFIER,13,Milk Alternative,Premium,SKU_SOY_001,1234567890136,Each,0.65,0.20,69.23,TRUE,0.0875,FALSE,FALSE,0,25,Soy,Vegan,TRUE
+15,ITEM_015,Whipped Cream,Fresh whipped cream,MODIFIER,13,Toppings,Premium,SKU_WHI_001,1234567890137,Each,0.50,0.15,70.00,TRUE,0.0875,FALSE,FALSE,0,50,Dairy,Vegetarian,TRUE
+16,ITEM_016,Coffee Beans 1lb,House blend coffee beans,PRODUCT,11,Coffee Beans,House Blend,SKU_BEA_001,1234567890138,Pound,12.95,5.25,59.46,TRUE,0.0875,TRUE,FALSE,0,0,None,Vegan,TRUE
+17,ITEM_017,Logo Mug,Branded ceramic mug,PRODUCT,12,Mugs & Cups,Merchandise,SKU_MUG_001,1234567890139,Each,15.95,6.50,59.25,TRUE,0.0875,TRUE,FALSE,0,0,None,None,TRUE
+18,ITEM_018,Oat Milk,Oat milk substitute,MODIFIER,13,Milk Alternative,Premium,SKU_OAT_001,1234567890140,Each,0.75,0.25,66.67,TRUE,0.0875,FALSE,FALSE,0,30,Oats,Vegan,TRUE
+19,ITEM_019,Cinnamon,Cinnamon powder,MODIFIER,13,Spices,Basic,SKU_CIN_001,1234567890141,Each,0.25,0.05,80.00,TRUE,0.0875,FALSE,FALSE,0,5,None,Vegan,TRUE
+20,ITEM_020,Large Size,Upgrade to large size,MODIFIER,13,Size,Basic,SKU_LAR_001,1234567890142,Each,0.60,0.10,83.33,TRUE,0.0875,FALSE,FALSE,0,0,None,None,TRUE

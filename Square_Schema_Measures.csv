@@ -1,0 +1,11 @@
+Cube Name,Measure Name,Title,Description,Type,Aggregation Type,Format,Business Purpose
+Orders,Orders.count,Orders Count,Total number of orders,number,count,,Track order volume
+Orders,Orders.top_line_product_sales,Top Line Product Sales,"Gross Sales - top-line product sales without counting refunds, discounts, comps, tips, tax, fees, or gift card sales",number,sum,currency,Revenue measurement
+Orders,Orders.net_sales,Net Sales,Top line sales after discounts and itemized returns,number,sum,currency,True revenue after adjustments
+Orders,Orders.total_collected_amount,Total Collected Amount,"Total amount collected from the customer. Includes modifiers, discounts, tips, tax, gift card sales, returns, refunds, and cash rounding",number,sum,currency,Actual cash collected
+PaymentAndRefunds,PaymentAndRefunds.total_amount,Total Amount,"The total amount for the payment, including amount and tip, or the amount of money refunded",number,sum,currency,Payment processing tracking
+ItemTransactions,ItemTransactions.item_gross_sales,Item Gross Sales,"Gross sales amount (sales are positive, returns are negative)",number,sum,currency,Item-level revenue
+ItemTransactions,ItemTransactions.net_quantity,Net Quantity,"Net quantity (sales are positive, returns are negative)",number,sum,,Item volume tracking
+CustomerSnapshots,CustomerSnapshots.customers_first_purchase_at_merchant_count,New Customers Count,Count of new customers (first order with merchant),number,sum,,Customer acquisition
+Fees,Fees.amount_money,Fee Amount,The fee amount. Displayed as a negative value to represent costs incurred by the seller,number,sum,currency,Cost tracking
+Voids,Voids.total_amount_voided,Total Amount Voided,Total amount of voided line items,number,sum,currency,Loss tracking

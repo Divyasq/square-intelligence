@@ -1,0 +1,7 @@
+Metric Category,Current Dimensional Coverage,Missing Key Dimensions,Enhancement Priority,Recommended Actions,Business Impact
+Order-Level Metrics,EXCELLENT (10/13 dimensions),"Order Name, Section, Visit Frequency",HIGH,"Add order_name to Orders, create Sections cube, pre-calculate visit frequency",Complete order analysis capability
+Item-Level Metrics,MODERATE (4-6/13 dimensions),"Device, Employee, Customer Type, Order Completion",HIGH,Add joins to Orders/CustomerSnapshots cubes for full context,Enhanced product performance analysis
+Customer Metrics,LIMITED (4/13 dimensions),"Device, Channel, Employee, Location, Order Completion",MEDIUM,Enhance CustomerSnapshots with operational context,Better customer journey analysis
+Payment Metrics,MODERATE (5-6/13 dimensions),"Channel, Customer Type, Visit Frequency",MEDIUM,Add channel and customer context to payment analysis,Complete payment method analysis
+Operational Metrics (Voids),GOOD (6/13 dimensions),"Device, Channel, Customer Type",LOW,Add device and channel context for complete operational view,Enhanced operational efficiency tracking
+Master Data Metrics,VERY LIMITED (1/13 dimensions),All transactional dimensions,LOW,"These are reference data, not meant for transactional analysis",No enhancement needed - use for lookups only

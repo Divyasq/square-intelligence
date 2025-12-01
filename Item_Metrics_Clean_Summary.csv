@@ -1,0 +1,13 @@
+Item Metric,Available in Square?,Key Dimensions Available,Key Dimensions Missing,Coverage,Status
+Item Sales,✅ item_gross_sales,"Item Name, Category, Location, Order ID, Order Created, Units","Employee, Customer Type, Device, Section, Payment Method",6/46 (13%),🟡 LIMITED
+Net Item Sales,✅ item_net_sales,"Item Name, Category, Location, Order ID, Order Created, Units","Employee, Customer Type, Device, Section, Payment Method",6/46 (13%),🟡 LIMITED
+Tax,✅ item_tax_money,"Item Name, Category, Location, Order ID, Order Created, Units","Employee, Customer Type, Device, Section, Payment Method",6/46 (13%),🟡 LIMITED
+Discount Amount,✅ total_discount_and_comp_amount,"Discount Name, Item Type, Location, Order ID, Order Created","Item Name, Employee, Customer Type, Device, Section",6/46 (13%),🟡 LIMITED
+Comps,✅ comp_amount,"Discount Name, Item Type, Location, Order ID, Order Created","Item Name, Employee, Customer Type, Device, Section",6/46 (13%),🟡 LIMITED
+Void,✅ total_amount_voided,"Item Name, Category, Employee, Location, Void Reason, SKU, Item Variation","Customer Type, Device, Section, Payment Method",11/46 (24%),🟠 MODERATE
+Items Refunded,✅ items_returned_count,"Item Name, Category, Location, Order ID, Order Created, Units","Employee, Customer Type, Device, Section, Payment Method",6/46 (13%),🟡 LIMITED
+Items Sold,✅ items_sold_count,"Item Name, Category, Location, Order ID, Order Created, Units","Employee, Customer Type, Device, Section, Payment Method",6/46 (13%),🟡 LIMITED
+Units Sold,✅ net_quantity,"Item Name, Category, Location, Order ID, Order Created, Units","Employee, Customer Type, Device, Section, Payment Method",6/46 (13%),🟡 LIMITED
+Units Refunded,✅ item_quantity_returned,"Item Name, Category, Location, Order ID, Order Created, Units","Employee, Customer Type, Device, Section, Payment Method",6/46 (13%),🟡 LIMITED
+Returns,✅ returns_gross_amount,"Item Name, Category, Location, Order ID, Order Created, Units","Employee, Customer Type, Device, Section, Payment Method",6/46 (13%),🟡 LIMITED
+Variation Unit Cost,❌ NOT AVAILABLE,None,All dimensions,0/46 (0%),🔴 MISSING

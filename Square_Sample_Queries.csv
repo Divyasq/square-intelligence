@@ -1,0 +1,5 @@
+Query Purpose,Query Type,SQL Example,Expected Output
+Basic Gross Sales by Order,Simple Select,"SELECT order_id, top_line_product_sales AS gross_sales, created_at FROM Orders WHERE created_at >= ""2024-01-01""","Order ID, Gross Sales Amount, Order Date"
+Gross Sales with Customer Type,Join Query,"SELECT o.order_id, o.top_line_product_sales, cs.customers_first_purchase_at_merchant FROM Orders o LEFT JOIN CustomerSnapshots cs ON o.order_id = cs.id",Order details with new/returning customer flag
+Complete Analysis Query,Multi-Join,"SELECT o.order_id, o.top_line_product_sales, pr.device_nickname, c.channel_name, l.location_name, o.team_member_collected, cs.customers_first_purchase_at_merchant FROM Orders o LEFT JOIN CustomerSnapshots cs ON o.order_id = cs.id LEFT JOIN PaymentAndRefunds pr ON o.order_id = pr.order_id LEFT JOIN Location l ON o.location_id = l.location_id LEFT JOIN Channel c ON o.sales_channel_id = c.channel_id",All requested dimensions with gross sales
+Customer Visit Frequency,Aggregation,"SELECT customer_id, COUNT(*) as visit_frequency FROM Orders WHERE customer_id IS NOT NULL GROUP BY customer_id",Customer ID with visit count

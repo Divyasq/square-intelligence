@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Suite - AI Insights Mock</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .ai-action-center {
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .ai-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        
+        .ai-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+        
+        .ai-brain {
+            color: #6366f1;
+        }
+        
+        .ai-counters {
+            display: flex;
+            gap: 16px;
+            font-size: 14px;
+        }
+        
+        .ai-counter {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            background: #f3f4f6;
+        }
+        
+        .ai-counter.insights {
+            background: #ddd6fe;
+            color: #6366f1;
+        }
+        
+        .ai-counter.alerts {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        
+        .ai-insight {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            position: relative;
+        }
+        
+        .ai-insight.high-priority {
+            border-left: 4px solid #ef4444;
+            background: linear-gradient(135deg, #fef2f2 0%, #fef7f7 100%);
+        }
+        
+        .ai-insight.medium-priority {
+            border-left: 4px solid #f59e0b;
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+        }
+        
+        .ai-insight.opportunity {
+            border-left: 4px solid #10b981;
+            background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
+        }
+        
+        .ai-insight.predictive {
+            border-left: 4px solid #6366f1;
+            background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+        }
+        
+        .insight-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .insight-icon {
+            font-size: 18px;
+            margin-right: 8px;
+        }
+        
+        .insight-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: #1f2937;
+            flex: 1;
+        }
+        
+        .insight-badge {
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        
+        .badge-ai {
+            background: #ddd6fe;
+            color: #6366f1;
+        }
+        
+        .badge-urgent {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        
+        .badge-opportunity {
+            background: #d1fae5;
+            color: #059669;
+        }
+        
+        .badge-forecast {
+            background: #e0e7ff;
+            color: #4338ca;
+        }
+        
+        .insight-description {
+            font-size: 13px;
+            color: #6b7280;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+        
+        .insight-metrics {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+            font-size: 12px;
+        }
+        
+        .metric {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 6px;
+            min-width: 60px;
+        }
+        
+        .metric-label {
+            color: #6b7280;
+            font-weight: 500;
+        }
+        
+        .metric-value {
+            font-weight: 600;
+            color: #1f2937;
+            margin-top: 2px;
+        }
+        
+        .metric-value.positive {
+            color: #059669;
+        }
+        
+        .metric-value.negative {
+            color: #dc2626;
+        }
+        
+        .insight-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .action-btn {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .action-btn.primary {
+            background: #6366f1;
+            color: white;
+        }
+        
+        .action-btn.primary:hover {
+            background: #4f46e5;
+        }
+        
+        .action-btn.secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        .action-btn.secondary:hover {
+            background: #e5e7eb;
+        }
+        
+        .confidence-score {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 11px;
+            color: #6b7280;
+        }
+        
+        .confidence-bar {
+            width: 40px;
+            height: 3px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 2px;
+        }
+        
+        .confidence-fill {
+            height: 100%;
+            background: #10b981;
+            border-radius: 2px;
+        }
+        
+        .timestamp {
+            font-size: 11px;
+            color: #9ca3af;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="ai-action-center">
+        <div class="ai-header">
+            <div class="ai-title">
+                <span class="ai-brain">🧠</span>
+                AI Action Center
+            </div>
+            <div class="ai-counters">
+                <div class="ai-counter insights">
+                    <span>💡</span>
+                    <span>5 AI Insights</span>
+                </div>
+                <div class="ai-counter alerts">
+                    <span>⚠️</span>
+                    <span>2 Alerts</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- High Priority Cost Alert -->
+        <div class="ai-insight high-priority">
+            <div class="confidence-score">
+                Confidence: 94%
+                <div class="confidence-bar">
+                    <div class="confidence-fill" style="width: 94%"></div>
+                </div>
+            </div>
+            <div class="insight-header">
+                <div style="display: flex; align-items: center;">
+                    <span class="insight-icon">🔴</span>
+                    <span class="insight-title">Chicken Supply Cost Spike Detected</span>
+                </div>
+                <span class="insight-badge badge-urgent">Urgent</span>
+            </div>
+            <div class="insight-description">
+                Your primary chicken supplier (Sysco) has increased prices by 18% over the past 2 weeks, significantly above market average of 3%. This impacts 12 menu items and threatens your target food cost percentage.
+            </div>
+            <div class="insight-metrics">
+                <div class="metric">
+                    <span class="metric-label">Cost Impact</span>
+                    <span class="metric-value negative">+$340/week</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Margin Impact</span>
+                    <span class="metric-value negative">-4.2%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Items Affected</span>
+                    <span class="metric-value">12 items</span>
+                </div>
+            </div>
+            <div class="insight-actions">
+                <button class="action-btn primary">Switch to Alternative Supplier</button>
+                <button class="action-btn secondary">Adjust Menu Prices</button>
+                <button class="action-btn secondary">View Details</button>
+            </div>
+            <div class="timestamp">Generated 2 hours ago • Based on Order Guide data</div>
+        </div>
+
+        <!-- Predictive Staffing -->
+        <div class="ai-insight predictive">
+            <div class="confidence-score">
+                Confidence: 87%
+                <div class="confidence-bar">
+                    <div class="confidence-fill" style="width: 87%"></div>
+                </div>
+            </div>
+            <div class="insight-header">
+                <div style="display: flex; align-items: center;">
+                    <span class="insight-icon">🔮</span>
+                    <span class="insight-title">Weekend Rush Forecast: Increase Staffing</span>
+                </div>
+                <span class="insight-badge badge-forecast">Forecast</span>
+            </div>
+            <div class="insight-description">
+                Weather forecast shows 75°F and sunny this weekend, plus a local festival nearby. Historical patterns suggest 35% higher sales than typical weekends. Current staffing may be insufficient.
+            </div>
+            <div class="insight-metrics">
+                <div class="metric">
+                    <span class="metric-label">Predicted Sales</span>
+                    <span class="metric-value positive">+35%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Staff Needed</span>
+                    <span class="metric-value">+2 servers</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Revenue Lift</span>
+                    <span class="metric-value positive">$2,800</span>
+                </div>
+            </div>
+            <div class="insight-actions">
+                <button class="action-btn primary">Schedule Extra Staff</button>
+                <button class="action-btn secondary">View Forecast Details</button>
+            </div>
+            <div class="timestamp">Generated 4 hours ago • Weather + Event data</div>
+        </div>
+
+        <!-- Revenue Opportunity -->
+        <div class="ai-insight opportunity">
+            <div class="confidence-score">
+                Confidence: 82%
+                <div class="confidence-bar">
+                    <div class="confidence-fill" style="width: 82%"></div>
+                </div>
+            </div>
+            <div class="insight-header">
+                <div style="display: flex; align-items: center;">
+                    <span class="insight-icon">💰</span>
+                    <span class="insight-title">Menu Optimization Opportunity</span>
+                </div>
+                <span class="insight-badge badge-opportunity">Opportunity</span>
+            </div>
+            <div class="insight-description">
+                Your "Truffle Mac & Cheese" has 73% profit margin but only represents 2% of orders. Similar restaurants see 8-12% order rate for comparable items. Consider promotional strategy.
+            </div>
+            <div class="insight-metrics">
+                <div class="metric">
+                    <span class="metric-label">Current Orders</span>
+                    <span class="metric-value">2%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Profit Margin</span>
+                    <span class="metric-value positive">73%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Revenue Potential</span>
+                    <span class="metric-value positive">+$1,200/mo</span>
+                </div>
+            </div>
+            <div class="insight-actions">
+                <button class="action-btn primary">Create Promotion</button>
+                <button class="action-btn secondary">Menu Analysis</button>
+            </div>
+            <div class="timestamp">Generated 6 hours ago • Benchmarking data</div>
+        </div>
+
+        <!-- Customer Behavior -->
+        <div class="ai-insight medium-priority">
+            <div class="confidence-score">
+                Confidence: 91%
+                <div class="confidence-bar">
+                    <div class="confidence-fill" style="width: 91%"></div>
+                </div>
+            </div>
+            <div class="insight-header">
+                <div style="display: flex; align-items: center;">
+                    <span class="insight-icon">👥</span>
+                    <span class="insight-title">VIP Customer Engagement Drop</span>
+                </div>
+                <span class="insight-badge badge-ai">AI Insight</span>
+            </div>
+            <div class="insight-description">
+                3 of your top 10 VIP customers haven't visited in 14+ days, unusual for their typical 5-day frequency. Combined CLV at risk: $8,400. Proactive outreach recommended.
+            </div>
+            <div class="insight-metrics">
+                <div class="metric">
+                    <span class="metric-label">Customers</span>
+                    <span class="metric-value">3 VIPs</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">CLV at Risk</span>
+                    <span class="metric-value negative">$8,400</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Days Since Visit</span>
+                    <span class="metric-value">14-18 days</span>
+                </div>
+            </div>
+            <div class="insight-actions">
+                <button class="action-btn primary">Send Personalized Offers</button>
+                <button class="action-btn secondary">View Customer Details</button>
+            </div>
+            <div class="timestamp">Generated 1 day ago • Customer behavior analysis</div>
+        </div>
+
+        <!-- Cash Flow Prediction -->
+        <div class="ai-insight predictive">
+            <div class="confidence-score">
+                Confidence: 88%
+                <div class="confidence-bar">
+                    <div class="confidence-fill" style="width: 88%"></div>
+                </div>
+            </div>
+            <div class="insight-header">
+                <div style="display: flex; align-items: center;">
+                    <span class="insight-icon">📊</span>
+                    <span class="insight-title">Cash Flow Optimization Alert</span>
+                </div>
+                <span class="insight-badge badge-forecast">Forecast</span>
+            </div>
+            <div class="insight-description">
+                Based on Bill Pay data and sales trends, you'll have $12K excess cash in 2 weeks. Consider early vendor payment discounts or equipment investment to optimize cash utilization.
+            </div>
+            <div class="insight-metrics">
+                <div class="metric">
+                    <span class="metric-label">Excess Cash</span>
+                    <span class="metric-value positive">$12,000</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Early Pay Savings</span>
+                    <span class="metric-value positive">$240</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Timeline</span>
+                    <span class="metric-value">2 weeks</span>
+                </div>
+            </div>
+            <div class="insight-actions">
+                <button class="action-btn primary">Optimize Payments</button>
+                <button class="action-btn secondary">Cash Flow Forecast</button>
+            </div>
+            <div class="timestamp">Generated 3 hours ago • Bill Pay + Sales data</div>
+        </div>
+    </div>
+</body>
+</html>

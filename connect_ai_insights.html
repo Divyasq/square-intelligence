@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONNECT Phase - AI Action Center Cards</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .ai-action-center {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            max-width: 800px;
+        }
+        
+        .ai-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .ai-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+        
+        .ai-brain {
+            font-size: 20px;
+            color: #6366f1;
+        }
+        
+        .phase-badge {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .ai-counters {
+            display: flex;
+            gap: 16px;
+            font-size: 14px;
+        }
+        
+        .ai-counter {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: #f3f4f6;
+            font-weight: 500;
+        }
+        
+        .ai-counter.insights {
+            background: #ddd6fe;
+            color: #6366f1;
+        }
+        
+        .ai-insight {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ai-insight::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899);
+        }
+        
+        .ai-insight.cost-alert {
+            border-left: 4px solid #ef4444;
+            background: linear-gradient(135deg, #fef2f2 0%, #fef7f7 100%);
+        }
+        
+        .ai-insight.forecast {
+            border-left: 4px solid #10b981;
+            background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
+        }
+        
+        .insight-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        
+        .insight-icon-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+        
+        .insight-icon {
+            font-size: 20px;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .insight-icon.cost {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        
+        .insight-icon.forecast {
+            background: #d1fae5;
+            color: #059669;
+        }
+        
+        .insight-title {
+            font-weight: 600;
+            font-size: 16px;
+            color: #1f2937;
+            line-height: 1.3;
+        }
+        
+        .insight-badge {
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .badge-urgent {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        
+        .badge-opportunity {
+            background: #d1fae5;
+            color: #059669;
+        }
+        
+        .insight-description {
+            font-size: 14px;
+            color: #4b5563;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+        
+        .data-sources {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .data-source {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 16px;
+            font-size: 11px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+        
+        .insight-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+            padding: 16px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 8px;
+        }
+        
+        .metric {
+            text-align: center;
+        }
+        
+        .metric-label {
+            color: #6b7280;
+            font-weight: 500;
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+        
+        .metric-value {
+            font-weight: 700;
+            color: #1f2937;
+            font-size: 16px;
+        }
+        
+        .metric-value.negative {
+            color: #dc2626;
+        }
+        
+        .metric-value.positive {
+            color: #059669;
+        }
+        
+        .recommendation-box {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border: 1px solid #0ea5e9;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .recommendation-title {
+            font-weight: 600;
+            color: #0c4a6e;
+            font-size: 13px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .recommendation-text {
+            color: #0c4a6e;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        
+        .insight-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .action-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .action-btn.primary {
+            background: #6366f1;
+            color: white;
+        }
+        
+        .action-btn.primary:hover {
+            background: #4f46e5;
+            transform: translateY(-1px);
+        }
+        
+        .action-btn.secondary {
+            background: #f3f4f6;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+        
+        .action-btn.secondary:hover {
+            background: #e5e7eb;
+        }
+        
+        .confidence-score {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            text-align: center;
+        }
+        
+        .confidence-label {
+            font-size: 10px;
+            color: #6b7280;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .confidence-bar {
+            width: 50px;
+            height: 4px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 4px 0;
+        }
+        
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #059669);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        
+        .confidence-value {
+            font-size: 12px;
+            font-weight: 600;
+            color: #059669;
+        }
+        
+        .timestamp {
+            font-size: 11px;
+            color: #9ca3af;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #f3f4f6;
+        }
+        
+        .connect-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="ai-action-center">
+        <div class="ai-header">
+            <div class="ai-title">
+                <span class="ai-brain">🧠</span>
+                AI Action Center
+                <span class="phase-badge">Connect Phase</span>
+            </div>
+            <div class="ai-counters">
+                <div class="ai-counter insights">
+                    <span>🤖</span>
+                    <span>2 AI Insights</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cost Alert Insight -->
+        <div class="ai-insight cost-alert">
+            <div class="confidence-score">
+                <div class="confidence-label">Confidence</div>
+                <div class="confidence-bar">
+                    <div class="confidence-fill" style="width: 94%"></div>
+                </div>
+                <div class="confidence-value">94%</div>
+            </div>
+            
+            <div class="insight-header">
+                <div class="insight-icon-title">
+                    <div class="insight-icon cost">🚨</div>
+                    <div class="insight-title">Food Cost Percentage Spike Detected</div>
+                </div>
+                <span class="insight-badge badge-urgent">Urgent Action</span>
+            </div>
+            
+            <div class="insight-description">
+                Your food cost percentage spiked because chicken prices rose 12% across your suppliers over the past 2 weeks. This affects 8 menu items and threatens your target 28% food cost ratio.
+            </div>
+            
+            <div class="data-sources">
+                <div class="data-source">
+                    <span>🛒</span> Order Guide
+                </div>
+                <div class="data-source">
+                    <span>💳</span> Bill Pay
+                </div>
+                <div class="data-source">
+                    <span>📊</span> Market Data
+                </div>
+                <div class="data-source">
+                    <span>📈</span> POS Analytics
+                </div>
+            </div>
+            
+            <div class="insight-metrics">
+                <div class="metric">
+                    <div class="metric-label">Price Increase</div>
+                    <div class="metric-value negative">+12%</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Cost Impact</div>
+                    <div class="metric-value negative">+$420/week</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Items Affected</div>
+                    <div class="metric-value">8 items</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Food Cost %</div>
+                    <div class="metric-value negative">31.2%</div>
+                </div>
+            </div>
+            
+            <div class="recommendation-box">
+                <div class="recommendation-title">
+                    💡 AI Recommendation
+                </div>
+                <div class="recommendation-text">
+                    Switch to Alternative Supplier: "Fresh Farm Direct" offers chicken at 8% lower cost with same quality rating. Estimated savings: $280/week. Contract terms available for 6-month lock-in pricing.
+                </div>
+            </div>
+            
+            <div class="insight-actions">
+                <button class="action-btn primary">
+                    🔄 Switch to Recommended Supplier
+                </button>
+                <button class="action-btn secondary">
+                    📊 Compare All Suppliers
+                </button>
+                <button class="action-btn secondary">
+                    💰 Adjust Menu Pricing
+                </button>
+            </div>
+            
+            <div class="timestamp">
+                Generated 3 hours ago • Multi-source analysis: Order Guide pricing + Bill Pay actuals + Market benchmarks
+            </div>
+        </div>
+
+        <!-- Weekend Forecast Insight -->
+        <div class="ai-insight forecast">
+            <div class="confidence-score">
+                <div class="confidence-label">Confidence</div>
+                <div class="confidence-bar">
+                    <div class="confidence-fill" style="width: 89%"></div>
+                </div>
+                <div class="confidence-value">89%</div>
+            </div>
+            
+            <div class="insight-header">
+                <div class="insight-icon-title">
+                    <div class="insight-icon forecast">🎯</div>
+                    <div class="insight-title">Weekend Sales Lift Opportunity</div>
+                </div>
+                <span class="insight-badge badge-opportunity">Revenue Opportunity</span>
+            </div>
+            
+            <div class="insight-description">
+                Expect a 20% sales lift this weekend due to a local festival and good weather (75°F, sunny). Historical data shows similar conditions drive 35% higher patio sales and 15% overall increase.
+            </div>
+            
+            <div class="data-sources">
+                <div class="data-source">
+                    <span>🌤️</span> Weather API
+                </div>
+                <div class="data-source">
+                    <span>📅</span> Local Events
+                </div>
+                <div class="data-source">
+                    <span>📊</span> Historical POS
+                </div>
+                <div class="data-source">
+                    <span>👥</span> Staffing Data
+                </div>
+            </div>
+            
+            <div class="insight-metrics">
+                <div class="metric">
+                    <div class="metric-label">Sales Lift</div>
+                    <div class="metric-value positive">+20%</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Revenue Boost</div>
+                    <div class="metric-value positive">+$2,800</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Patio Sales</div>
+                    <div class="metric-value positive">+35%</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Staff Needed</div>
+                    <div class="metric-value">+2 servers</div>
+                </div>
+            </div>
+            
+            <div class="recommendation-box">
+                <div class="recommendation-title">
+                    🎯 Staffing & Ordering Plan
+                </div>
+                <div class="recommendation-text">
+                    Add 2 servers for Saturday (12pm-8pm) and 1 for Sunday (11am-6pm). Increase patio prep by 40% and order extra: chicken (25 lbs), beer inventory (+30%), and ice (+50%). Total labor cost: $340, ROI: 720%.
+                </div>
+            </div>
+            
+            <div class="insight-actions">
+                <button class="action-btn primary">
+                    📅 Auto-Schedule Extra Staff
+                </button>
+                <button class="action-btn secondary">
+                    📦 Adjust Inventory Orders
+                </button>
+                <button class="action-btn secondary">
+                    📈 View Detailed Forecast
+                </button>
+            </div>
+            
+            <div class="timestamp">
+                Generated 6 hours ago • External context analysis: Weather forecast + Festival calendar + Historical patterns
+            </div>
+        </div>
+    </div>
+</body>
+</html>

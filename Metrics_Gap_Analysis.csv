@@ -1,0 +1,7 @@
+Requested Metric,Current Availability,Available In Cube,Available Field,Data Type,Status,Gap Description,Recommended Enhancement,Priority,Implementation Notes
+Gross Sales,AVAILABLE,Orders,top_line_product_sales,Currency,✅ COMPLETE,No gap - perfect match,None needed,N/A,Already available as requested
+Order Name/Title,MISSING,None,N/A,String,❌ MISSING,No human-readable order names,Add order_name field to Orders cube,HIGH,Would need to be populated from order creation or allow custom naming
+Order Description,MISSING,None,N/A,String,❌ MISSING,No order descriptions,Add order_description field to Orders cube,MEDIUM,Optional field for order notes/descriptions
+Section/Department,MISSING,None,N/A,String,❌ MISSING,No section/department concept,Add section_id and section_name to Orders/Location cubes,HIGH,Would need business logic to define sections
+Order Priority,MISSING,None,N/A,String,❌ MISSING,No order priority levels,Add order_priority field to Orders cube,LOW,"Values like HIGH, MEDIUM, LOW, RUSH"
+Order Source Detail,PARTIAL,Orders,source,String,⚠️ BASIC,Basic source info available,Enhance source field with more detail,MEDIUM,Current source field could be more descriptive

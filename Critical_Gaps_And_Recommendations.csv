@@ -1,0 +1,6 @@
+Gap Type,Description,Impact,Recommendation,Priority,Effort
+Missing Metrics,"Service Charges, Average Cover Count, Covers not available",Cannot analyze service charges or cover-based metrics,Add these metrics to Orders cube or create new cube,MEDIUM,HIGH
+Missing Order Names,No human-readable order names,Reports show IDs instead of names,Add order_name field to Orders cube,HIGH,MEDIUM
+Missing Sections,No section/department concept,Cannot do departmental analysis,Create Sections cube + add relationships,HIGH,HIGH
+Customer Frequency Limited,Customer metrics have limited dimensional support,Customer analysis lacks operational context,Enhance CustomerSnapshots with more joins,MEDIUM,MEDIUM
+Visit Frequency Calculation,Customer visit frequency not pre-calculated,"Must calculate on-demand, slower queries",Pre-calculate and store visit frequency,MEDIUM,MEDIUM

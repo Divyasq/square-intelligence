@@ -1,0 +1,16 @@
+category_sk,category_id,category_name,category_description,parent_category_sk,category_level,category_path,display_order,is_active
+1,CAT_001,Food,All food items,,1,Food,1,TRUE
+2,CAT_002,Beverages,All beverage items,,1,Beverages,2,TRUE
+3,CAT_003,Desserts,Sweet treats and desserts,,1,Desserts,3,TRUE
+4,CAT_004,Merchandise,Retail merchandise and gifts,,1,Merchandise,4,TRUE
+5,CAT_005,Hot Drinks,Coffee tea and hot beverages,2,2,Beverages/Hot Drinks,1,TRUE
+6,CAT_006,Cold Drinks,Iced drinks and cold beverages,2,2,Beverages/Cold Drinks,2,TRUE
+7,CAT_007,Sandwiches,Sandwiches and wraps,1,2,Food/Sandwiches,1,TRUE
+8,CAT_008,Salads,Fresh salads and bowls,1,2,Food/Salads,2,TRUE
+9,CAT_009,Pastries,Baked goods and pastries,3,2,Desserts/Pastries,1,TRUE
+10,CAT_010,Ice Cream,Ice cream and frozen treats,3,2,Desserts/Ice Cream,2,TRUE
+11,CAT_011,Coffee Beans,Retail coffee beans,4,2,Merchandise/Coffee Beans,1,TRUE
+12,CAT_012,Mugs & Cups,Branded drinkware,4,2,Merchandise/Mugs & Cups,2,TRUE
+13,CAT_013,Espresso,Espresso-based drinks,5,3,Beverages/Hot Drinks/Espresso,1,TRUE
+14,CAT_014,Brewed Coffee,Drip and pour-over coffee,5,3,Beverages/Hot Drinks/Brewed Coffee,2,TRUE
+15,CAT_015,Tea,Hot tea varieties,5,3,Beverages/Hot Drinks/Tea,3,TRUE

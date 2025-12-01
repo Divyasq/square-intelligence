@@ -1,0 +1,7 @@
+Dimension Category,Available Dimensions,Unique Advantages,Missing Dimensions,Enhancement Value
+✅ ITEM CONTEXT (EXCELLENT),"Item Name, Category, Item Type, Item Variation, SKU",Most detailed item context of any cube,"Item Notes, GTIN, Custom Attributes",Medium - already very good
+✅ OPERATIONAL CONTEXT (GOOD),"Employee (void performer), Location, Void Reason, Order ID",Unique void reason tracking,"Manager, Section, Device",High - add operational context
+✅ TIMING CONTEXT (GOOD),"Order Created, Order Completed (void timing)",Both creation and void timestamps,Enhanced time dimensions,Low - timing is adequate
+❌ CUSTOMER CONTEXT (MISSING),None,N/A,"Customer Name, Customer Type, Visit Frequency",High - understand customer impact
+❌ DEVICE CONTEXT (MISSING),None,N/A,"Device, Device Nickname",Medium - identify device issues
+❌ RESTAURANT CONTEXT (MISSING),None,N/A,"Section, Menu, Dining Options, Manager",Medium - departmental analysis

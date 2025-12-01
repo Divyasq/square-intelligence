@@ -1,0 +1,18 @@
+Customer_Segment,Category,Gross_Sales,Sales_Percentage,Customer_Count,Customer_Percentage,Transaction_Count,Average_Margin,Top_Items
+VIP,Espresso,17.05,11.6%,4,26.7%,6,74.4%,"Cappuccino(2), Extra Shot(1), Cinnamon(1)"
+Inactive,Coffee Beans,15.95,10.8%,1,6.7%,1,59.5%,Coffee Beans 1lb(1)
+Regular,Espresso,15.15,10.3%,4,26.7%,5,71.2%,"Latte(2), Soy Milk(1), Oat Milk(1)"
+New,Ice Cream,12.95,8.8%,1,6.7%,1,65.9%,Vanilla Ice Cream(1)
+Regular,Cold Drinks,11.25,7.6%,2,13.3%,2,71.8%,"Frappuccino(1), Iced Coffee(1)"
+New,Espresso,10.00,6.8%,1,6.7%,2,72.1%,"Mocha(1), Latte(1)"
+Regular,Sandwiches,8.95,6.1%,1,6.7%,1,63.7%,Club Sandwich(1)
+Inactive,Sandwiches,8.95,6.1%,1,6.7%,1,63.7%,Club Sandwich(1)
+Regular,Pastries,7.75,5.3%,2,13.3%,2,67.7%,"Croissant(1), Muffin(1)"
+Regular,Salads,7.50,5.1%,1,6.7%,1,63.3%,Caesar Salad(1)
+Regular,Brewed Coffee,7.00,4.7%,2,13.3%,2,75.7%,Americano(2)
+New,Cold Drinks,5.95,4.0%,1,6.7%,1,68.9%,Frappuccino(1)
+Regular,Mugs & Cups,4.25,2.9%,1,6.7%,1,59.2%,Logo Mug(1)
+VIP,Salads,3.95,2.7%,1,6.7%,1,63.3%,Caesar Salad(1)
+VIP,Pastries,3.95,2.7%,1,6.7%,1,68.3%,Croissant(1)
+VIP,Brewed Coffee,3.75,2.5%,1,6.7%,1,75.7%,Americano(1)
+Regular,Tea,3.25,2.2%,1,6.7%,1,76.9%,Green Tea(1)

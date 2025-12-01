@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Square Neighborhood Profiles Dashboard Mockups</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #1a1a1a;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .widget-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .widget {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .widget-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .widget-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .widget-subtitle {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .calendar-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f8f9fa;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #e1e5e9;
+            font-size: 14px;
+            color: #1a1a1a;
+        }
+
+        .metric-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            margin-bottom: 12px;
+        }
+
+        .metric-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .metric-change {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .metric-change.positive {
+            color: #0d7c2a;
+        }
+
+        .metric-change.negative {
+            color: #d73027;
+        }
+
+        .percentage-bar {
+            width: 100%;
+            height: 8px;
+            background: #e1e5e9;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 8px 0;
+        }
+
+        .percentage-fill {
+            height: 100%;
+            background: #1976d2;
+            transition: width 0.3s ease;
+        }
+
+        .channel-breakdown {
+            display: flex;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .channel-item {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .channel-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .channel-label {
+            font-size: 11px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .chart-container {
+            height: 200px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 14px;
+            margin: 16px 0;
+        }
+
+        .fee-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 16px 0;
+        }
+
+        .fee-item {
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .fee-amount {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .fee-type {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .customer-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .customer-metric {
+            text-align: center;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .customer-number {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .customer-label {
+            font-size: 11px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .cash-activity {
+            display: flex;
+            justify-content: space-between;
+            margin: 16px 0;
+        }
+
+        .cash-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .cash-amount {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .cash-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .view-details-btn {
+            background: #1976d2;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 12px;
+        }
+
+        .view-details-btn:hover {
+            background: #1565c0;
+        }
+
+        .blue-bar { background: #1976d2; }
+        .green-bar { background: #0d7c2a; }
+        .purple-bar { background: #7b1fa2; }
+        .orange-bar { background: #f57c00; }
+
+        .legend {
+            display: flex;
+            gap: 16px;
+            margin-top: 12px;
+            font-size: 12px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Neighborhood Profiles Dashboard</h1>
+            <p>Track your local business performance and Cash Local program metrics</p>
+            
+            <div style="margin-top: 16px;">
+                <div class="calendar-selector">
+                    📅 Oct 28 - Prior day | Closed
+                </div>
+            </div>
+        </div>
+
+        <!-- Widget Grid -->
+        <div class="widget-grid">
+            
+            <!-- Ordering Profile Metrics Widget -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div>
+                        <div class="widget-title">Ordering Profile Metrics</div>
+                        <div class="widget-subtitle">Net & Gross Sales by Source</div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div>
+                        <div class="metric-label">Total Sales</div>
+                        <div class="metric-value">$2,847.63</div>
+                    </div>
+                    <div class="metric-change positive">↗ +12.7%</div>
+                </div>
+
+                <div class="channel-breakdown">
+                    <div class="channel-item">
+                        <div class="channel-value">$1,895.20</div>
+                        <div class="channel-label">Cash Local</div>
+                        <div style="font-size: 10px; color: #0d7c2a; margin-top: 2px;">66.5%</div>
+                    </div>
+                    <div class="channel-item">
+                        <div class="channel-value">$952.43</div>
+                        <div class="channel-label">Other Channels</div>
+                        <div style="font-size: 10px; color: #666; margin-top: 2px;">33.5%</div>
+                    </div>
+                </div>
+
+                <!-- Revenue Breakdown Bar -->
+                <div style="margin: 16px 0;">
+                    <div style="font-size: 12px; color: #666; margin-bottom: 8px;">Revenue by Source</div>
+                    <div style="display: flex; height: 24px; border-radius: 4px; overflow: hidden;">
+                        <div style="background: #1976d2; width: 66.5%; display: flex; align-items: center; justify-content: center; color: white; font-size: 11px; font-weight: 600;">Cash Local</div>
+                        <div style="background: #e1e5e9; width: 33.5%; display: flex; align-items: center; justify-content: center; color: #666; font-size: 11px;">Other</div>
+                    </div>
+                </div>
+
+                <button class="view-details-btn">View Sales Summary →</button>
+            </div>
+
+            <!-- Fee Breakdown Widget -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div>
+                        <div class="widget-title">Fee Breakdown</div>
+                        <div class="widget-subtitle">Compare fees by channel</div>
+                    </div>
+                </div>
+
+                <div class="fee-comparison">
+                    <div class="fee-item">
+                        <div class="fee-type">3P Delivery Fees</div>
+                        <div class="fee-amount">$142.85</div>
+                        <div style="font-size: 10px; color: #d73027; margin-top: 4px;">15.0% of sales</div>
+                    </div>
+                    <div class="fee-item">
+                        <div class="fee-type">Cash Local Fees</div>
+                        <div class="fee-amount">$56.86</div>
+                        <div style="font-size: 10px; color: #0d7c2a; margin-top: 4px;">3.0% of sales</div>
+                    </div>
+                </div>
+
+                <div style="margin: 16px 0;">
+                    <div style="font-size: 12px; color: #666; margin-bottom: 8px;">Fee Savings with Cash Local</div>
+                    <div class="metric-card" style="background: #e8f5e8;">
+                        <div>
+                            <div class="metric-label">Total Savings</div>
+                            <div class="metric-value" style="color: #0d7c2a;">$85.99</div>
+                        </div>
+                        <div style="font-size: 12px; color: #0d7c2a; font-weight: 600;">12% reduction</div>
+                    </div>
+                </div>
+
+                <button class="view-details-btn">View Fee Report →</button>
+            </div>
+
+            <!-- Customer Insights Widget -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div>
+                        <div class="widget-title">Customer Insights</div>
+                        <div class="widget-subtitle">ROI signals for Cash Local</div>
+                    </div>
+                </div>
+
+                <div class="customer-metrics">
+                    <div class="customer-metric">
+                        <div class="customer-number">68%</div>
+                        <div class="customer-label">New Customers</div>
+                    </div>
+                    <div class="customer-metric">
+                        <div class="customer-number">32%</div>
+                        <div class="customer-label">Repeat Customers</div>
+                    </div>
+                    <div class="customer-metric">
+                        <div class="customer-number">2.4</div>
+                        <div class="customer-label">Avg Visits</div>
+                    </div>
+                </div>
+
+                <div style="margin: 16px 0;">
+                    <div style="font-size: 12px; color: #666; margin-bottom: 8px;">Average Spend Comparison</div>
+                    <div class="channel-breakdown">
+                        <div class="channel-item">
+                            <div class="channel-value">$28.50</div>
+                            <div class="channel-label">Cash Local</div>
+                            <div style="font-size: 10px; color: #0d7c2a; margin-top: 2px;">+15% vs other</div>
+                        </div>
+                        <div class="channel-item">
+                            <div class="channel-value">$24.75</div>
+                            <div class="channel-label">All Channels</div>
+                            <div style="font-size: 10px; color: #666; margin-top: 2px;">baseline</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin: 16px 0;">
+                    <div style="font-size: 12px; color: #666; margin-bottom: 8px;">Visit Frequency Distribution</div>
+                    <div style="display: flex; gap: 4px; height: 40px; align-items: end;">
+                        <div style="background: #1976d2; width: 25%; height: 80%; border-radius: 2px;"></div>
+                        <div style="background: #42a5f5; width: 25%; height: 60%; border-radius: 2px;"></div>
+                        <div style="background: #90caf9; width: 25%; height: 40%; border-radius: 2px;"></div>
+                        <div style="background: #e3f2fd; width: 25%; height: 20%; border-radius: 2px;"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 10px; color: #666; margin-top: 4px;">
+                        <span>1 visit</span>
+                        <span>2-3 visits</span>
+                        <span>4-5 visits</span>
+                        <span>6+ visits</span>
+                    </div>
+                </div>
+
+                <button class="view-details-btn">View Customer Report →</button>
+            </div>
+
+            <!-- Neighborhoods Metrics Widget (Next Phase) -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div>
+                        <div class="widget-title">Local Cash Activity</div>
+                        <div class="widget-subtitle">Cash earned, redeemed & spent per seller</div>
+                    </div>
+                </div>
+
+                <div class="cash-activity">
+                    <div class="cash-item">
+                        <div class="cash-amount">$485.20</div>
+                        <div class="cash-label">Cash Earned</div>
+                        <div style="font-size: 10px; color: #0d7c2a; margin-top: 2px;">↗ +8.5%</div>
+                    </div>
+                    <div class="cash-item">
+                        <div class="cash-amount">$312.40</div>
+                        <div class="cash-label">Cash Redeemed</div>
+                        <div style="font-size: 10px; color: #1976d2; margin-top: 2px;">64% usage</div>
+                    </div>
+                    <div class="cash-item">
+                        <div class="cash-amount">$172.80</div>
+                        <div class="cash-label">Outstanding</div>
+                        <div style="font-size: 10px; color: #666; margin-top: 2px;">36% balance</div>
+                    </div>
+                </div>
+
+                <div style="margin: 16px 0;">
+                    <div style="font-size: 12px; color: #666; margin-bottom: 8px;">Cash Flow Trend (7 days)</div>
+                    <div class="chart-container">
+                        <div style="display: flex; gap: 8px; align-items: end; height: 100px;">
+                            <div style="background: #1976d2; width: 20px; height: 60%; border-radius: 2px;"></div>
+                            <div style="background: #1976d2; width: 20px; height: 80%; border-radius: 2px;"></div>
+                            <div style="background: #1976d2; width: 20px; height: 45%; border-radius: 2px;"></div>
+                            <div style="background: #1976d2; width: 20px; height: 90%; border-radius: 2px;"></div>
+                            <div style="background: #1976d2; width: 20px; height: 70%; border-radius: 2px;"></div>
+                            <div style="background: #1976d2; width: 20px; height: 85%; border-radius: 2px;"></div>
+                            <div style="background: #42a5f5; width: 20px; height: 100%; border-radius: 2px;"></div>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 10px; color: #666;">
+                        <span>Mon</span>
+                        <span>Tue</span>
+                        <span>Wed</span>
+                        <span>Thu</span>
+                        <span>Fri</span>
+                        <span>Sat</span>
+                        <span>Sun</span>
+                    </div>
+                </div>
+
+                <div style="background: #f0f7ff; padding: 12px; border-radius: 6px; margin: 16px 0;">
+                    <div style="font-size: 12px; font-weight: 600; color: #1976d2; margin-bottom: 4px;">💡 Insight</div>
+                    <div style="font-size: 11px; color: #666;">Weekend cash redemption is 40% higher. Consider weekend-specific promotions.</div>
+                </div>
+
+                <button class="view-details-btn">Explore Cash Analytics →</button>
+            </div>
+
+        </div>
+
+        <!-- Summary Stats Row -->
+        <div class="widget" style="margin-bottom: 20px;">
+            <div class="widget-header">
+                <div>
+                    <div class="widget-title">Neighborhood Performance Summary</div>
+                    <div class="widget-subtitle">Key metrics across all channels</div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                <div class="metric-card">
+                    <div>
+                        <div class="metric-label">Total Transactions</div>
+                        <div class="metric-value">127</div>
+                    </div>
+                    <div class="metric-change positive">↗ +5.2%</div>
+                </div>
+                <div class="metric-card">
+                    <div>
+                        <div class="metric-label">Avg Order Value</div>
+                        <div class="metric-value">$22.42</div>
+                    </div>
+                    <div class="metric-change positive">↗ +7.1%</div>
+                </div>
+                <div class="metric-card">
+                    <div>
+                        <div class="metric-label">Cash Local Adoption</div>
+                        <div class="metric-value">66.5%</div>
+                    </div>
+                    <div class="metric-change positive">↗ +12.3%</div>
+                </div>
+                <div class="metric-card">
+                    <div>
+                        <div class="metric-label">Customer Retention</div>
+                        <div class="metric-value">32%</div>
+                    </div>
+                    <div class="metric-change positive">↗ +2.8%</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+Metric,Available in Square?,Dimensions Available,Dimensions Missing,Coverage Score,Status
+Gross Sales,✅ YES (top_line_product_sales),10/13,"Order Name, Section, Visit Frequency",77%,🟢 EXCELLENT
+Net Sales,✅ YES (net_sales),10/13,"Order Name, Section, Visit Frequency",77%,🟢 EXCELLENT
+Refunds,✅ YES (refunds_by_amount_amount),10/13,"Order Name, Section, Visit Frequency",77%,🟢 EXCELLENT
+Transaction Counts,✅ YES (count),10/13,"Order Name, Section, Visit Frequency",77%,🟢 EXCELLENT
+Discount,✅ YES (discounts_amount),10/13,"Order Name, Section, Visit Frequency",77%,🟢 EXCELLENT
+Returns,✅ YES (itemized_returns),10/13,"Order Name, Section, Visit Frequency",77%,🟢 EXCELLENT
+Service Charges,❌ NO,0/13,ALL DIMENSIONS,0%,🔴 NOT AVAILABLE
+Tax,✅ YES (sales_tax_amount),10/13,"Order Name, Section, Visit Frequency",77%,🟢 EXCELLENT
+Tip,✅ YES (tips_amount),10/13,"Order Name, Section, Visit Frequency",77%,🟢 EXCELLENT
+Average Cover Count,❌ NO,0/13,ALL DIMENSIONS,0%,🔴 NOT AVAILABLE
+Covers,❌ NO,0/13,ALL DIMENSIONS,0%,🔴 NOT AVAILABLE
+Customer Frequency,⚠️ PARTIAL,4/13,"Order Name, Device, Device Nickname, Channel, Section, Employee, Location, Order Completed, Visit Frequency",31%,🟡 LIMITED

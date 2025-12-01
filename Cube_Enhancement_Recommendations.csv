@@ -1,0 +1,16 @@
+Cube Name,Enhancement Type,New Field Name,Data Type,Description,Business Value,Priority,Implementation Complexity,Dependencies
+Orders,New Dimension,order_name,String,Human-readable order name/title,Better order identification and reporting,HIGH,MEDIUM,UI changes for order naming
+Orders,New Dimension,section_id,String,Section/department identifier,Departmental analysis and reporting,HIGH,HIGH,Business logic to define sections
+Orders,New Dimension,section_name,String,Section/department name,Readable section names for reports,HIGH,MEDIUM,Section master data
+Orders,New Dimension,order_tags,String Array,Custom tags for orders,Flexible order categorization,MEDIUM,MEDIUM,Tagging system implementation
+Orders,New Dimension,order_notes,String,Order-level notes/comments,Additional context for orders,MEDIUM,LOW,UI for note entry
+Orders,New Dimension,fulfillment_method,String,How order will be fulfilled,Fulfillment analysis,MEDIUM,MEDIUM,Business process definition
+Orders,New Dimension,customer_name,String,Customer display name,Readable customer identification,HIGH,LOW,Customer data integration
+Orders,New Dimension,team_member_name,String,Employee display name,Readable employee identification,HIGH,LOW,Employee data integration
+Orders,New Measure,order_duration_minutes,Number,Minutes from creation to completion,Order processing efficiency metrics,LOW,LOW,Timestamp calculations
+CustomerSnapshots,New Measure,customer_visit_frequency,Number,Pre-calculated visit frequency,Customer behavior analysis,MEDIUM,MEDIUM,Historical data processing
+CustomerSnapshots,New Dimension,customer_segment,String,Customer segment classification,Advanced customer segmentation,MEDIUM,MEDIUM,Segmentation logic
+PaymentAndRefunds,New Dimension,device_type,String,Type of payment device,Device performance analysis,MEDIUM,LOW,Device classification logic
+Sections,New Cube,Complete cube,Various,Master data for sections/departments,Departmental reporting and analysis,HIGH,HIGH,Business process definition
+Customers,New Cube,Complete cube,Various,"Customer master data with names, segments, etc.",Enhanced customer reporting,HIGH,MEDIUM,Customer data consolidation
+Employees,New Cube,Complete cube,Various,"Employee master data with names, roles, etc.",Enhanced employee reporting,HIGH,MEDIUM,Employee data consolidation

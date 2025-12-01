@@ -1,0 +1,14 @@
+Dimension,Available Metrics Count,Missing Metrics Count,Availability %,Status
+Order Name,0/9,9/9,0%,❌ MISSING - Needs to be added
+Order ID,9/9,0/9,100%,✅ UNIVERSAL - Available everywhere
+Device,8/9,1/9,89%,✅ EXCELLENT - Via joins to PaymentAndRefunds
+Device Nickname,8/9,1/9,89%,✅ EXCELLENT - Via joins to PaymentAndRefunds
+Channel,8/9,1/9,89%,✅ EXCELLENT - Via joins to Channel cube
+Section,0/9,9/9,0%,❌ MISSING - Needs to be added
+Employee,8/9,1/9,89%,✅ EXCELLENT - Available in Orders cube
+Location,8/9,1/9,89%,✅ EXCELLENT - Via joins to Location cube
+Customer,9/9,0/9,100%,✅ UNIVERSAL - Available everywhere
+Customer Type,8/9,1/9,89%,✅ EXCELLENT - Via joins to CustomerSnapshots
+Order Created,9/9,0/9,100%,✅ UNIVERSAL - Available everywhere
+Order Completed,8/9,1/9,89%,✅ EXCELLENT - Available as sale_timestamp
+Customer Visit Frequency,0/9,9/9,0%,⚠️ NEEDS CALCULATION - Can be derived

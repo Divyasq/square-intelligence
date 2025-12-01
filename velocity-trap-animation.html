@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Velocity Trap - Code Duplication Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 200px;
+            background: #252526;
+            padding: 20px 0;
+            border-right: 1px solid #3c3c3c;
+            overflow-y: auto;
+        }
+
+        .sidebar h3 {
+            padding: 15px 20px 10px;
+            color: #cccccc;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            padding: 8px 20px;
+            color: #cccccc;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 13px;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar li:hover {
+            background: #2a2d2e;
+            color: #ffffff;
+        }
+
+        .sidebar li.active {
+            background: #094771;
+            color: #ffffff;
+            border-left-color: #007acc;
+        }
+
+        .sidebar li.updating {
+            background: #5a4e00;
+            color: #ffcc02;
+            border-left-color: #ffcc02;
+            animation: pulse-yellow 1s infinite;
+        }
+
+        @keyframes pulse-yellow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+        }
+
+        .dashboard-panel {
+            width: 300px;
+            background: #1e1e1e;
+            border-right: 1px solid #3c3c3c;
+            padding: 20px;
+            display: none;
+        }
+
+        .dashboard-panel.active {
+            display: block;
+        }
+
+        .dashboard-panel h2 {
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .date-picker-section {
+            background: #252526;
+            border: 1px solid #3c3c3c;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .custom-workweek {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-top: 1px solid #3c3c3c;
+            margin-top: 15px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 40px;
+            height: 20px;
+            background: #3c3c3c;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: #007acc;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(20px);
+        }
+
+        .code-editor {
+            flex: 1;
+            background: #1e1e1e;
+            position: relative;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        }
+
+        .code-tabs {
+            display: flex;
+            background: #2d2d30;
+            border-bottom: 1px solid #3c3c3c;
+            overflow-x: auto;
+        }
+
+        .code-tab {
+            padding: 10px 20px;
+            background: #2d2d30;
+            color: #cccccc;
+            border-right: 1px solid #3c3c3c;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 12px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .code-tab.active {
+            background: #1e1e1e;
+            color: #ffffff;
+        }
+
+        .code-tab.modified {
+            color: #ffcc02;
+        }
+
+        .code-tab.modified::after {
+            content: '●';
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .code-content {
+            height: calc(100vh - 160px);
+            overflow: auto;
+            padding: 20px;
+            font-size: 13px;
+            line-height: 1.5;
+            display: none;
+        }
+
+        .code-content.active {
+            display: block;
+        }
+
+        .code-line {
+            display: flex;
+            min-height: 20px;
+        }
+
+        .line-number {
+            width: 40px;
+            color: #858585;
+            text-align: right;
+            padding-right: 10px;
+            user-select: none;
+        }
+
+        .line-content {
+            flex: 1;
+            white-space: pre;
+        }
+
+        .highlight-line {
+            background: rgba(255, 204, 2, 0.1);
+            animation: highlight-flash 2s ease-in-out;
+        }
+
+        @keyframes highlight-flash {
+            0%, 100% { background: rgba(255, 204, 2, 0.1); }
+            50% { background: rgba(255, 204, 2, 0.3); }
+        }
+
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 16px;
+            background: #ffffff;
+            animation: blink 1s infinite;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .progress-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            z-index: 1001;
+        }
+
+        .velocity-trap-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(231, 76, 60, 0.95);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.5s;
+            z-index: 1002;
+            max-width: 500px;
+        }
+
+        .velocity-trap-message.show {
+            opacity: 1;
+        }
+
+        .calendar-widget {
+            background: #252526;
+            border: 1px solid #3c3c3c;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .calendar-nav {
+            background: none;
+            border: none;
+            color: #cccccc;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 3px;
+        }
+
+        .calendar-nav:hover {
+            background: #3c3c3c;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+            text-align: center;
+        }
+
+        .calendar-day-header {
+            padding: 5px;
+            font-size: 11px;
+            color: #888;
+            font-weight: bold;
+        }
+
+        .calendar-day {
+            padding: 8px 4px;
+            font-size: 12px;
+            color: #cccccc;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: background 0.2s;
+        }
+
+        .calendar-day:hover {
+            background: #3c3c3c;
+        }
+
+        .calendar-day.selected {
+            background: #007acc;
+            color: white;
+        }
+
+        .calendar-day.workweek-only {
+            background: rgba(0, 122, 204, 0.2);
+            color: #9cdcfe;
+        }
+
+        /* Syntax highlighting */
+        .keyword { color: #569cd6; }
+        .string { color: #ce9178; }
+        .comment { color: #6a9955; }
+        .function { color: #dcdcaa; }
+        .variable { color: #9cdcfe; }
+        .number { color: #b5cea8; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h3>Reports</h3>
+            <ul id="reports-nav">
+                <li data-report="sales-summary" class="active">Sales summary</li>
+                <li data-report="item-sales">Item sales</li>
+                <li data-report="sales-trends">Sales trends</li>
+                <li data-report="category-sales">Category sales</li>
+                <li data-report="team-sales">Team sales</li>
+                <li data-report="modifier-sales">Modifier sales</li>
+                <li data-report="gift-cards">Gift Cards</li>
+                <li data-report="future-bookings">Future bookings</li>
+            </ul>
+            <h3>Accounting</h3>
+            <ul>
+                <li data-report="payments">Payments</li>
+                <li data-report="operations">Operations</li>
+                <li data-report="online">Online</li>
+            </ul>
+        </div>
+
+        <div class="dashboard-panel active" id="dashboard">
+            <h2 id="panel-title">Sales Summary</h2>
+            <div class="date-picker-section">
+                <div>📅 Wed, January 01 - Wed, December 31, 2025</div>
+                <div style="font-size: 12px; color: #888; margin-top: 5px;">Metrics: Gross sales & 30 others</div>
+                
+                <div class="custom-workweek">
+                    <span>Custom workweek</span>
+                    <div class="toggle-switch active" id="workweek-toggle"></div>
+                </div>
+            </div>
+            
+            <div class="calendar-widget" id="calendar-widget">
+                <div class="calendar-header">
+                    <button class="calendar-nav">‹</button>
+                    <span>Jan 2025</span>
+                    <button class="calendar-nav">›</button>
+                </div>
+                <div class="calendar-grid">
+                    <div class="calendar-day-header">Sun</div>
+                    <div class="calendar-day-header">Mon</div>
+                    <div class="calendar-day-header">Tue</div>
+                    <div class="calendar-day-header">Wed</div>
+                    <div class="calendar-day-header">Thu</div>
+                    <div class="calendar-day-header">Fri</div>
+                    <div class="calendar-day-header">Sat</div>
+                    
+                    <div class="calendar-day"></div>
+                    <div class="calendar-day"></div>
+                    <div class="calendar-day"></div>
+                    <div class="calendar-day selected">1</div>
+                    <div class="calendar-day workweek-only">2</div>
+                    <div class="calendar-day workweek-only">3</div>
+                    <div class="calendar-day">4</div>
+                    
+                    <div class="calendar-day">5</div>
+                    <div class="calendar-day workweek-only">6</div>
+                    <div class="calendar-day workweek-only">7</div>
+                    <div class="calendar-day workweek-only">8</div>
+                    <div class="calendar-day workweek-only">9</div>
+                    <div class="calendar-day workweek-only">10</div>
+                    <div class="calendar-day">11</div>
+                    
+                    <div class="calendar-day">12</div>
+                    <div class="calendar-day workweek-only">13</div>
+                    <div class="calendar-day workweek-only">14</div>
+                    <div class="calendar-day workweek-only">15</div>
+                    <div class="calendar-day workweek-only">16</div>
+                    <div class="calendar-day workweek-only">17</div>
+                    <div class="calendar-day">18</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="code-editor">
+            <div class="code-tabs" id="code-tabs">
+                <div class="code-tab active" data-file="sales-summary">SalesSummary.js</div>
+            </div>
+            
+            <div class="code-content active" id="sales-summary">
+                <div class="code-line"><span class="line-number">1</span><span class="line-content"><span class="comment">// Sales Summary Component</span></span></div>
+                <div class="code-line"><span class="line-number">2</span><span class="line-content"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span></div>
+                <div class="code-line"><span class="line-number">3</span><span class="line-content"></span></div>
+                <div class="code-line"><span class="line-number">4</span><span class="line-content"><span class="keyword">const</span> <span class="function">SalesSummary</span> = () => {</span></div>
+                <div class="code-line"><span class="line-number">5</span><span class="line-content">  <span class="keyword">const</span> [<span class="variable">customWorkweek</span>, <span class="variable">setCustomWorkweek</span>] = <span class="function">useState</span>(<span class="keyword">true</span>);</span></div>
+                <div class="code-line"><span class="line-number">6</span><span class="line-content"></span></div>
+                <div class="code-line"><span class="line-number">7</span><span class="line-content">  <span class="keyword">const</span> <span class="function">getWorkweekDays</span> = () => {</span></div>
+                <div class="code-line" id="workweek-logic"><span class="line-number">8</span><span class="line-content">    <span class="keyword">if</span> (<span class="variable">customWorkweek</span>) {</span></div>
+                <div class="code-line"><span class="line-number">9</span><span class="line-content">      <span class="keyword">return</span> [<span class="string">'Monday'</span>, <span class="string">'Tuesday'</span>, <span class="string">'Wednesday'</span>, <span class="string">'Thursday'</span>, <span class="string">'Friday'</span>];</span></div>
+                <div class="code-line"><span class="line-number">10</span><span class="line-content">    }</span></div>
+                <div class="code-line"><span class="line-number">11</span><span class="line-content">    <span class="keyword">return</span> [<span class="string">'Sunday'</span>, <span class="string">'Monday'</span>, <span class="string">'Tuesday'</span>, <span class="string">'Wednesday'</span>, <span class="string">'Thursday'</span>, <span class="string">'Friday'</span>, <span class="string">'Saturday'</span>];</span></div>
+                <div class="code-line"><span class="line-number">12</span><span class="line-content">  };</span></div>
+                <div class="code-line"><span class="line-number">13</span><span class="line-content"></span></div>
+                <div class="code-line"><span class="line-number">14</span><span class="line-content">  <span class="keyword">return</span> (</span></div>
+                <div class="code-line"><span class="line-number">15</span><span class="line-content">    &lt;<span class="keyword">div</span>&gt;</span></div>
+                <div class="code-line"><span class="line-number">16</span><span class="line-content">      <span class="comment">{/* Date picker and workweek toggle */}</span></span></div>
+                <div class="code-line"><span class="line-number">17</span><span class="line-content">    &lt;/<span class="keyword">div</span>&gt;</span></div>
+                <div class="code-line"><span class="line-number">18</span><span class="line-content">  );</span></div>
+                <div class="code-line"><span class="line-number">19</span><span class="line-content">};</span></div>
+            </div>
+
+            <!-- Additional code files will be dynamically added -->
+        </div>
+    </div>
+
+    <div class="progress-indicator" id="progress">
+        Click reports to see the velocity trap in action...
+    </div>
+
+    <div class="velocity-trap-message" id="trap-message">
+        <h2>🚨 VELOCITY TRAP ACTIVATED! 🚨</h2>
+        <p>You've now duplicated the same custom workweek logic across <span id="file-count">8</span> different files!</p>
+        <p>One bug fix = <span id="file-count-2">8</span> places to update</p>
+        <p><strong>This is why code reuse matters!</strong></p>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        let isAnimating = false;
+        let openFiles = [];
+
+        const reports = [
+            { id: 'sales-summary', name: 'Sales Summary', file: 'SalesSummary.js' },
+            { id: 'item-sales', name: 'Item Sales', file: 'ItemSales.js' },
+            { id: 'sales-trends', name: 'Sales Trends', file: 'SalesTrends.js' },
+            { id: 'category-sales', name: 'Category Sales', file: 'CategorySales.js' },
+            { id: 'team-sales', name: 'Team Sales', file: 'TeamSales.js' },
+            { id: 'modifier-sales', name: 'Modifier Sales', file: 'ModifierSales.js' },
+            { id: 'gift-cards', name: 'Gift Cards', file: 'GiftCards.js' },
+            { id: 'future-bookings', name: 'Future Bookings', file: 'FutureBookings.js' }
+        ];
+
+        const codeTemplates = {
+            simple: (componentName, fileName) => `
+                <div class="code-line"><span class="line-number">1</span><span class="line-content"><span class="comment">// ${componentName} Component - Simple Implementation</span></span></div>
+                <div class="code-line"><span class="line-number">2</span><span class="line-content"><span class="keyword">import</span> React, { <span class="variable">useState</span> } <span class="keyword">from</span> <span class="string">'react'</span>;</span></div>
+                <div class="code-line"><span class="line-number">3</span><span class="line-content"></span></div>
+                <div class="code-line"><span class="line-number">4</span><span class="line-content"><span class="keyword">const</span> <span class="function">${componentName.replace(/\s+/g, '')}</span> = () => {</span></div>
+                <div class="code-line"><span class="line-number">5</span><span class="line-content">  <span class="keyword">const</span> [<span class="variable">customWorkweek</span>, <span class="variable">setCustomWorkweek</span>] = <span class="function">useState</span>(<span class="keyword">true</span>);</span></div>
+                <div class="code-line"><span class="line-number">6</span><span class="line-content"></span></div>
+                <div class="code-line"><span class="line-number">7</span><span class="line-content">  <span class="keyword">const</span> <span class="function">getWorkweekDays</span> = () => {</span></div>
+                <div class="code-line highlight-line" id="workweek-logic-${fileName}"><span class="line-number">8</span><span class="line-content">    <span class="keyword">if</span> (<span class="variable">customWorkweek</span>) {<span class="typing-cursor"></span></span></div>
+                <div class="code-line"><span class="line-number">9</span><span class="line-content">      <span class="keyword">return</span> [<span class="string">'Monday'</span>, <span class="string">'Tuesday'</span>, <span class="string">'Wednesday'</span>, <span class="string">'Thursday'</span>, <span class="string">'Friday'</span>];</span></div>
+                <div class="code-line"><span class="line-number">10</span><span class="line-content">    }</span></div>
+                <div class="code-line"><span class="line-number">11</span><span class="line-content">    <span class="keyword">return</span> [<span class="string">'Sunday'</span>, <span class="string">'Monday'</span>, <span class="string">'Tuesday'</span>, <span class="string">'Wednesday'</span>, <span class="string">'Thursday'</span>, <span class="string">'Friday'</span>, <span class="string">'Saturday'</span>];</span></div>
+                <div class="code-line"><span class="line-number">12</span><span class="line-content">  };</span></div>
+                <div class="code-line"><span class="line-number">13</span><span class="line-content"></span></div>
+                <div class="code-line"><span class="line-number">14</span><span class="line-content">  <span class="keyword">return</span> (&lt;<span class="keyword">div</span>&gt;<span class="comment">{/* Calendar */}</span>&lt;/<span class="keyword">div</span>&gt;);</span></div>
+                <div class="code-line"><span class="line-number">15</span><span class="line-content">};</span></div>
+            `,
+            complex: (componentName, fileName) => `
+                <div class="code-line"><span class="line-number">1</span><span class="line-content"><span class="comment">// ${componentName} Component - Getting Complex...</span></span></div>
+                <div class="code-line"><span class="line-number">2</span><span class="line-content"><span class="keyword">import</span> React, { <span class="variable">useState</span>, <span class="variable">useEffect</span>, <span class="variable">useMemo</span> } <span class="keyword">from</span> <span class="string">'react'</span>;</span></div>
+                <div class="code-line"><span class="line-number">3</span><span class="line-content"><span class="keyword">import</span> { <span class="variable">format</span>, <span class="variable">startOfWeek</span>, <span class="variable">endOfWeek</span> } <span class="keyword">from</span> <span class="string">'date-fns'</span>;</span></div>
+                <div class="code-line"><span class="line-number">4</span><span class="line-content"></span></div>
+                <div class="code-line"><span class="line-number">5</span><span class="line-content"><span class="keyword">const</span> <span class="function">${componentName.replace(/\s+/g, '')}</span> = ({ <span class="variable">dateRange</span>, <span class="variable">onDateChange</span> }) => {</span></div>
+                <div class="code-line"><span class="line-number">6</span><span class="line-content">  <span class="keyword">const</span> [<span class="variable">customWorkweek</span>, <span class="variable">setCustomWorkweek</span>] = <span class="function">useState</span>(<span class="keyword">true</span>);</span></div>
+                <div class="code-line"><span class="line-number">7</span><span class="line-content">  <span class="keyword">const</span> [<span class="variable">selectedDate</span>, <span class="variable">setSelectedDate</span>] = <span class="function">useState</span>(<span class="keyword">new</span> <span class="function">Date</span>());</span></div>
+                <div class="code-line"><span class="line-number">8</span><span class="line-content"></span></div>
+                <div class="code-line highlight-line"><span class="line-number">9</span><span class="line-content">  <span class="comment">// DUPLICATED CUSTOM WORKWEEK LOGIC - COPY PASTE HELL!</span><span class="typing-cursor"></span></span></div>
+                <div class="code-line"><span class="line-number">10</span><span class="line-content">  <span class="keyword">const</span> <span class="function">getWorkweekDays</span> = <span class="function">useMemo</span>(() => {</span></div>
+                <div class="code-line"><span class="line-number">11</span><span class="line-content">    <span class="keyword">if</span> (<span class="variable">customWorkweek</span>) {</span></div>
+                <div class="code-line"><span class="line-number">12</span><span class="line-content">      <span class="keyword">const</span> <span class="variable">workDays</span> = [<span class="string">'Monday'</span>, <span class="string">'Tuesday'</span>, <span class="string">'Wednesday'</span>, <span class="string">'Thursday'</span>, <span class="string">'Friday'</span>];</span></div>
+                <div class="code-line"><span class="line-number">13</span><span class="line-content">      <span class="keyword">return</span> <span class="variable">workDays</span>.<span class="function">map</span>(<span class="variable">day</span> => ({ <span class="variable">name</span>: <span class="variable">day</span>, <span class="variable">enabled</span>: <span class="keyword">true</span> }));</span></div>
+                <div class="code-line"><span class="line-number">14</span><span class="line-content">    }</span></div>
+                <div class="code-line"><span class="line-number">15</span><span class="line-content">    <span class="keyword">return</span> [<span class="string">'Sunday'</span>, <span class="string">'Monday'</span>, <span class="string">'Tuesday'</span>, <span class="string">'Wednesday'</span>, <span class="string">'Thursday'</span>, <span class="string">'Friday'</span>, <span class="string">'Saturday'</span>]</span></div>
+                <div class="code-line"><span class="line-number">16</span><span class="line-content">      .<span class="function">map</span>(<span class="variable">day</span> => ({ <span class="variable">name</span>: <span class="variable">day</span>, <span class="variable">enabled</span>: <span class="keyword">true</span> }));</span></div>
+                <div class="code-line"><span class="line-number">17</span><span class="line-content">  }, [<span class="variable">customWorkweek</span>]);</span></div>
+                <div class="code-line"><span class="line-number">18</span><span class="line-content"></span></div>
+                <div class="code-line"><span class="line-number">19</span><span class="line-content">  <span class="keyword">return</span> (&lt;<span class="keyword">div</span>&gt;<span class="comment">{/* More complex calendar */}</span>&lt;/<span class="keyword">div</span>&gt;);</span></div>
+                <div class="code-line"><span class="line-number">20</span><span class="line-content">};</span></div>
+            `,
+            nightmare: (componentName, fileName) => `
+                <div class="code-line"><span class="line-number">1</span><span class="line-content"><span class="comment">// ${componentName} Component - COPY PASTE NIGHTMARE!</span></span></div>
+                <div class="code-line"><span class="line-number">2</span><span class="line-content"><span class="keyword">import</span> React, { <span class="variable">useState</span>, <span class="variable">useEffect</span>, <span class="variable">useMemo</span>, <span class="variable">useCallback</span> } <span class="keyword">from</span> <span class="string">'react'</span>;</span></div>
+                <div class="code-line"><span class="line-number">3</span><span class="line-content"><span class="keyword">import</span> { <span class="variable">format</span>, <span class="variable">startOfWeek</span>, <span class="variable">endOfWeek</span>, <span class="variable">addDays</span>, <span class="variable">isSameDay</span> } <span class="keyword">from</span> <span class="string">'date-fns'</span>;</span></div>
+                <div class="code-line"><span class="line-number">4</span><span class="line-content"><span class="keyword">import</span> { <span class="variable">debounce</span> } <span class="keyword">from</span> <span class="string">'lodash'</span>;</span></div>
+                <div class="code-line"><span class="line-number">5</span><span class="line-content"></span></div>
+                <div class="code-line"><span class="line-number">6</span><span class="line-content"><span class="keyword">const</span> <span class="function">${componentName.replace(/\s+/g, '')}</span> = ({ <span class="variable">dateRange</span>, <span class="variable">onDateChange</span>, <span class="variable">timezone</span>, <span class="variable">locale</span> }) => {</span></div>
+                <div class="code-line"><span class="line-number">7</span><span class="line-content">  <span class="keyword">const</span> [<span class="variable">customWorkweek</span>, <span class="variable">setCustomWorkweek</span>] = <span class="function">useState</span>(<span class="keyword">true</span>);</span></div>
+                <div class="code-line"><span class="line-number">8</span><span class="line-content">  <span class="keyword">const</span> [<span class="variable">selectedDate</span>, <span class="variable">setSelectedDate</span>] = <span class="function">useState</span>(<span class="keyword">new</span> <span class="function">Date</span>());</span></div>
+                <div class="code-line"><span class="line-number">9</span><span class="line-content">  <span class="keyword">const</span> [<span class="variable">workweekConfig</span>, <span class="variable">setWorkweekConfig</span>] = <span class="function">useState</span>(<span class="keyword">null</span>);</span></div>
+                <div class="code-line"><span class="line-number">10</span><span class="line-content"></span></div>
+                <div class="code-line highlight-line"><span class="line-number">11</span><span class="line-content">  <span class="comment">// OH NO! EVEN MORE DUPLICATED WORKWEEK LOGIC! 😱</span><span class="typing-cursor"></span></span></div>
+                <div class="code-line"><span class="line-number">12</span><span class="line-content">  <span class="keyword">const</span> <span class="function">calculateWorkweekDays</span> = <span class="function">useCallback</span>((<span class="variable">customEnabled</span>, <span class="variable">config</span>) => {</span></div>
+                <div class="code-line"><span class="line-number">13</span><span class="line-content">    <span class="keyword">if</span> (<span class="variable">customEnabled</span>) {</span></div>
+                <div class="code-line"><span class="line-number">14</span><span class="line-content">      <span class="keyword">const</span> <span class="variable">baseWorkDays</span> = [<span class="string">'Monday'</span>, <span class="string">'Tuesday'</span>, <span class="string">'Wednesday'</span>, <span class="string">'Thursday'</span>, <span class="string">'Friday'</span>];</span></div>
+                <div class="code-line"><span class="line-number">15</span><span class="line-content">      <span class="keyword">const</span> <span class="variable">filteredDays</span> = <span class="variable">baseWorkDays</span>.<span class="function">filter</span>(<span class="variable">day</span> => {</span></div>
+                <div class="code-line"><span class="line-number">16</span><span class="line-content">        <span class="keyword">return</span> !<span class="variable">config</span>?.<span class="variable">excludedDays</span>?.<span class="function">includes</span>(<span class="variable">day</span>.<span class="function">toLowerCase</span>());</span></div>
+                <div class="code-line"><span class="line-number">17</span><span class="line-content">      });</span></div>
+                <div class="code-line"><span class="line-number">18</span><span class="line-content">      <span class="keyword">return</span> <span class="variable">filteredDays</span>.<span class="function">map</span>((<span class="variable">day</span>, <span class="variable">index</span>) => ({</span></div>
+                <div class="code-line"><span class="line-number">19</span><span class="line-content">        <span class="variable">id</span>: <span class="variable">index</span>,</span></div>
+                <div class="code-line"><span class="line-number">20</span><span class="line-content">        <span class="variable">name</span>: <span class="variable">day</span>,</span></div>
+                <div class="code-line"><span class="line-number">21</span><span class="line-content">        <span class="variable">enabled</span>: <span class="keyword">true</span>,</span></div>
+                <div class="code-line"><span class="line-number">22</span><span class="line-content">        <span class="variable">isWorkday</span>: <span class="keyword">true</span></span></div>
+                <div class="code-line"><span class="line-number">23</span><span class="line-content">      }));</span></div>
+                <div class="code-line"><span class="line-number">24</span><span class="line-content">    }</span></div>
+                <div class="code-line"><span class="line-number">25</span><span class="line-content">    <span class="comment">// Default to all days...</span></span></div>
+                <div class="code-line"><span class="line-number">26</span><span class="line-content">    <span class="keyword">return</span> [<span class="string">'Sunday'</span>, <span class="string">'Monday'</span>, <span class="string">'Tuesday'</span>, <span class="string">'Wednesday'</span>, <span class="string">'Thursday'</span>, <span class="string">'Friday'</span>, <span class="string">'Saturday'</span>]</span></div>
+                <div class="code-line"><span class="line-number">27</span><span class="line-content">      .<span class="function">map</span>((<span class="variable">day</span>, <span class="variable">index</span>) => ({ <span class="variable">id</span>: <span class="variable">index</span>, <span class="variable">name</span>: <span class="variable">day</span>, <span class="variable">enabled</span>: <span class="keyword">true</span>, <span class="variable">isWorkday</span>: <span class="variable">index</span> > <span class="number">0</span> && <span class="variable">index</span> < <span class="number">6</span> }));</span></div>
+                <div class="code-line"><span class="line-number">28</span><span class="line-content">  }, []);</span></div>
+                <div class="code-line"><span class="line-number">29</span><span class="line-content"></span></div>
+                <div class="code-line"><span class="line-number">30</span><span class="line-content">  <span class="keyword">const</span> <span class="variable">workweekDays</span> = <span class="function">useMemo</span>(() => </span></div>
+                <div class="code-line"><span class="line-number">31</span><span class="line-content">    <span class="function">calculateWorkweekDays</span>(<span class="variable">customWorkweek</span>, <span class="variable">workweekConfig</span>), [<span class="variable">customWorkweek</span>, <span class="variable">workweekConfig</span>, <span class="variable">calculateWorkweekDays</span>]);</span></div>
+                <div class="code-line"><span class="line-number">32</span><span class="line-content"></span></div>
+                <div class="code-line"><span class="line-number">33</span><span class="line-content">  <span class="keyword">return</span> (&lt;<span class="keyword">div</span>&gt;<span class="comment">{/* Overly complex calendar implementation */}</span>&lt;/<span class="keyword">div</span>&gt;);</span></div>
+                <div class="code-line"><span class="line-number">34</span><span class="line-content">};</span></div>
+            `
+        };
+
+        function updateProgress(message) {
+            document.getElementById('progress').textContent = message;
+        }
+
+        function addCodeTab(report, index) {
+            const tabsContainer = document.getElementById('code-tabs');
+            const codeEditor = document.querySelector('.code-editor');
+            
+            // Add tab
+            const tab = document.createElement('div');
+            tab.className = 'code-tab modified';
+            tab.dataset.file = report.id;
+            tab.textContent = report.file;
+            tab.onclick = () => switchToTab(report.id);
+            tabsContainer.appendChild(tab);
+            
+            // Choose template based on complexity progression
+            let template;
+            if (index <= 2) {
+                template = codeTemplates.simple(report.name, report.id);
+            } else if (index <= 5) {
+                template = codeTemplates.complex(report.name, report.id);
+            } else {
+                template = codeTemplates.nightmare(report.name, report.id);
+            }
+            
+            // Add code content
+            const content = document.createElement('div');
+            content.className = 'code-content';
+            content.id = report.id;
+            content.innerHTML = template;
+            codeEditor.appendChild(content);
+            
+            openFiles.push(report.id);
+        }
+
+        function switchToTab(fileId) {
+            // Update tabs
+            document.querySelectorAll('.code-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`[data-file="${fileId}"]`).classList.add('active');
+            
+            // Update content
+            document.querySelectorAll('.code-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(fileId).classList.add('active');
+        }
+
+        function simulateNavClick(reportId, index) {
+            return new Promise((resolve) => {
+                // Update sidebar
+                document.querySelectorAll('.sidebar li').forEach(li => {
+                    li.classList.remove('active', 'updating');
+                });
+                
+                const navItem = document.querySelector(`[data-report="${reportId}"]`);
+                navItem.classList.add('updating');
+                
+                // Update panel title
+                const report = reports.find(r => r.id === reportId);
+                document.getElementById('panel-title').textContent = report.name;
+                
+                setTimeout(() => {
+                    navItem.classList.remove('updating');
+                    navItem.classList.add('active');
+                    
+                    // Add new code file with complexity progression
+                    addCodeTab(report, index);
+                    switchToTab(reportId);
+                    
+                    setTimeout(resolve, 1000);
+                }, 1500);
+            });
+        }
+
+        async function runVelocityTrapDemo() {
+            if (isAnimating) return;
+            isAnimating = true;
+            
+            updateProgress('Starting velocity trap demonstration...');
+            
+            // Skip first report (already open)
+            for (let i = 1; i < reports.length; i++) {
+                const report = reports[i];
+                updateProgress(`Opening ${report.name} - Duplicating workweek logic...`);
+                await simulateNavClick(report.id, i);
+                await new Promise(resolve => setTimeout(resolve, 500));
+            }
+            
+            // Show the trap message
+            updateProgress('All reports updated - But at what cost?');
+            setTimeout(() => {
+                document.getElementById('file-count').textContent = openFiles.length;
+                document.getElementById('file-count-2').textContent = openFiles.length;
+                document.getElementById('trap-message').classList.add('show');
+                
+                setTimeout(() => {
+                    document.getElementById('trap-message').classList.remove('show');
+                    updateProgress('Click reports to see the trap again...');
+                    isAnimating = false;
+                }, 5000);
+            }, 1000);
+        }
+
+        function restartDemo() {
+            if (isAnimating) return;
+            
+            // Reset everything
+            openFiles = ['sales-summary'];
+            currentStep = 0;
+            
+            // Reset sidebar
+            document.querySelectorAll('.sidebar li').forEach(li => {
+                li.classList.remove('active', 'updating');
+            });
+            document.querySelector('[data-report="sales-summary"]').classList.add('active');
+            
+            // Reset code editor
+            const tabsContainer = document.getElementById('code-tabs');
+            const codeEditor = document.querySelector('.code-editor');
+            
+            // Remove all tabs except first
+            const tabs = tabsContainer.querySelectorAll('.code-tab');
+            for (let i = 1; i < tabs.length; i++) {
+                tabs[i].remove();
+            }
+            
+            // Remove all code content except first
+            const contents = codeEditor.querySelectorAll('.code-content');
+            for (let i = 1; i < contents.length; i++) {
+                contents[i].remove();
+            }
+            
+            // Reset first tab
+            tabs[0].classList.remove('modified');
+            tabs[0].classList.add('active');
+            contents[0].classList.add('active');
+            
+            // Reset panel
+            document.getElementById('panel-title').textContent = 'Sales Summary';
+            
+            updateProgress('Demo reset. Starting in 2 seconds...');
+            setTimeout(runVelocityTrapDemo, 2000);
+        }
+
+        // Add click handlers to navigation
+        document.querySelectorAll('.sidebar li[data-report]').forEach(li => {
+            li.addEventListener('click', (e) => {
+                if (!isAnimating) {
+                    const reportId = e.target.dataset.report;
+                    if (!openFiles.includes(reportId)) {
+                        simulateNavClick(reportId);
+                    } else {
+                        switchToTab(reportId);
+                        document.getElementById('panel-title').textContent = 
+                            reports.find(r => r.id === reportId).name;
+                    }
+                }
+            });
+        });
+
+        // Auto-start demo
+        setTimeout(runVelocityTrapDemo, 3000);
+    </script>
+</body>
+</html>

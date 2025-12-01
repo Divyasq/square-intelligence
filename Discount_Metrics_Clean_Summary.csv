@@ -1,0 +1,8 @@
+Discount Metric,Available in Square?,Key Dimensions Available,Key Dimensions Missing,Coverage,Status
+Amount Discounted (Order),✅ discounts_amount (Orders),"Order ID, Employee, Location, Order Created, Order Completed, Channel, Device, Source","Customer Type, Section, Discount Name, Item context",8/46 (17%),🟠 MODERATE
+Amount Discounted (Item),✅ total_discount_and_comp_amount,"Discount Name, Item Type, Location, Order ID, Order Created","Employee, Customer Type, Device, Item Name, Section",6/46 (13%),🟡 LIMITED
+Discounts Applied,✅ discounts_applied_count,"Discount Name, Item Type, Location, Order ID, Order Created","Employee, Customer Type, Device, Item Name, Section",6/46 (13%),🟡 LIMITED
+Orders Discounted,✅ orders_count,"Discount Name, Item Type, Location, Order ID, Order Created","Employee, Customer Type, Device, Item Name, Section",6/46 (13%),🟡 LIMITED
+Items Discounted,✅ count,"Discount Name, Item Type, Location, Order ID, Order Created","Employee, Customer Type, Device, Item Name, Section",6/46 (13%),🟡 LIMITED
+Gift Card Amount Discounted,✅ gift_card_discount_amount,"Discount Name, Item Type, Location, Order ID, Order Created","Employee, Customer Type, Device, Item Name, Section",6/46 (13%),🟡 LIMITED
+Gift Card Discounts Applied,⚠️ Filtered gift_card_discount_amount,"Discount Name, Item Type, Location, Order ID, Order Created","Employee, Customer Type, Device, Item Name, Section",6/46 (13%),🟡 LIMITED

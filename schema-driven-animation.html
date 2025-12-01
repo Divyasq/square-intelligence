@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schema-Driven Frontend - Data Agnostic Reports</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .architecture-panel {
+            width: 50%;
+            background: white;
+            border-right: 1px solid #e2e8f0;
+            padding: 20px;
+            overflow: auto;
+        }
+
+        .demo-panel {
+            width: 50%;
+            background: #f8fafc;
+            padding: 20px;
+            overflow: auto;
+        }
+
+        .architecture-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .layer {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 12px 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .layer.active {
+            border-color: #3b82f6;
+            background: #eff6ff;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+        }
+
+        .layer.updating {
+            border-color: #f59e0b;
+            background: #fef3c7;
+            animation: layer-pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes layer-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .layer-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .layer-components {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .component {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            padding: 6px 10px;
+            font-size: 11px;
+            color: #475569;
+            transition: all 0.3s ease;
+        }
+
+        .component.active {
+            background: #dbeafe;
+            border-color: #3b82f6;
+            color: #1d4ed8;
+        }
+
+        .component.updating {
+            background: #fde68a;
+            border-color: #f59e0b;
+            color: #92400e;
+            animation: component-flash 0.8s ease-in-out infinite;
+        }
+
+        @keyframes component-flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .data-flow {
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 2px;
+            background: #cbd5e1;
+            transition: all 0.3s ease;
+        }
+
+        .data-flow::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: -3px;
+            width: 0;
+            height: 0;
+            border-left: 6px solid #cbd5e1;
+            border-top: 4px solid transparent;
+            border-bottom: 4px solid transparent;
+        }
+
+        .data-flow.active {
+            background: #3b82f6;
+            animation: flow-pulse 1s ease-in-out infinite;
+        }
+
+        .data-flow.active::after {
+            border-left-color: #3b82f6;
+        }
+
+        @keyframes flow-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .api-section {
+            background: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .api-section.active {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+
+        .api-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748b;
+            margin-bottom: 12px;
+        }
+
+        .api-endpoints {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .api-endpoint {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            padding: 8px;
+            font-size: 10px;
+            color: #475569;
+            transition: all 0.3s ease;
+        }
+
+        .api-endpoint.active {
+            border-color: #10b981;
+            background: #ecfdf5;
+            color: #065f46;
+        }
+
+        .demo-section {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .demo-header {
+            background: #f8fafc;
+            padding: 16px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .demo-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .demo-subtitle {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        .schema-display {
+            padding: 16px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 11px;
+            background: #1e293b;
+            color: #e2e8f0;
+            overflow-x: auto;
+        }
+
+        .schema-line {
+            margin: 2px 0;
+            transition: all 0.3s ease;
+        }
+
+        .schema-line.highlight {
+            background: rgba(59, 130, 246, 0.2);
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+
+        .report-preview {
+            padding: 16px;
+        }
+
+        .preview-chart {
+            height: 100px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+            margin: 12px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .preview-chart.updating {
+            animation: chart-update 1s ease-in-out;
+        }
+
+        @keyframes chart-update {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .preview-table {
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .table-header {
+            background: #f8fafc;
+            padding: 8px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #374151;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .table-row {
+            padding: 6px 12px;
+            font-size: 11px;
+            color: #4b5563;
+            border-bottom: 1px solid #f3f4f6;
+            transition: all 0.3s ease;
+        }
+
+        .table-row.updating {
+            background: #fef3c7;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 1000;
+        }
+
+        .control-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background: #2563eb;
+        }
+
+        .control-btn.active {
+            background: #10b981;
+        }
+
+        .status-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 8px 20px;
+            font-size: 12px;
+            z-index: 1001;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="status-bar">
+        <div class="status-indicator">
+            <div class="status-dot"></div>
+            <span id="status-text">Schema-driven frontend ready</span>
+        </div>
+        <div>Data Source: <span id="current-api">ItemizationReportData</span></div>
+    </div>
+
+    <div class="container">
+        <div class="architecture-panel">
+            <div class="architecture-title">🏗️ Schema-Driven Architecture</div>
+            
+            <!-- Report Page Layer -->
+            <div class="layer" id="report-page">
+                <div class="layer-title">Report Page</div>
+                <div class="layer-components">
+                    <div class="component">ReportPage.tsx</div>
+                    <div class="component">Report Schema State</div>
+                </div>
+                <div class="data-flow" id="flow-1"></div>
+            </div>
+
+            <!-- Control Components Layer -->
+            <div class="layer" id="control-components">
+                <div class="layer-title">Control Components</div>
+                <div class="layer-components">
+                    <div class="component">ReportControls.tsx</div>
+                    <div class="component">GroupBy Component</div>
+                    <div class="component">TimeRange Component</div>
+                    <div class="component">FilterBy...Blade Components</div>
+                </div>
+                <div class="data-flow" id="flow-2"></div>
+            </div>
+
+            <!-- Report Data Components Layer -->
+            <div class="layer" id="data-components">
+                <div class="layer-title">Report Data Components</div>
+                <div class="layer-components">
+                    <div class="component">ReportData.tsx</div>
+                    <div class="component">useReportData Hook</div>
+                    <div class="component">Report Data State</div>
+                </div>
+                <div class="data-flow" id="flow-3"></div>
+            </div>
+
+            <!-- API Transform Layer -->
+            <div class="api-section" id="api-layer">
+                <div class="api-title">API Transform Layer</div>
+                <div class="api-endpoints">
+                    <div class="api-endpoint" id="report-api">Report Data API</div>
+                    <div class="api-endpoint" id="control-api">Control Options API</div>
+                </div>
+            </div>
+
+            <!-- Backend APIs -->
+            <div class="layer" id="backend-apis">
+                <div class="layer-title">Backend APIs (Data Agnostic)</div>
+                <div class="layer-components">
+                    <div class="component">ItemizationReportData</div>
+                    <div class="component">ItemizationSalesAvailableFilters</div>
+                    <div class="component">ListReportingHours</div>
+                    <div class="component">Cube.dev</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-panel">
+            <div class="demo-section">
+                <div class="demo-header">
+                    <div class="demo-title">Schema Response</div>
+                    <div class="demo-subtitle">Same frontend, different data sources</div>
+                </div>
+                <div class="schema-display" id="schema-display">
+                    <div class="schema-line">{</div>
+                    <div class="schema-line">  "reportType": "items",</div>
+                    <div class="schema-line">  "groupBy": "item_name",</div>
+                    <div class="schema-line">  "availableMetrics": [</div>
+                    <div class="schema-line">    "combos_sold", "gross_sales", "discount_amount"</div>
+                    <div class="schema-line">  ],</div>
+                    <div class="schema-line">  "supportedFilters": ["timeframe", "location"],</div>
+                    <div class="schema-line">  "chartType": "bar",</div>
+                    <div class="schema-line">  "data": [...],</div>
+                    <div class="schema-line">}</div>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <div class="demo-header">
+                    <div class="demo-title" id="report-type-title">Items Report</div>
+                    <div class="demo-subtitle">Frontend adapts automatically to schema</div>
+                </div>
+                <div class="report-preview">
+                    <div class="preview-chart" id="preview-chart">
+                        📊 Chart renders based on schema.chartType
+                    </div>
+                    <div class="preview-table">
+                        <div class="table-header" id="table-header">Item Name | Combos Sold | Gross Sales</div>
+                        <div class="table-row">Invoice Item | 1 | $18,200</div>
+                        <div class="table-row">Massage | 11 | $3,000</div>
+                        <div class="table-row">Chicken Fajita | 47 | $968</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="control-btn active" data-type="items">Items Report</button>
+        <button class="control-btn" data-type="discounts">Discounts Report</button>
+        <button class="control-btn" data-type="orders">Orders Report</button>
+        <button class="control-btn" data-type="locations">Locations Report</button>
+    </div>
+
+    <script>
+        let isAnimating = false;
+
+        const reportSchemas = {
+            items: {
+                reportType: "items",
+                groupBy: "item_name", 
+                availableMetrics: ["combos_sold", "gross_sales", "discount_amount"],
+                supportedFilters: ["timeframe", "location"],
+                chartType: "bar",
+                api: "ItemizationReportData",
+                title: "Items Report",
+                headers: "Item Name | Combos Sold | Gross Sales",
+                data: [
+                    "Invoice Item | 1 | $18,200",
+                    "Massage | 11 | $3,000", 
+                    "Chicken Fajita | 47 | $968"
+                ]
+            },
+            discounts: {
+                reportType: "discounts",
+                groupBy: "discount_name",
+                availableMetrics: ["discount_amount", "usage_count", "total_savings"],
+                supportedFilters: ["timeframe", "discount_type"],
+                chartType: "pie",
+                api: "DiscountAnalyticsData",
+                title: "Discounts Report",
+                headers: "Discount Name | Usage Count | Total Savings",
+                data: [
+                    "10% Off | 132 | $1,098",
+                    "$5 Off | 89 | $445",
+                    "Summer Sale | 137 | $2,740"
+                ]
+            },
+            orders: {
+                reportType: "orders",
+                groupBy: "order_status",
+                availableMetrics: ["order_count", "avg_order_value", "total_revenue"],
+                supportedFilters: ["timeframe", "payment_method"],
+                chartType: "line",
+                api: "OrderAnalyticsData", 
+                title: "Orders Report",
+                headers: "Order Status | Count | Avg Value",
+                data: [
+                    "Completed | 1,247 | $73.50",
+                    "Pending | 23 | $45.20",
+                    "Cancelled | 8 | $32.10"
+                ]
+            },
+            locations: {
+                reportType: "locations",
+                groupBy: "location_name",
+                availableMetrics: ["sales_volume", "customer_count", "avg_transaction"],
+                supportedFilters: ["timeframe", "region"],
+                chartType: "map",
+                api: "LocationPerformanceData",
+                title: "Locations Report", 
+                headers: "Location | Sales Volume | Customers",
+                data: [
+                    "Downtown | $45,200 | 892",
+                    "Mall Location | $32,100 | 654",
+                    "Airport | $28,900 | 445"
+                ]
+            }
+        };
+
+        function updateStatus(message) {
+            document.getElementById('status-text').textContent = message;
+        }
+
+        function updateCurrentAPI(api) {
+            document.getElementById('current-api').textContent = api;
+        }
+
+        function animateDataFlow() {
+            const flows = ['flow-1', 'flow-2', 'flow-3'];
+            flows.forEach((flowId, index) => {
+                setTimeout(() => {
+                    document.getElementById(flowId).classList.add('active');
+                }, index * 300);
+            });
+
+            setTimeout(() => {
+                document.getElementById('api-layer').classList.add('active');
+            }, 900);
+
+            setTimeout(() => {
+                flows.forEach(flowId => {
+                    document.getElementById(flowId).classList.remove('active');
+                });
+                document.getElementById('api-layer').classList.remove('active');
+            }, 2000);
+        }
+
+        function updateSchema(schema) {
+            const schemaDisplay = document.getElementById('schema-display');
+            schemaDisplay.innerHTML = `
+                <div class="schema-line">{</div>
+                <div class="schema-line highlight">  "reportType": "${schema.reportType}",</div>
+                <div class="schema-line highlight">  "groupBy": "${schema.groupBy}",</div>
+                <div class="schema-line">  "availableMetrics": [</div>
+                <div class="schema-line">    "${schema.availableMetrics.join('", "')}"</div>
+                <div class="schema-line">  ],</div>
+                <div class="schema-line">  "supportedFilters": ${JSON.stringify(schema.supportedFilters)},</div>
+                <div class="schema-line highlight">  "chartType": "${schema.chartType}",</div>
+                <div class="schema-line">  "data": [...],</div>
+                <div class="schema-line">}</div>
+            `;
+
+            setTimeout(() => {
+                document.querySelectorAll('.schema-line.highlight').forEach(line => {
+                    line.classList.remove('highlight');
+                });
+            }, 2000);
+        }
+
+        function updateReportPreview(schema) {
+            document.getElementById('report-type-title').textContent = schema.title;
+            document.getElementById('table-header').textContent = schema.headers;
+            
+            const chart = document.getElementById('preview-chart');
+            chart.textContent = `📊 ${schema.chartType.toUpperCase()} chart renders based on schema.chartType`;
+            chart.classList.add('updating');
+
+            const tableRows = document.querySelector('.preview-table').querySelectorAll('.table-row');
+            tableRows.forEach((row, index) => {
+                if (schema.data[index]) {
+                    row.textContent = schema.data[index];
+                    row.classList.add('updating');
+                }
+            });
+
+            setTimeout(() => {
+                chart.classList.remove('updating');
+                tableRows.forEach(row => row.classList.remove('updating'));
+            }, 1000);
+        }
+
+        function animateLayerUpdate(layerId) {
+            const layer = document.getElementById(layerId);
+            layer.classList.add('updating');
+            
+            const components = layer.querySelectorAll('.component');
+            components.forEach((comp, index) => {
+                setTimeout(() => comp.classList.add('updating'), index * 200);
+            });
+
+            setTimeout(() => {
+                layer.classList.remove('updating');
+                components.forEach(comp => comp.classList.remove('updating'));
+            }, 1500);
+        }
+
+        async function switchReportType(reportType) {
+            if (isAnimating) return;
+            isAnimating = true;
+
+            const schema = reportSchemas[reportType];
+            
+            updateStatus(`Switching to ${schema.title} - Schema driving UI changes...`);
+            updateCurrentAPI(schema.api);
+
+            // Update active button
+            document.querySelectorAll('.control-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-type="${reportType}"]`).classList.add('active');
+
+            // Animate architecture layers
+            updateStatus('Schema update detected - propagating through layers...');
+            animateLayerUpdate('report-page');
+            
+            setTimeout(() => animateLayerUpdate('control-components'), 300);
+            setTimeout(() => animateLayerUpdate('data-components'), 600);
+            
+            // Animate data flow
+            setTimeout(animateDataFlow, 900);
+
+            // Update schema display
+            setTimeout(() => {
+                updateSchema(schema);
+                updateStatus('Frontend adapting to new schema...');
+            }, 1200);
+
+            // Update report preview
+            setTimeout(() => {
+                updateReportPreview(schema);
+                updateStatus(`✅ ${schema.title} rendered - Same components, different data!`);
+            }, 1500);
+
+            setTimeout(() => {
+                updateStatus('Schema-driven frontend ready - Click any report type');
+                isAnimating = false;
+            }, 3000);
+        }
+
+        // Add click handlers
+        document.querySelectorAll('.control-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const reportType = e.target.dataset.type;
+                switchReportType(reportType);
+            });
+        });
+
+        // Auto-start demo
+        setTimeout(() => {
+            updateStatus('Demonstrating schema-driven architecture...');
+            switchReportType('discounts');
+        }, 2000);
+
+        // Auto-cycle demo
+        let currentIndex = 0;
+        const reportTypes = ['items', 'discounts', 'orders', 'locations'];
+        
+        setInterval(() => {
+            if (!isAnimating) {
+                currentIndex = (currentIndex + 1) % reportTypes.length;
+                switchReportType(reportTypes[currentIndex]);
+            }
+        }, 8000);
+    </script>
+</body>
+</html>

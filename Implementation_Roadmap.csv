@@ -1,0 +1,11 @@
+Priority,Enhancement,Cube,Field,Business Impact,Effort,Timeline Estimate,Dependencies
+HIGH,Add Order Names,Orders,order_name,Better order identification,Medium,2-4 weeks,UI changes for naming
+HIGH,Add Section/Department,Orders + New Sections cube,"section_id, section_name",Departmental analysis,High,6-8 weeks,Business process definition
+HIGH,Add Customer Names,Orders,customer_name,Readable customer reports,Low,1-2 weeks,Customer data integration
+HIGH,Add Employee Names,Orders,team_member_name,Readable employee reports,Low,1-2 weeks,Employee data integration
+MEDIUM,Pre-calculate Visit Frequency,CustomerSnapshots,customer_visit_frequency,Customer behavior insights,Medium,3-4 weeks,Historical data processing
+MEDIUM,Add Order Tags,Orders,order_tags,Flexible categorization,Medium,3-4 weeks,Tagging system
+MEDIUM,Add Fulfillment Method,Orders,fulfillment_method,Fulfillment analysis,Medium,2-3 weeks,Process definition
+MEDIUM,Add Device Type,PaymentAndRefunds,device_type,Device analysis,Low,1-2 weeks,Device classification
+LOW,Add Order Duration,Orders,order_duration_minutes,Efficiency metrics,Low,1 week,Calculation logic
+LOW,Add Order Notes,Orders,order_notes,Additional context,Low,1-2 weeks,UI for notes

@@ -1,0 +1,13 @@
+Field Name,Data Type,Description,Business Purpose,Example Values,Required/Optional,Default Value,Validation Rules,Source System,Implementation Notes
+order_name,VARCHAR(255),Human-readable order name/title,Order identification and reporting,"""Morning Coffee Order"", ""Table 5 Lunch"", ""Online Order #123""",Optional,Auto-generated from order_id,"Max 255 characters, no special chars",POS/Online System,Allow merchants to customize or auto-generate
+section_id,VARCHAR(50),Section/department identifier,Departmental analysis,"""DINING"", ""BAR"", ""TAKEOUT"", ""DELIVERY""",Optional,NULL,Must exist in Sections master table,Business Configuration,Requires new Sections cube
+section_name,VARCHAR(100),Section/department display name,Readable section identification,"""Dining Room"", ""Bar Area"", ""Takeout Counter""",Optional,NULL,Max 100 characters,Sections Cube,Derived from section_id lookup
+customer_name,VARCHAR(255),Customer display name,Customer identification in reports,"""John Smith"", ""Jane Doe"", ""Guest Customer""",Optional,"""Guest Customer""",Max 255 characters,Customer System,Lookup from customer_id
+team_member_name,VARCHAR(255),Employee display name,Employee identification in reports,"""Alice Johnson"", ""Bob Wilson"", ""System""",Optional,"""System""",Max 255 characters,Employee System,Lookup from team_member_collected
+order_tags,JSON,Array of custom tags,Flexible order categorization,"[""Rush"", ""VIP"", ""Special""]",Optional,[],Valid JSON array of strings,POS System,Allow multiple tags per order
+order_notes,TEXT,Order-level notes/comments,Additional order context,"""Customer allergic to nuts"", ""Extra hot""",Optional,NULL,Max 1000 characters,POS System,Free-text field for staff notes
+fulfillment_method,VARCHAR(50),How order will be fulfilled,Fulfillment analysis,"""DINE_IN"", ""TAKEOUT"", ""DELIVERY"", ""PICKUP""",Optional,"""DINE_IN""",Must be valid enum value,POS System,Predefined list of fulfillment types
+order_priority,VARCHAR(20),Order priority level,Order processing prioritization,"""HIGH"", ""MEDIUM"", ""LOW"", ""RUSH""",Optional,"""MEDIUM""",Must be valid enum value,POS System,For kitchen/fulfillment prioritization
+order_duration_minutes,"DECIMAL(10,2)",Minutes from creation to completion,Order processing efficiency,"15.5, 23.0, 45.25",Calculated,Calculated,Must be positive number,System Calculated,Auto-calculated from timestamps
+estimated_completion_time,TIMESTAMP,Estimated order completion time,Customer expectation management,2024-01-15 14:30:00,Optional,NULL,Must be future timestamp,POS System,For customer communication
+actual_completion_time,TIMESTAMP,Actual order completion time,Performance tracking,2024-01-15 14:32:15,Optional,NULL,Must be after created_at,POS System,When order actually ready

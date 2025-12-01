@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Roadmap Timeline - Custom Dashboard & Reporting Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .timeline-container {
+            padding: 40px;
+            background: #f8f9fa;
+        }
+        
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .timeline-periods {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            margin-bottom: 40px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .period {
+            text-align: center;
+            padding: 15px 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            position: relative;
+        }
+        
+        .period.q3-2025 { background: #27ae60; color: white; }
+        .period.q4-2025 { background: #3498db; color: white; }
+        .period.q1-2026 { background: #e74c3c; color: white; }
+        .period.q2-2026 { background: #9b59b6; color: white; }
+        .period.q3-2026 { background: #f39c12; color: white; }
+        .period.q4-2026 { background: #95a5a6; color: white; }
+        
+        .milestone {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .milestone:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        
+        .milestone-header {
+            padding: 25px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #ecf0f1;
+        }
+        
+        .milestone-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .milestone-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .m0 .milestone-icon { background: #27ae60; }
+        .m1 .milestone-icon { background: #3498db; }
+        .m2 .milestone-icon { background: #e74c3c; }
+        .m3 .milestone-icon { background: #9b59b6; }
+        .m4 .milestone-icon { background: #95a5a6; }
+        
+        .milestone-info h3 {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        
+        .milestone-timeline {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+        
+        .milestone-status {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        
+        .status-completed { background: #d5f4e6; color: #27ae60; }
+        .status-active { background: #dbeafe; color: #3498db; }
+        .status-upcoming { background: #fef3cd; color: #f39c12; }
+        .status-planning { background: #e9ecef; color: #6c757d; }
+        
+        .milestone-content {
+            padding: 30px;
+        }
+        
+        .milestone-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+        
+        .detail-section h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 8px;
+        }
+        
+        .detail-list {
+            list-style: none;
+        }
+        
+        .detail-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .detail-list li::before {
+            content: "▶";
+            color: #3498db;
+            font-size: 0.8em;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .metric-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border-left: 4px solid #3498db;
+        }
+        
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .metric-label {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-100 { width: 100%; background: #27ae60; }
+        .progress-75 { width: 75%; background: #3498db; }
+        .progress-50 { width: 50%; background: #f39c12; }
+        .progress-25 { width: 25%; background: #e74c3c; }
+        .progress-0 { width: 0%; background: #95a5a6; }
+        
+        .timeline-visual {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .timeline-track {
+            position: relative;
+            height: 120px;
+            background: #ecf0f1;
+            border-radius: 60px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .timeline-segment {
+            position: absolute;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-segment:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+        
+        .seg-m0 { left: 0%; width: 16.67%; background: #27ae60; }
+        .seg-m1 { left: 16.67%; width: 33.33%; background: #3498db; }
+        .seg-m2 { left: 50%; width: 16.67%; background: #e74c3c; }
+        .seg-m3 { left: 66.67%; width: 16.67%; background: #9b59b6; }
+        .seg-m4 { left: 83.34%; width: 16.66%; background: #95a5a6; }
+        
+        .legend {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline-periods {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .milestone-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .legend {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Product Roadmap Timeline</h1>
+            <p>Custom Dashboard & Reporting Platform Evolution</p>
+        </div>
+        
+        <div class="timeline-container">
+            <div class="timeline-header">
+                <h2>📅 Timeline Overview</h2>
+                <div style="color: #7f8c8d; font-size: 0.9em;">Q3 2025 - Q4 2026</div>
+            </div>
+            
+            <div class="timeline-periods">
+                <div class="period q3-2025">Q3 2025</div>
+                <div class="period q4-2025">Q4 2025</div>
+                <div class="period q1-2026">Q1 2026</div>
+                <div class="period q2-2026">Q2 2026</div>
+                <div class="period q3-2026">Q3 2026</div>
+                <div class="period q4-2026">Q4 2026</div>
+            </div>
+            
+            <div class="timeline-visual">
+                <h3 style="text-align: center; margin-bottom: 20px; color: #2c3e50;">🎯 Milestone Timeline</h3>
+                <div class="timeline-track">
+                    <div class="timeline-segment seg-m0">M0 ✅<br>DONE</div>
+                    <div class="timeline-segment seg-m1">M1 🔄<br>Q4'25-Q1'26</div>
+                    <div class="timeline-segment seg-m2">M2 🚀<br>Q1'26</div>
+                    <div class="timeline-segment seg-m3">M3 💰<br>Q2'26</div>
+                    <div class="timeline-segment seg-m4">M4 🔄<br>TBD</div>
+                </div>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #27ae60;"></div>
+                        <span>Completed</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #3498db;"></div>
+                        <span>In Progress</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #e74c3c;"></div>
+                        <span>Upcoming</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #9b59b6;"></div>
+                        <span>Future</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #95a5a6;"></div>
+                        <span>Planning</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- M0 Milestone -->
+            <div class="milestone m0">
+                <div class="milestone-header">
+                    <div class="milestone-title">
+                        <div class="milestone-icon">M0</div>
+                        <div class="milestone-info">
+                            <h3>Item Level Metrics Dashboard</h3>
+                            <div class="milestone-timeline">Q3 2025</div>
+                        </div>
+                    </div>
+                    <div class="milestone-status status-completed">✅ COMPLETED</div>
+                </div>
+                <div class="milestone-content">
+                    <div class="milestone-details">
+                        <div class="detail-section">
+                            <h4>🎯 Achievements</h4>
+                            <ul class="detail-list">
+                                <li>Custom dashboard views launched</li>
+                                <li>Item-level metrics visibility</li>
+                                <li>Foundation for advanced analytics</li>
+                                <li>User interface established</li>
+                            </ul>
+                        </div>
+                        <div class="detail-section">
+                            <h4>📊 Impact</h4>
+                            <ul class="detail-list">
+                                <li>Enhanced granular reporting</li>
+                                <li>Improved decision-making capability</li>
+                                <li>Platform foundation established</li>
+                                <li>User adoption initiated</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-100"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- M1 Milestone -->
+            <div class="milestone m1">
+                <div class="milestone-header">
+                    <div class="milestone-title">
+                        <div class="milestone-icon">M1</div>
+                        <div class="milestone-info">
+                            <h3>Advanced Reporting Infrastructure</h3>
+                            <div class="milestone-timeline">Q4 2025 - Q1 2026</div>
+                        </div>
+                    </div>
+                    <div class="milestone-status status-active">🔄 IN PROGRESS</div>
+                </div>
+                <div class="milestone-content">
+                    <div class="milestone-details">
+                        <div class="detail-section">
+                            <h4>🚀 Key Features</h4>
+                            <ul class="detail-list">
+                                <li>Fast follow metrics implementation</li>
+                                <li>UX iterations for Reporting IA</li>
+                                <li>Saved Views functionality</li>
+                                <li>Scheduled Export capabilities</li>
+                                <li>Cube infrastructure integration</li>
+                            </ul>
+                        </div>
+                        <div class="detail-section">
+                            <h4>🎯 Success Metrics</h4>
+                            <ul class="detail-list">
+                                <li>50 sellers using cube reports</li>
+                                <li>Improved reporting performance</li>
+                                <li>Enhanced user experience</li>
+                                <li>Automated export workflows</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-value">50</div>
+                            <div class="metric-label">Target Sellers</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">Q4-Q1</div>
+                            <div class="metric-label">Timeline</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">Cube</div>
+                            <div class="metric-label">Platform</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-75"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- M2 Milestone -->
+            <div class="milestone m2">
+                <div class="milestone-header">
+                    <div class="milestone-title">
+                        <div class="milestone-icon">M2</div>
+                        <div class="milestone-info">
+                            <h3>Custom Views & Massive Scale-up</h3>
+                            <div class="milestone-timeline">Q1 2026</div>
+                        </div>
+                    </div>
+                    <div class="milestone-status status-upcoming">🚀 UPCOMING</div>
+                </div>
+                <div class="milestone-content">
+                    <div class="milestone-details">
+                        <div class="detail-section">
+                            <h4>🔧 Custom Views</h4>
+                            <ul class="detail-list">
+                                <li>Order objects custom views</li>
+                                <li>Payments objects custom views</li>
+                                <li>Employee objects custom views</li>
+                                <li>Advanced filtering & sorting</li>
+                            </ul>
+                        </div>
+                        <div class="detail-section">
+                            <h4>📈 Scale Targets</h4>
+                            <ul class="detail-list">
+                                <li>Scale cube to ALL sellers</li>
+                                <li>AI + Builder to 1,000 sellers</li>
+                                <li>Enhanced platform capabilities</li>
+                                <li>Advanced analytics features</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-value">ALL</div>
+                            <div class="metric-label">Sellers (Cube)</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">1,000</div>
+                            <div class="metric-label">AI Builder Users</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">3</div>
+                            <div class="metric-label">Object Types</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-25"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- M3 Milestone -->
+            <div class="milestone m3">
+                <div class="milestone-header">
+                    <div class="milestone-title">
+                        <div class="milestone-icon">M3</div>
+                        <div class="milestone-info">
+                            <h3>Profitability Analytics Platform</h3>
+                            <div class="milestone-timeline">Q2 2026 Spring Release</div>
+                        </div>
+                    </div>
+                    <div class="milestone-status status-upcoming">💰 FUTURE</div>
+                </div>
+                <div class="milestone-content">
+                    <div class="milestone-details">
+                        <div class="detail-section">
+                            <h4>📊 Profitability Dimensions</h4>
+                            <ul class="detail-list">
+                                <li>Profitability by Location</li>
+                                <li>Profitability by Product</li>
+                                <li>Profitability by Category</li>
+                                <li>Profitability by Employee</li>
+                            </ul>
+                        </div>
+                        <div class="detail-section">
+                            <h4>🔧 Technical Features</h4>
+                            <ul class="detail-list">
+                                <li>Insight widgets integration</li>
+                                <li>COGS data integration</li>
+                                <li>Labor cost tracking</li>
+                                <li>Advanced profit calculations</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-value">4</div>
+                            <div class="metric-label">Profit Dimensions</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">COGS+Labor</div>
+                            <div class="metric-label">Cost Integration</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">Spring</div>
+                            <div class="metric-label">Q2 2026 Release</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-0"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- M4 Milestone -->
+            <div class="milestone m4">
+                <div class="milestone-header">
+                    <div class="milestone-title">
+                        <div class="milestone-icon">M4</div>
+                        <div class="milestone-info">
+                            <h3>Legacy System Migration</h3>
+                            <div class="milestone-timeline">Post M3 - TBD</div>
+                        </div>
+                    </div>
+                    <div class="milestone-status status-planning">🔄 PLANNING</div>
+                </div>
+                <div class="milestone-content">
+                    <div class="milestone-details">
+                        <div class="detail-section">
+                            <h4>🔄 Migration Strategy</h4>
+                            <ul class="detail-list">
+                                <li>Deprecation plan for canned reports</li>
+                                <li>Metric compatibility analysis</li>
+                                <li>Auto-generatable saved views</li>
+                                <li>Seamless user transition</li>
+                            </ul>
+                        </div>
+                        <div class="detail-section">
+                            <h4>✅ Success Criteria</h4>
+                            <ul class="detail-list">
+                                <li>Zero data loss during migration</li>
+                                <li>All metrics supported in new system</li>
+                                <li>User training completed</li>
+                                <li>Legacy systems decommissioned</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-value">100%</div>
+                            <div class="metric-label">Metric Coverage</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">0</div>
+                            <div class="metric-label">Data Loss</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">Unified</div>
+                            <div class="metric-label">Platform</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-0"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

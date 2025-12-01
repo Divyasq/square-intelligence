@@ -1,0 +1,5 @@
+Customer_Segment,Gross_Sales,Sales_Percentage,Customer_Count,Customer_Percentage,Average_Per_Customer,Performance_Rating
+Regular,65.10,44.1%,8,53.3%,8.14,Balanced
+New,28.90,19.6%,2,13.3%,14.45,High Value
+VIP,28.70,19.4%,4,26.7%,7.17,Low Value
+Inactive,24.90,16.9%,1,6.7%,24.90,High Value

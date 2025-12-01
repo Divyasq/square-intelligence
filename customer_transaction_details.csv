@@ -1,0 +1,31 @@
+customer_segment,customer_name,category_name,item_name,item_type,gross_sales,unit_price,profit_margin,transaction_id
+VIP,John Smith,Espresso,Cappuccino,PRODUCT,4.25,4.25,72.94,TXN_001
+VIP,John Smith,Espresso,Extra Shot,MODIFIER,0.75,0.75,66.67,TXN_001
+Regular,Emma Johnson,Espresso,Latte,PRODUCT,4.75,4.75,73.68,TXN_002
+Regular,Emma Johnson,Espresso,Soy Milk,MODIFIER,0.65,0.65,69.23,TXN_002
+VIP,Michael Brown,Brewed Coffee,Americano,PRODUCT,3.75,3.5,75.71,TXN_003
+Regular,Sarah Davis,Sandwiches,Club Sandwich,PRODUCT,8.95,8.95,63.69,TXN_004
+New,David Wilson,Espresso,Mocha,PRODUCT,5.25,5.25,70.48,TXN_005
+Regular,Lisa Martinez,Cold Drinks,Frappuccino,PRODUCT,7.5,5.95,68.91,TXN_006
+VIP,Robert Garcia,Salads,Caesar Salad,PRODUCT,3.95,7.5,63.33,TXN_007
+Regular,Jennifer Lee,Pastries,Croissant,PRODUCT,3.5,3.95,68.35,TXN_008
+Regular,Christopher Taylor,Pastries,Muffin,PRODUCT,4.25,3.5,67.14,TXN_009
+New,Amanda Anderson,Ice Cream,Vanilla Ice Cream,PRODUCT,12.95,4.25,65.88,TXN_010
+Inactive,James Thomas,Coffee Beans,Coffee Beans 1lb,PRODUCT,15.95,12.95,59.46,TXN_011
+Regular,Mary Jackson,Mugs & Cups,Logo Mug,PRODUCT,4.25,15.95,59.25,TXN_012
+VIP,William White,Espresso,Cappuccino,PRODUCT,5.95,4.25,72.94,TXN_013
+Regular,Patricia Harris,Espresso,Oat Milk,MODIFIER,0.75,0.75,66.67,TXN_013
+Regular,Richard Clark,Espresso,Latte,PRODUCT,4.75,4.75,73.68,TXN_014
+VIP,John Smith,Espresso,Cinnamon,MODIFIER,0.25,0.25,80.0,TXN_014
+Regular,Emma Johnson,Brewed Coffee,Americano,PRODUCT,3.5,3.5,75.71,TXN_015
+VIP,Michael Brown,Espresso,Large Size,MODIFIER,0.6,0.6,83.33,TXN_015
+Regular,Sarah Davis,Espresso,Cappuccino,PRODUCT,4.25,4.25,72.94,TXN_016
+New,David Wilson,Espresso,Latte,PRODUCT,4.75,4.75,73.68,TXN_017
+Regular,Lisa Martinez,Brewed Coffee,Americano,PRODUCT,3.5,3.5,75.71,TXN_018
+VIP,Robert Garcia,Espresso,Mocha,PRODUCT,5.25,5.25,70.48,TXN_019
+Regular,Jennifer Lee,Tea,Green Tea,PRODUCT,3.25,3.25,76.92,TXN_020
+Regular,Christopher Taylor,Cold Drinks,Iced Coffee,PRODUCT,3.75,3.75,74.67,TXN_021
+New,Amanda Anderson,Cold Drinks,Frappuccino,PRODUCT,5.95,5.95,68.91,TXN_022
+Inactive,James Thomas,Sandwiches,Club Sandwich,PRODUCT,8.95,8.95,63.69,TXN_023
+Regular,Mary Jackson,Salads,Caesar Salad,PRODUCT,7.5,7.5,63.33,TXN_024
+VIP,William White,Pastries,Croissant,PRODUCT,3.95,3.95,68.35,TXN_025

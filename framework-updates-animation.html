@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Framework Updates - Multiple Reports</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f6f8fa;
+            color: #24292f;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 200px;
+            background: #ffffff;
+            border-right: 1px solid #d0d7de;
+            padding: 20px 0;
+            overflow-y: auto;
+        }
+
+        .sidebar h3 {
+            padding: 15px 20px 10px;
+            color: #656d76;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            padding: 8px 20px;
+            color: #656d76;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar li:hover {
+            background: #f6f8fa;
+            color: #24292f;
+        }
+
+        .sidebar li.active {
+            background: #dbeafe;
+            color: #1f2937;
+            border-left-color: #3b82f6;
+            font-weight: 500;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+        }
+
+        .report-view {
+            flex: 1;
+            background: white;
+            overflow: auto;
+        }
+
+        .report-header {
+            padding: 20px;
+            border-bottom: 1px solid #d0d7de;
+            background: #f6f8fa;
+        }
+
+        .report-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #24292f;
+            margin-bottom: 8px;
+        }
+
+        .report-filters {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-size: 14px;
+            color: #656d76;
+        }
+
+        .filter-tag {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .report-content {
+            padding: 20px;
+        }
+
+        .chart-section {
+            margin-bottom: 30px;
+        }
+
+        .chart-container {
+            height: 200px;
+            display: flex;
+            align-items: end;
+            gap: 8px;
+            margin: 15px 0;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 6px;
+        }
+
+        .bar {
+            background: #3b82f6;
+            border-radius: 2px 2px 0 0;
+            min-width: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .bar.updating {
+            background: #f59e0b;
+            animation: bar-pulse 1s ease-in-out infinite;
+        }
+
+        @keyframes bar-pulse {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(1.05); }
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .data-table th {
+            background: #f6f8fa;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 12px;
+            color: #656d76;
+            border-bottom: 1px solid #d0d7de;
+        }
+
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid #f6f8fa;
+            font-size: 14px;
+        }
+
+        .data-table tr.updating {
+            background: #fef3c7;
+            animation: row-highlight 1s ease-in-out;
+        }
+
+        @keyframes row-highlight {
+            0%, 100% { background: #fef3c7; }
+            50% { background: #fde68a; }
+        }
+
+        .github-panel {
+            width: 400px;
+            background: #0d1117;
+            color: #e6edf3;
+            border-left: 1px solid #30363d;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .github-header {
+            padding: 16px;
+            border-bottom: 1px solid #30363d;
+            background: #161b22;
+        }
+
+        .github-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #f0f6fc;
+            margin-bottom: 8px;
+        }
+
+        .commit-info {
+            font-size: 12px;
+            color: #7d8590;
+        }
+
+        .file-tree {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .file-item {
+            padding: 8px 16px;
+            border-bottom: 1px solid #21262d;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .file-item:hover {
+            background: #21262d;
+        }
+
+        .file-item.updating {
+            background: #1f2937;
+            border-left: 3px solid #f59e0b;
+            animation: file-update 2s ease-in-out;
+        }
+
+        @keyframes file-update {
+            0%, 100% { background: #1f2937; }
+            50% { background: #374151; }
+        }
+
+        .file-icon {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .file-status {
+            margin-left: auto;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            background: #1f6feb;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .file-item.updating .file-status {
+            opacity: 1;
+            background: #f59e0b;
+        }
+
+        .diff-view {
+            background: #0d1117;
+            border-top: 1px solid #30363d;
+            padding: 12px;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .diff-line {
+            padding: 2px 8px;
+            margin: 1px 0;
+            border-radius: 2px;
+        }
+
+        .diff-add {
+            background: #033a16;
+            color: #aff5b4;
+        }
+
+        .diff-remove {
+            background: #67060c;
+            color: #ffdcd7;
+        }
+
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #f6f8fa;
+            z-index: 1000;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #3b82f6;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .status-message {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #24292f;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            z-index: 1001;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        /* Report-specific content */
+        .metric-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .metric-card {
+            background: white;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            padding: 16px;
+            transition: all 0.3s;
+        }
+
+        .metric-card.updating {
+            border-color: #f59e0b;
+            background: #fefce8;
+        }
+
+        .metric-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #24292f;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: #656d76;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h3>Reports</h3>
+            <ul id="reports-nav">
+                <li data-report="items" class="active">Item Sales</li>
+                <li data-report="discounts">Discounts</li>
+                <li data-report="performance">Performance</li>
+                <li data-report="locations">Locations</li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <div class="report-view">
+                <div class="report-header">
+                    <div class="report-title" id="report-title">Item Sales Report</div>
+                    <div class="report-filters">
+                        <span>Report type: <strong>Summary</strong></span>
+                        <span>Locations: <strong>All</strong></span>
+                        <span>Group metric by: <strong>Item name</strong></span>
+                        <div class="filter-tag">Metrics: Combos sold & 24 others</div>
+                        <div class="filter-tag">Filter by Timeframe: Reporting day</div>
+                    </div>
+                </div>
+
+                <div class="report-content">
+                    <div class="chart-section">
+                        <div class="chart-container" id="chart-container">
+                            <div class="bar" style="height: 140px;" title="Invoice Item"></div>
+                            <div class="bar" style="height: 60px;" title="Massage"></div>
+                            <div class="bar" style="height: 45px;" title="Online Site Item"></div>
+                            <div class="bar" style="height: 35px;" title="Chicken Fajita Plate"></div>
+                            <div class="bar" style="height: 30px;" title="Chicken Sandwich"></div>
+                            <div class="bar" style="height: 25px;" title="Unknown Item"></div>
+                            <div class="bar" style="height: 20px;" title="Chocolate Shake"></div>
+                            <div class="bar" style="height: 18px;" title="Mango Smoothie"></div>
+                        </div>
+                    </div>
+
+                    <table class="data-table" id="data-table">
+                        <thead>
+                            <tr>
+                                <th>Item name</th>
+                                <th>Combos sold</th>
+                                <th>Comps amount</th>
+                                <th>Discount amount</th>
+                                <th>Gross sales</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Invoice Item</td>
+                                <td>1</td>
+                                <td>$2,000.00</td>
+                                <td>$35.00</td>
+                                <td>$18,200.00</td>
+                            </tr>
+                            <tr>
+                                <td>Massage</td>
+                                <td>11</td>
+                                <td>$0.00</td>
+                                <td>$50.00</td>
+                                <td>$3,000.00</td>
+                            </tr>
+                            <tr>
+                                <td>Online Site Item</td>
+                                <td>1</td>
+                                <td>$0.00</td>
+                                <td>$0.00</td>
+                                <td>$2,700.00</td>
+                            </tr>
+                            <tr>
+                                <td>Chicken Fajita Plate</td>
+                                <td>47</td>
+                                <td>$17.14</td>
+                                <td>$39.70</td>
+                                <td>$968.94</td>
+                            </tr>
+                            <tr>
+                                <td>Chicken Sandwich</td>
+                                <td>44</td>
+                                <td>$0.00</td>
+                                <td>$5.00</td>
+                                <td>$802.78</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="github-panel">
+                <div class="github-header">
+                    <div class="github-title">📝 Framework Update</div>
+                    <div class="commit-info">Updating schema-driven widgets across reports</div>
+                </div>
+
+                <div class="file-tree" id="file-tree">
+                    <div class="file-item" data-file="ItemSalesReport.tsx">
+                        <div class="file-icon">📄</div>
+                        <span>ItemSalesReport.tsx</span>
+                        <div class="file-status">Modified</div>
+                    </div>
+                    <div class="file-item" data-file="DiscountsReport.tsx">
+                        <div class="file-icon">📄</div>
+                        <span>DiscountsReport.tsx</span>
+                        <div class="file-status">Modified</div>
+                    </div>
+                    <div class="file-item" data-file="PerformanceReport.tsx">
+                        <div class="file-icon">📄</div>
+                        <span>PerformanceReport.tsx</span>
+                        <div class="file-status">Modified</div>
+                    </div>
+                    <div class="file-item" data-file="LocationsReport.tsx">
+                        <div class="file-icon">📄</div>
+                        <span>LocationsReport.tsx</span>
+                        <div class="file-status">Modified</div>
+                    </div>
+                    <div class="file-item" data-file="shared/ChartWidget.tsx">
+                        <div class="file-icon">🧩</div>
+                        <span>shared/ChartWidget.tsx</span>
+                        <div class="file-status">Modified</div>
+                    </div>
+                    <div class="file-item" data-file="shared/DataTable.tsx">
+                        <div class="file-icon">🧩</div>
+                        <span>shared/DataTable.tsx</span>
+                        <div class="file-status">Modified</div>
+                    </div>
+                    <div class="file-item" data-file="shared/MetricsCard.tsx">
+                        <div class="file-icon">🧩</div>
+                        <span>shared/MetricsCard.tsx</span>
+                        <div class="file-status">Modified</div>
+                    </div>
+                    <div class="file-item" data-file="types/ReportSchema.ts">
+                        <div class="file-icon">⚙️</div>
+                        <span>types/ReportSchema.ts</span>
+                        <div class="file-status">Modified</div>
+                    </div>
+                </div>
+
+                <div class="diff-view" id="diff-view">
+                    <div class="diff-line diff-remove">- const groupBy = 'item_name';</div>
+                    <div class="diff-line diff-add">+ const groupBy = schema.groupBy || 'item_name';</div>
+                    <div class="diff-line diff-add">+ const metrics = schema.availableMetrics;</div>
+                    <div class="diff-line diff-add">+ const filters = schema.supportedFilters;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+    </div>
+
+    <div class="status-message" id="status-message">
+        Framework update propagating across reports...
+    </div>
+
+    <script>
+        let isAnimating = false;
+        let currentReport = 'items';
+
+        const reports = {
+            items: {
+                title: 'Item Sales Report',
+                groupBy: 'Item name',
+                metrics: 'Combos sold & 24 others',
+                data: [
+                    ['Invoice Item', '1', '$2,000.00', '$35.00', '$18,200.00'],
+                    ['Massage', '11', '$0.00', '$50.00', '$3,000.00'],
+                    ['Online Site Item', '1', '$0.00', '$0.00', '$2,700.00'],
+                    ['Chicken Fajita Plate', '47', '$17.14', '$39.70', '$968.94'],
+                    ['Chicken Sandwich', '44', '$0.00', '$5.00', '$802.78']
+                ]
+            },
+            discounts: {
+                title: 'Discounts Report',
+                groupBy: 'Discount',
+                metrics: 'Combos sold & 24 others',
+                data: [
+                    ['10% off tax', '132', '$1,098.00', '$240.50', '$14,378.90'],
+                    ['$5 off', '89', '$1,098.00', '$240.50', '$14,378.90'],
+                    ['Summer discount', '137', '$1,098.00', '$5.25', '$14,378.90'],
+                    ['$50 off tax', '133', '$1,098.00', '$240.50', '$14,378.90']
+                ]
+            },
+            performance: {
+                title: 'Performance Dashboard',
+                groupBy: 'Time',
+                metrics: 'Payment amount & 9 others',
+                data: [
+                    ['Net sales', '$0.00', 'N/A', '0', '0.00%'],
+                    ['Gross sales', '$0.00', 'N/A', '0', '0.00%'],
+                    ['Transactions', '0', 'N/A', '0', '0.00%'],
+                    ['Average sale', '$0.00', 'N/A', '0', '0.00%']
+                ]
+            },
+            locations: {
+                title: 'Locations Report',
+                groupBy: 'Location',
+                metrics: 'Combos sold & 24 others',
+                data: [
+                    ['SL', '$0.00', 'N/A', '0', '0.00%'],
+                    ['Test 2025', '$0.00', 'N/A', '0', '0.00%']
+                ]
+            }
+        };
+
+        const files = [
+            'ItemSalesReport.tsx',
+            'DiscountsReport.tsx', 
+            'PerformanceReport.tsx',
+            'LocationsReport.tsx',
+            'shared/ChartWidget.tsx',
+            'shared/DataTable.tsx',
+            'shared/MetricsCard.tsx',
+            'types/ReportSchema.ts'
+        ];
+
+        function updateProgress(percent) {
+            document.getElementById('progress-fill').style.width = percent + '%';
+        }
+
+        function updateStatus(message) {
+            document.getElementById('status-message').textContent = message;
+        }
+
+        function updateReport(reportId) {
+            const report = reports[reportId];
+            document.getElementById('report-title').textContent = report.title;
+            
+            // Update filters
+            const filtersDiv = document.querySelector('.report-filters');
+            filtersDiv.innerHTML = `
+                <span>Report type: <strong>Summary</strong></span>
+                <span>Locations: <strong>All</strong></span>
+                <span>Group metric by: <strong>${report.groupBy}</strong></span>
+                <div class="filter-tag">Metrics: ${report.metrics}</div>
+                <div class="filter-tag">Filter by Timeframe: Reporting day</div>
+            `;
+
+            // Update table data
+            const tbody = document.querySelector('#data-table tbody');
+            tbody.innerHTML = report.data.map(row => 
+                `<tr><td>${row[0]}</td><td>${row[1]}</td><td>${row[2]}</td><td>${row[3]}</td><td>${row[4]}</td></tr>`
+            ).join('');
+        }
+
+        async function animateFileUpdate(fileName, delay = 0) {
+            await new Promise(resolve => setTimeout(resolve, delay));
+            
+            const fileItem = document.querySelector(`[data-file="${fileName}"]`);
+            fileItem.classList.add('updating');
+            
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            fileItem.classList.remove('updating');
+        }
+
+        async function animateUIUpdate() {
+            // Animate chart bars
+            const bars = document.querySelectorAll('.bar');
+            bars.forEach((bar, index) => {
+                setTimeout(() => bar.classList.add('updating'), index * 100);
+            });
+
+            // Animate table rows
+            const rows = document.querySelectorAll('#data-table tbody tr');
+            rows.forEach((row, index) => {
+                setTimeout(() => row.classList.add('updating'), index * 150);
+            });
+
+            await new Promise(resolve => setTimeout(resolve, 2000));
+
+            // Remove updating classes
+            bars.forEach(bar => bar.classList.remove('updating'));
+            rows.forEach(row => row.classList.remove('updating'));
+        }
+
+        async function simulateFrameworkUpdate() {
+            if (isAnimating) return;
+            isAnimating = true;
+
+            updateStatus('Framework update detected - analyzing dependencies...');
+            updateProgress(10);
+
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            updateStatus('Updating schema-driven components...');
+            updateProgress(30);
+
+            // Animate file updates
+            const fileAnimations = files.map((file, index) => 
+                animateFileUpdate(file, index * 200)
+            );
+
+            // Animate UI updates simultaneously
+            setTimeout(animateUIUpdate, 500);
+
+            await Promise.all(fileAnimations);
+
+            updateProgress(80);
+            updateStatus('Propagating changes across all reports...');
+
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            updateProgress(100);
+            updateStatus('✅ Framework updated - All reports now use shared schema');
+
+            setTimeout(() => {
+                updateProgress(0);
+                updateStatus('Click any report to see schema-driven updates in action');
+                isAnimating = false;
+            }, 2000);
+        }
+
+        function switchReport(reportId) {
+            if (isAnimating) return;
+
+            currentReport = reportId;
+            
+            // Update sidebar
+            document.querySelectorAll('.sidebar li').forEach(li => {
+                li.classList.remove('active');
+            });
+            document.querySelector(`[data-report="${reportId}"]`).classList.add('active');
+
+            // Update report content
+            updateReport(reportId);
+
+            // Trigger framework update
+            setTimeout(simulateFrameworkUpdate, 500);
+        }
+
+        // Add click handlers
+        document.querySelectorAll('.sidebar li[data-report]').forEach(li => {
+            li.addEventListener('click', (e) => {
+                const reportId = e.target.dataset.report;
+                switchReport(reportId);
+            });
+        });
+
+        // Auto-start demo
+        setTimeout(() => {
+            updateStatus('Schema-driven framework ready. Click any report to see updates!');
+            simulateFrameworkUpdate();
+        }, 1000);
+    </script>
+</body>
+</html>

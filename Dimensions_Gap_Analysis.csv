@@ -1,0 +1,21 @@
+Requested Dimension,Current Availability,Available In Cube,Available Field,Data Type,Status,Gap Description,Recommended Enhancement,Priority,Implementation Notes
+Order ID,AVAILABLE,Orders,order_id,String,✅ COMPLETE,No gap,None needed,N/A,Perfect match
+Device,AVAILABLE,PaymentAndRefunds,device_id,String,✅ COMPLETE,No gap,None needed,N/A,Available through payment data
+Device Nickname,AVAILABLE,PaymentAndRefunds,device_nickname,String,✅ COMPLETE,No gap,None needed,N/A,Perfect match
+Channel,AVAILABLE,Channel,channel_name,String,✅ COMPLETE,No gap,None needed,N/A,Available via join
+Employee,AVAILABLE,Orders,team_member_collected,String,✅ COMPLETE,No gap,None needed,N/A,Team member info available
+Location,AVAILABLE,Location,location_name,String,✅ COMPLETE,No gap,None needed,N/A,Full location details
+Customer,AVAILABLE,Orders,customer_id,String,✅ COMPLETE,No gap,None needed,N/A,Customer ID available
+Customer Type,AVAILABLE,CustomerSnapshots,customers_first_purchase_at_merchant,Boolean,✅ COMPLETE,No gap,None needed,N/A,New/returning classification
+Order Created,AVAILABLE,Orders,created_at,Time,✅ COMPLETE,No gap,None needed,N/A,Exact match
+Order Completed,AVAILABLE,Orders,sale_timestamp,Time,✅ COMPLETE,No gap,None needed,N/A,Completion tracking
+Order Name,MISSING,None,N/A,String,❌ MISSING,No human-readable order names/titles,Add order_name to Orders cube,HIGH,Allow merchants to name orders or auto-generate descriptive names
+Section,MISSING,None,N/A,String,❌ MISSING,No section/department concept in schema,"Add section_id, section_name to Orders cube",HIGH,"Business logic needed to define sections (could be based on location areas, item categories, etc.)"
+Customer Visit Frequency,CALCULATED,Multiple,Derived,Number,⚠️ REQUIRES CALCULATION,"Not pre-calculated, must derive from data",Add visit_frequency to CustomerSnapshots cube,MEDIUM,Pre-calculate and store customer visit counts
+Order Tags/Labels,MISSING,None,N/A,String Array,❌ MISSING,No tagging system for orders,Add order_tags field to Orders cube,MEDIUM,"Allow custom tags like ""Rush"", ""Special"", ""VIP"", etc."
+Order Notes,MISSING,None,N/A,String,❌ MISSING,No order-level notes/comments,Add order_notes to Orders cube,MEDIUM,Free-text field for order notes
+Customer Name,MISSING,None,N/A,String,❌ MISSING,"Only customer ID available, no name",Add customer_name to Orders or create Customer cube,HIGH,Customer name for reporting readability
+Employee Name,MISSING,None,N/A,String,❌ MISSING,"Only team member ID, no readable name",Add team_member_name to Orders cube,HIGH,Employee name for reporting readability
+Device Type,MISSING,PaymentAndRefunds,N/A,String,❌ MISSING,Device ID and nickname but no device type,Add device_type to PaymentAndRefunds cube,MEDIUM,"Values like ""POS Terminal"", ""Mobile"", ""Online"", etc."
+Order Fulfillment Method,MISSING,None,N/A,String,❌ MISSING,No fulfillment method tracking,Add fulfillment_method to Orders cube,MEDIUM,"Values like ""Pickup"", ""Delivery"", ""Dine-in"", ""Takeout"""
+Order Duration,CALCULATED,Orders,Derived from timestamps,Number,⚠️ REQUIRES CALCULATION,Can calculate from created_at to sale_timestamp,Add order_duration_minutes to Orders cube,LOW,Pre-calculate time from creation to completion

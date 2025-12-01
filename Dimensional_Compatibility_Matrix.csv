@@ -1,0 +1,14 @@
+Dimension,Orders Metrics,ItemTransactions Metrics,CustomerSnapshots Metrics,PaymentAndRefunds Metrics,Fees Metrics,Voids Metrics,Overall Availability
+Order ID,✅ Direct,✅ Direct,✅ Direct,✅ Direct,✅ Direct,✅ Direct,✅ UNIVERSAL
+Order Name,❌ Missing,❌ Missing,❌ Missing,❌ Missing,❌ Missing,❌ Missing,❌ NEEDS ADDITION
+Device,✅ Via Join,❌ Missing,❌ Missing,✅ Direct,❌ Missing,❌ Missing,⚠️ LIMITED
+Device Nickname,✅ Via Join,❌ Missing,❌ Missing,✅ Direct,❌ Missing,❌ Missing,⚠️ LIMITED
+Channel,✅ Via Join,✅ Via Join,❌ Missing,❌ Missing,❌ Missing,❌ Missing,⚠️ LIMITED
+Section,❌ Missing,❌ Missing,❌ Missing,❌ Missing,❌ Missing,❌ Missing,❌ NEEDS ADDITION
+Employee,✅ Direct,❌ Missing,❌ Missing,✅ Direct,❌ Missing,✅ Direct,⚠️ MODERATE
+Location,✅ Via Join,✅ Direct,❌ Missing,✅ Direct,✅ Direct,✅ Direct,✅ GOOD
+Customer,✅ Direct,❌ Missing,✅ Direct,❌ Missing,❌ Missing,✅ Direct,⚠️ MODERATE
+Customer Type,✅ Via Join,❌ Missing,✅ Direct,❌ Missing,❌ Missing,❌ Missing,⚠️ LIMITED
+Order Created,✅ Direct,✅ Direct,✅ Direct,✅ Direct,✅ Direct,✅ Direct,✅ UNIVERSAL
+Order Completed,✅ Direct,❌ Missing,❌ Missing,❌ Missing,❌ Missing,✅ Direct,⚠️ LIMITED
+Visit Frequency,⚠️ Calculated,❌ Missing,⚠️ Calculated,❌ Missing,❌ Missing,❌ Missing,⚠️ NEEDS CALCULATION

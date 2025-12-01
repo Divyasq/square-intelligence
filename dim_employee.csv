@@ -1,0 +1,16 @@
+employee_sk,employee_id,first_name,last_name,full_name,email,phone_number,job_title,department,hire_date,employment_status,hourly_rate,pay_type,location_sk,manager_employee_sk,permission_level,can_process_refunds,can_apply_discounts,can_void_transactions,is_active
+1,EMP_001,Sarah,Johnson,Sarah Johnson,sarah.johnson@company.com,415-555-1001,Store Manager,Management,2023-01-15,ACTIVE,28.50,HOURLY,1,,MANAGER,TRUE,TRUE,TRUE,TRUE
+2,EMP_002,Mike,Chen,Mike Chen,mike.chen@company.com,415-555-1002,Assistant Manager,Management,2023-03-20,ACTIVE,24.00,HOURLY,2,1,MANAGER,TRUE,TRUE,TRUE,TRUE
+3,EMP_003,Lisa,Rodriguez,Lisa Rodriguez,lisa.rodriguez@company.com,212-555-2001,Store Manager,Management,2022-11-10,ACTIVE,30.00,HOURLY,3,,MANAGER,TRUE,TRUE,TRUE,TRUE
+4,EMP_004,David,Kim,David Kim,david.kim@company.com,718-555-2002,Shift Supervisor,Management,2023-05-12,ACTIVE,22.00,HOURLY,4,3,MANAGER,TRUE,TRUE,FALSE,TRUE
+5,EMP_005,Carlos,Martinez,Carlos Martinez,carlos.martinez@company.com,512-555-3001,Food Truck Manager,Management,2023-02-28,ACTIVE,26.00,HOURLY,5,,MANAGER,TRUE,TRUE,TRUE,TRUE
+6,EMP_006,Jennifer,Lee,Jennifer Lee,jennifer.lee@company.com,214-555-3002,Store Manager,Management,2022-09-15,ACTIVE,29.00,HOURLY,6,,MANAGER,TRUE,TRUE,TRUE,TRUE
+7,EMP_007,Roberto,Silva,Roberto Silva,roberto.silva@company.com,305-555-4001,Retail Manager,Management,2023-04-08,ACTIVE,25.50,HOURLY,7,,MANAGER,TRUE,TRUE,TRUE,TRUE
+8,EMP_008,Amanda,Wong,Amanda Wong,amanda.wong@company.com,213-555-1003,Store Manager,Management,2023-01-22,ACTIVE,31.00,HOURLY,8,,MANAGER,TRUE,TRUE,TRUE,TRUE
+9,EMP_009,James,Wilson,James Wilson,james.wilson@company.com,415-555-1011,Barista,Service,2023-06-01,ACTIVE,18.50,HOURLY,1,1,EMPLOYEE,FALSE,FALSE,FALSE,TRUE
+10,EMP_010,Maria,Garcia,Maria Garcia,maria.garcia@company.com,415-555-1012,Barista,Service,2023-07-15,ACTIVE,19.00,HOURLY,1,1,EMPLOYEE,FALSE,TRUE,FALSE,TRUE
+11,EMP_011,Alex,Thompson,Alex Thompson,alex.thompson@company.com,415-555-1013,Cook,Kitchen,2023-08-20,ACTIVE,20.00,HOURLY,2,2,EMPLOYEE,FALSE,FALSE,FALSE,TRUE
+12,EMP_012,Emily,Davis,Emily Davis,emily.davis@company.com,212-555-2011,Cashier,Service,2023-09-10,ACTIVE,17.50,HOURLY,3,3,EMPLOYEE,FALSE,FALSE,FALSE,TRUE
+13,EMP_013,Ryan,Brown,Ryan Brown,ryan.brown@company.com,718-555-2012,Barista,Service,2023-10-05,ACTIVE,18.00,HOURLY,4,4,EMPLOYEE,FALSE,TRUE,FALSE,TRUE
+14,EMP_014,Sophie,Miller,Sophie Miller,sophie.miller@company.com,512-555-3011,Cook,Kitchen,2023-11-12,ACTIVE,19.50,HOURLY,5,5,EMPLOYEE,FALSE,FALSE,FALSE,TRUE
+15,EMP_015,Kevin,Taylor,Kevin Taylor,kevin.taylor@company.com,214-555-3012,Cashier,Service,2023-12-01,ACTIVE,17.00,HOURLY,6,6,EMPLOYEE,FALSE,FALSE,FALSE,TRUE

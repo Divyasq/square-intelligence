@@ -1,0 +1,5 @@
+Dimension Category,Available Dimensions,Missing Dimensions,Enhancement Needed
+✅ DIRECTLY AVAILABLE,"Item Name, Category Name, Location, Order ID, Order Created",Most others,None - these work now
+⚠️ VIA JOINS NEEDED,"Employee, Customer Type, Device, Device Nickname, Channel, Order Completed, Payment Method",Requires joins to Orders/CustomerSnapshots/PaymentAndRefunds,Add joins to item cubes
+❌ COMPLETELY MISSING,"Section, Customer Name, Item Notes, GTIN, Vendor Info, Menu, Manager, Dining Options, Custom Attributes",Not in Square schema,Add new fields/cubes
+🔴 RESTAURANT-SPECIFIC,"Combo Name, Dining Option, Menu, Manager, Reporting Category",Restaurant concepts not in Square,Add restaurant-specific fields

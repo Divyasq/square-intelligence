@@ -1,0 +1,7 @@
+Enhancement,Metrics Improved,Business Value,Technical Complexity,Priority,Timeline
+Add Employee context to discount cubes,All discount metrics,Track staff discount usage patterns,Medium,HIGH,3-4 weeks
+Add Customer Type to discount analysis,All discount metrics,Discount effectiveness by customer segment,Medium,HIGH,3-4 weeks
+Add Item Name context to discount cubes,Item-level discount metrics,See which products get discounted most,Medium,HIGH,2-3 weeks
+Add Comp Reason field,Comp-related metrics,Understand why comps are given,Low,MEDIUM,1-2 weeks
+Add Section/Department concept,All discount metrics,Departmental discount analysis,High,MEDIUM,6-8 weeks
+Add Discount Categories/Types,All discount metrics,"Group discounts by type (%, $, etc.)",Medium,MEDIUM,2-3 weeks

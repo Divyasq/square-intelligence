@@ -1,0 +1,3 @@
+Void Metric,Available in Square?,Key Dimensions Available,Key Dimensions Missing,Coverage,Status
+Amount Voided,✅ total_amount_voided,"Item Name, Category, Employee, Location, Order ID, Void Reason, SKU, Item Variation, Channel, Order Created, Order Completed, Units","Customer Type, Device, Section, Payment Method, Manager, Item Notes",12/46 (26%),🟢 EXCELLENT
+Items Voided,✅ count,"Item Name, Category, Employee, Location, Order ID, Void Reason, SKU, Item Variation, Channel, Order Created, Order Completed, Units","Customer Type, Device, Section, Payment Method, Manager, Item Notes",12/46 (26%),🟢 EXCELLENT

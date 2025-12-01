@@ -1,0 +1,7 @@
+Step,Action,Cube(s) Involved,Fields Needed,Join Condition,Notes
+1,Get base order data with gross sales,Orders,"order_id, top_line_product_sales, created_at, sale_timestamp, customer_id, location_id, sales_channel_id, team_member_collected, state",N/A (Primary cube),This is your main data source
+2,Add customer segmentation,CustomerSnapshots,"customers_first_purchase_at_merchant, had_loyalty_at_purchase",Orders.order_id = CustomerSnapshots.id,Get new/returning/loyalty status
+3,Add device information,PaymentAndRefunds,"device_id, device_nickname",Orders.order_id = PaymentAndRefunds.order_id,Device details from payment processing
+4,Add location names,Location,location_name,Orders.location_id = Location.location_id,Get readable location names
+5,Add channel names,Channel,channel_name,Orders.sales_channel_id = Channel.channel_id,Get readable channel names
+6,Calculate customer visit frequency,CustomerSnapshots + Orders,Count of orders per customer,Group by customer_id,Requires aggregation query

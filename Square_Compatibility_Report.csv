@@ -1,0 +1,15 @@
+Your Requirement,Square Schema Equivalent,Availability Status,Cube Location,Field Name,Data Type,Notes & Limitations,Workaround/Alternative
+Gross Sales,top_line_product_sales,✅ AVAILABLE,Orders,top_line_product_sales,Currency,Exact match - gross sales without discounts/returns/fees,Perfect match
+Order Name,N/A,❌ NOT AVAILABLE,N/A,N/A,N/A,"Square does not have order names, only IDs",Use Order ID as identifier
+Order ID,order_id,✅ AVAILABLE,Orders,order_id,String,Unique identifier for each order,Perfect match
+Device,device_id,✅ AVAILABLE,PaymentAndRefunds,device_id,String,Square-issued ID of the device,Available through payment data
+Device Nick name,device_nickname,✅ AVAILABLE,PaymentAndRefunds,device_nickname,String,Device name set by seller on Dashboard,Exactly what you requested
+Channel,channel_name,✅ AVAILABLE,Channel,channel_name,String,Display name of sales channel,Join with Channel cube via sales_channel_id
+Section,N/A,❌ NOT AVAILABLE,N/A,N/A,N/A,No section concept in Square,Use Location or create custom grouping
+Employee,team_member_collected,✅ AVAILABLE,Orders,team_member_collected,String,Team member who collected payment,Available in Orders cube
+Location,location_name,✅ AVAILABLE,Location,location_name,String,Display name of location,Join with Location cube via location_id
+Customer,customer_id,✅ AVAILABLE,Orders,customer_id,String,Customer associated with order,Customer ID available
+Customer Type (New/Returning/Loyalty),customers_first_purchase_at_merchant + had_loyalty_at_purchase,✅ AVAILABLE,CustomerSnapshots,Multiple fields,Boolean,New vs returning + loyalty status,Comprehensive customer segmentation
+Order Created,created_at,✅ AVAILABLE,Orders,created_at,Time,Timestamp when order was created,Exact match
+Order Completed/Fulfilled,sale_timestamp + state,✅ AVAILABLE,Orders,"sale_timestamp, state",Time + String,When payment received + order status,Completion tracking available
+Customer visit frequency,Calculated field,⚠️ PARTIALLY AVAILABLE,CustomerSnapshots,Derived,Number,Must calculate from transaction history,Calculate from customer order count over time
