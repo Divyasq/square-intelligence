@@ -1,5 +1,10 @@
 # Square Intelligence Platform
 
+🌐 **Live Site**: https://divyasq.github.io/square-intelligence/
+
+## GitHub Pages Status
+Last updated: December 1, 2025 at 9:17 AM EST
+
 ## 🧠 AI-Powered Business Intelligence for Square Merchants
 
 A comprehensive business intelligence platform that transforms how Square merchants understand and optimize their operations through AI-generated insights, predictive analytics, and unified data intelligence.
