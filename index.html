@@ -1,15 +1,368 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/square-intelligence/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Financial Suite</title>
-    <script type="module" crossorigin src="/square-intelligence/assets/index-614ebb83.js"></script>
-    <link rel="stylesheet" href="/square-intelligence/assets/index-2e2155e0.css">
-  </head>
-  <body>
-    <div id="root"></div>
-    
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Square Business Intelligence Suite - Overview</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 40px 0;
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .card-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .card h3 {
+            color: #4a5568;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .card p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .card li {
+            color: #555;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .card li:before {
+            content: "✓";
+            color: #48bb78;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .stats-section {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            color: white;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #4299e1;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #3182ce;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .feature-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 20px;
+            color: white;
+        }
+
+        .feature-item h4 {
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏦 Square Business Intelligence Suite</h1>
+            <p>Advanced Financial Analytics & OLAP Cube Implementation</p>
+            <p><strong>Branch:</strong> SquareBusinessIntelligence | <strong>Updated:</strong> December 2024</p>
+        </div>
+
+        <div class="stats-section">
+            <h2>📊 Project Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">89</div>
+                    <div>Total Files</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">34K+</div>
+                    <div>Lines of Code</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">706</div>
+                    <div>Functions</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">341</div>
+                    <div>Classes</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon">🎯</div>
+                <h3>OLAP Cube Analytics</h3>
+                <p>Advanced multidimensional analysis capabilities for comprehensive business intelligence.</p>
+                <ul>
+                    <li>Customer segmentation analysis</li>
+                    <li>Item performance metrics</li>
+                    <li>Discount effectiveness tracking</li>
+                    <li>Void transaction analysis</li>
+                    <li>Real-time cube data validation</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🤖</div>
+                <h3>AI-Powered Reporting</h3>
+                <p>Intelligent report generation with machine learning insights and automated analysis.</p>
+                <ul>
+                    <li>Custom AI report builder</li>
+                    <li>Automated insight generation</li>
+                    <li>Interactive dashboard creation</li>
+                    <li>Natural language queries</li>
+                    <li>Predictive analytics</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">📈</div>
+                <h3>Interactive Dashboards</h3>
+                <p>Modern, responsive dashboards with real-time data visualization and user-friendly interfaces.</p>
+                <ul>
+                    <li>Neighborhood cash flow analysis</li>
+                    <li>Component revolution animations</li>
+                    <li>Schema-driven visualizations</li>
+                    <li>Custom report templates</li>
+                    <li>Mobile-responsive design</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">⚛️</div>
+                <h3>Modern Tech Stack</h3>
+                <p>Built with cutting-edge technologies for scalability, performance, and maintainability.</p>
+                <ul>
+                    <li>TypeScript & Vite development</li>
+                    <li>Tailwind CSS styling</li>
+                    <li>Python analytics backend</li>
+                    <li>SQL database integration</li>
+                    <li>ESLint code quality</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="stats-section">
+            <h2>🛠️ Technical Features</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <h4>📊 Data Processing</h4>
+                    <p>Comprehensive Python scripts for analyzing customer segments, item metrics, and financial data with advanced statistical methods.</p>
+                </div>
+                <div class="feature-item">
+                    <h4>🎨 Frontend Excellence</h4>
+                    <p>Modern HTML5/CSS3/JavaScript interfaces with smooth animations, responsive design, and intuitive user experiences.</p>
+                </div>
+                <div class="feature-item">
+                    <h4>📚 Documentation</h4>
+                    <p>Extensive markdown documentation covering development guides, gap analysis, implementation specs, and project context.</p>
+                </div>
+                <div class="feature-item">
+                    <h4>🗄️ Database Integration</h4>
+                    <p>Robust SQL schema design with OLAP cube enhancements, data validation, and performance optimization.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2 style="color: white; margin-bottom: 20px;">🚀 Get Started</h2>
+            <p style="color: rgba(255,255,255,0.9); font-size: 1.1em;">Explore the comprehensive financial analytics suite</p>
+            
+            <div class="cta-buttons">
+                <a href="custom-reports-prototype/ai-report-builder.html" class="btn btn-primary">
+                    🤖 Try AI Report Builder
+                </a>
+                <a href="item-sales-enhanced/custom-item-sales.html" class="btn btn-primary">
+                    📊 View Sales Dashboard
+                </a>
+                <a href="README.md" class="btn btn-secondary">
+                    📖 Read Documentation
+                </a>
+                <a href="https://github.com/Divyasq/square-intelligence/tree/SquareBusinessIntelligence" class="btn btn-secondary">
+                    💻 View on GitHub
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add smooth scrolling and interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate cards on scroll
+            const cards = document.querySelectorAll('.card');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+
+            // Add click analytics
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    console.log('Button clicked:', this.textContent.trim());
+                });
+            });
+        });
+    </script>
+</body>
 </html>
