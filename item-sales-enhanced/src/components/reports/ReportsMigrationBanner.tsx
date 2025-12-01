@@ -1,0 +1,348 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { 
+  AlertTriangle, 
+  X, 
+  ArrowRight, 
+  Calendar, 
+  CheckCircle, 
+  Clock,
+  Zap,
+  BarChart3,
+  Package,
+  DollarSign,
+  Users,
+  MapPin,
+  Percent,
+  CreditCard,
+  Building2,
+  FileText,
+  ShoppingCart,
+  User,
+  Target
+} from 'lucide-react';
+import { Card } from '../ui/Card';
+import { Button } from '../ui/Button';
+import { Badge } from '../ui/Badge';
+
+interface LegacyReport {
+  id: string;
+  name: string;
+  description: string;
+  icon: React.ComponentType<any>;
+  category: string;
+  migrationStatus: 'pending' | 'migrating' | 'completed';
+}
+
+const legacyReports: LegacyReport[] = [
+  { id: 'sales-summary', name: 'Sales Summary', description: 'Overview of total sales performance', icon: BarChart3, category: 'Sales', migrationStatus: 'pending' },
+  { id: 'sales-by-location', name: 'Sales by Location', description: 'Sales performance by store location', icon: MapPin, category: 'Sales', migrationStatus: 'pending' },
+  { id: 'sales-by-time', name: 'Sales by Time', description: 'Sales trends over time periods', icon: Clock, category: 'Sales', migrationStatus: 'pending' },
+  { id: 'sales-by-category', name: 'Sales by Category', description: 'Sales breakdown by item categories', icon: Package, category: 'Sales', migrationStatus: 'pending' },
+  { id: 'sales-by-item', name: 'Sales by Item', description: 'Individual item sales performance', icon: ShoppingCart, category: 'Sales', migrationStatus: 'pending' },
+  { id: 'discounts-comps', name: 'Discounts & Comps', description: 'Discount and complimentary item analysis', icon: Percent, category: 'Financial', migrationStatus: 'pending' },
+  { id: 'taxes', name: 'Taxes', description: 'Tax collection and reporting', icon: FileText, category: 'Financial', migrationStatus: 'pending' },
+  { id: 'payments', name: 'Payments', description: 'Payment method breakdown', icon: CreditCard, category: 'Financial', migrationStatus: 'pending' },
+  { id: 'cash-drawer', name: 'Cash Drawer', description: 'Cash drawer reconciliation', icon: DollarSign, category: 'Financial', migrationStatus: 'pending' },
+  { id: 'deposits', name: 'Deposits', description: 'Deposit tracking and management', icon: Building2, category: 'Financial', migrationStatus: 'pending' },
+  { id: 'employee-timecards', name: 'Employee Timecards', description: 'Staff time tracking and payroll', icon: Users, category: 'Staff', migrationStatus: 'pending' },
+  { id: 'gratuity', name: 'Gratuity', description: 'Tips and gratuity reporting', icon: DollarSign, category: 'Staff', migrationStatus: 'pending' },
+  { id: 'items-sold', name: 'Items Sold', description: 'Detailed item sales analysis', icon: Package, category: 'Inventory', migrationStatus: 'pending' },
+  { id: 'modifier-sold', name: 'Modifier Sold', description: 'Modifier and add-on sales', icon: Target, category: 'Inventory', migrationStatus: 'pending' },
+  { id: 'customer-directory', name: 'Customer Directory', description: 'Customer information and analytics', icon: User, category: 'Customer', migrationStatus: 'pending' }
+];
+
+export function ReportsMigrationBanner() {
+  const navigate = useNavigate();
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [selectedReports, setSelectedReports] = useState<string[]>([]);
+  const [migrationStatus, setMigrationStatus] = useState<'idle' | 'generating' | 'completed'>('idle');
+  const [isDismissed, setIsDismissed] = useState(false);
+
+  if (isDismissed) {
+    return null;
+  }
+
+  const handleSelectReport = (reportId: string) => {
+    setSelectedReports(prev => 
+      prev.includes(reportId) 
+        ? prev.filter(id => id !== reportId)
+        : [...prev, reportId]
+    );
+  };
+
+  const handleSelectAll = () => {
+    if (selectedReports.length === legacyReports.length) {
+      setSelectedReports([]);
+    } else {
+      setSelectedReports(legacyReports.map(r => r.id));
+    }
+  };
+
+  const handleAutoGenerate = async () => {
+    setMigrationStatus('generating');
+    
+    // Simulate API call to generate reports
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    
+    // Create the generated reports and store them (in a real app, this would be an API call)
+    const generatedReports = selectedReports.map(reportId => {
+      const legacyReport = legacyReports.find(r => r.id === reportId);
+      if (!legacyReport) return null;
+      
+      return {
+        id: `generated-${reportId}`,
+        name: `${legacyReport.name} (Auto-Generated)`,
+        description: `Automatically migrated from legacy ${legacyReport.name} report`,
+        type: 'dashboard' as const,
+        status: 'active' as const,
+        createdBy: 'System Migration',
+        createdAt: new Date().toISOString().split('T')[0],
+        lastModified: new Date().toISOString().split('T')[0],
+        lastRun: 'Never',
+        metrics: getMetricsForReport(reportId),
+        filters: getFiltersForReport(reportId),
+        isShared: false,
+        isAutoGenerated: true
+      };
+    }).filter(Boolean);
+    
+    // Store in localStorage for demo purposes (in real app, this would be saved to backend)
+    const existingReports = JSON.parse(localStorage.getItem('customReports') || '[]');
+    const updatedReports = [...existingReports, ...generatedReports];
+    localStorage.setItem('customReports', JSON.stringify(updatedReports));
+    
+    setMigrationStatus('completed');
+    
+    // Auto-redirect to Financial Suite after completion
+    setTimeout(() => {
+      navigate('/financial-suite/custom-reports');
+    }, 2000);
+  };
+
+  // Helper function to map legacy reports to appropriate metrics
+  const getMetricsForReport = (reportId: string): string[] => {
+    const metricMappings: { [key: string]: string[] } = {
+      'sales-summary': ['Gross Sales', 'Net Sales', 'Tax', 'Transaction Count'],
+      'sales-by-location': ['Gross Sales', 'Net Sales', 'Location'],
+      'sales-by-time': ['Gross Sales', 'Net Sales', 'Date', 'Time'],
+      'sales-by-category': ['Gross Sales', 'Net Sales', 'Category Rollup'],
+      'sales-by-item': ['Gross Sales', 'Net Sales', 'Item Name', 'Items Sold'],
+      'discounts-comps': ['Discount Amount', 'Amount Comped', 'Items Comped'],
+      'taxes': ['Tax', 'Gross Sales', 'Net Sales'],
+      'payments': ['Gross Sales', 'Payment Method', 'Transaction Count'],
+      'cash-drawer': ['Gross Sales', 'Net Sales', 'Cash Amount'],
+      'deposits': ['Gross Sales', 'Deposit Amount', 'Date'],
+      'employee-timecards': ['Employee', 'Hours Worked', 'Commission'],
+      'gratuity': ['Tips', 'Employee', 'Transaction Count'],
+      'items-sold': ['Item Name', 'Items Sold', 'Units Sold', 'Gross Sales'],
+      'modifier-sold': ['Modifier Name', 'Modifier Sales', 'Items Sold'],
+      'customer-directory': ['Customer Name', 'Transaction Count', 'Total Spent']
+    };
+    
+    return metricMappings[reportId] || ['Gross Sales', 'Net Sales'];
+  };
+
+  // Helper function to map legacy reports to appropriate filters
+  const getFiltersForReport = (reportId: string): number => {
+    const filterMappings: { [key: string]: number } = {
+      'sales-summary': 2,
+      'sales-by-location': 3,
+      'sales-by-time': 4,
+      'sales-by-category': 2,
+      'sales-by-item': 3,
+      'discounts-comps': 2,
+      'taxes': 2,
+      'payments': 3,
+      'cash-drawer': 1,
+      'deposits': 2,
+      'employee-timecards': 3,
+      'gratuity': 2,
+      'items-sold': 4,
+      'modifier-sold': 3,
+      'customer-directory': 2
+    };
+    
+    return filterMappings[reportId] || 2;
+  };
+
+  const handleGoToNewSystem = () => {
+    navigate('/financial-suite');
+  };
+
+  if (migrationStatus === 'completed') {
+    return (
+      <Card className="mx-6 mt-6 p-6 border-green-200 bg-green-50">
+        <div className="flex items-start space-x-4">
+          <CheckCircle className="h-6 w-6 text-green-600 mt-1" />
+          <div className="flex-1">
+            <h3 className="text-lg font-semibold text-green-900 mb-2">
+              Migration Complete!
+            </h3>
+            <p className="text-green-800 mb-4">
+              Successfully generated {selectedReports.length} custom reports in the new Financial Suite. 
+              You can now access these reports in the new system.
+            </p>
+            <div className="flex items-center space-x-3">
+              <Button onClick={handleGoToNewSystem} className="bg-green-600 hover:bg-green-700">
+                <ArrowRight className="h-4 w-4 mr-2" />
+                View New Reports
+              </Button>
+              <Button variant="outline" onClick={() => setIsDismissed(true)}>
+                Dismiss
+              </Button>
+            </div>
+          </div>
+        </div>
+      </Card>
+    );
+  }
+
+  return (
+    <Card className="mx-6 mt-6 p-6 border-amber-200 bg-amber-50">
+      <div className="flex items-start justify-between">
+        <div className="flex items-start space-x-4 flex-1">
+          <AlertTriangle className="h-6 w-6 text-amber-600 mt-1" />
+          <div className="flex-1">
+            <div className="flex items-center space-x-2 mb-2">
+              <h3 className="text-lg font-semibold text-amber-900">
+                System Migration Notice
+              </h3>
+              <Badge className="bg-amber-100 text-amber-800">
+                <Calendar className="h-3 w-3 mr-1" />
+                May 2026
+              </Badge>
+            </div>
+            
+            <p className="text-amber-800 mb-4">
+              Starting <strong>May 2026</strong>, we're moving to a new, more powerful reporting system. 
+              The reports below will no longer be available in their current form.
+            </p>
+
+            <div className="flex items-center space-x-3 mb-4">
+              <Button 
+                onClick={() => setIsExpanded(!isExpanded)}
+                variant="outline"
+                className="border-amber-300 text-amber-800 hover:bg-amber-100"
+              >
+                <Zap className="h-4 w-4 mr-2" />
+                Auto-Generate New Reports ({legacyReports.length})
+              </Button>
+              <Button 
+                onClick={handleGoToNewSystem}
+                className="bg-blue-600 hover:bg-blue-700"
+              >
+                <ArrowRight className="h-4 w-4 mr-2" />
+                Explore New System
+              </Button>
+            </div>
+
+            {isExpanded && (
+              <div className="mt-6 p-4 bg-white rounded-lg border border-amber-200">
+                <div className="flex items-center justify-between mb-4">
+                  <h4 className="text-md font-semibold text-gray-900">
+                    Select Reports to Auto-Generate
+                  </h4>
+                  <div className="flex items-center space-x-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleSelectAll}
+                      className="text-xs"
+                    >
+                      {selectedReports.length === legacyReports.length ? 'Deselect All' : 'Select All'}
+                    </Button>
+                    <Badge variant="outline" className="text-xs">
+                      {selectedReports.length} selected
+                    </Badge>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-6">
+                  {legacyReports.map((report) => {
+                    const Icon = report.icon;
+                    const isSelected = selectedReports.includes(report.id);
+                    
+                    return (
+                      <div
+                        key={report.id}
+                        onClick={() => handleSelectReport(report.id)}
+                        className={`p-3 rounded-lg border cursor-pointer transition-all ${
+                          isSelected 
+                            ? 'border-blue-500 bg-blue-50' 
+                            : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                        }`}
+                      >
+                        <div className="flex items-start space-x-3">
+                          <div className={`p-2 rounded-lg ${isSelected ? 'bg-blue-100' : 'bg-gray-100'}`}>
+                            <Icon className={`h-4 w-4 ${isSelected ? 'text-blue-600' : 'text-gray-600'}`} />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center justify-between">
+                              <h5 className="text-sm font-medium text-gray-900 truncate">
+                                {report.name}
+                              </h5>
+                              {isSelected && (
+                                <CheckCircle className="h-4 w-4 text-blue-600" />
+                              )}
+                            </div>
+                            <p className="text-xs text-gray-600 mt-1 line-clamp-2">
+                              {report.description}
+                            </p>
+                            <Badge variant="outline" className="mt-2 text-xs">
+                              {report.category}
+                            </Badge>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className="flex items-center justify-between pt-4 border-t border-gray-200">
+                  <div className="text-sm text-gray-600">
+                    Selected reports will be automatically recreated in the new Financial Suite system
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <Button
+                      variant="outline"
+                      onClick={() => setIsExpanded(false)}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={handleAutoGenerate}
+                      disabled={selectedReports.length === 0 || migrationStatus === 'generating'}
+                      className="bg-blue-600 hover:bg-blue-700"
+                    >
+                      {migrationStatus === 'generating' ? (
+                        <>
+                          <Clock className="h-4 w-4 mr-2 animate-spin" />
+                          Generating...
+                        </>
+                      ) : (
+                        <>
+                          <Zap className="h-4 w-4 mr-2" />
+                          Generate {selectedReports.length} Report{selectedReports.length !== 1 ? 's' : ''}
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+        
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setIsDismissed(true)}
+          className="ml-4"
+        >
+          <X className="h-4 w-4" />
+        </Button>
+      </div>
+    </Card>
+  );
+}

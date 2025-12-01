@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Sales - Financial Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .sidebar-shadow { box-shadow: 2px 0 4px rgba(0,0,0,0.1); }
+        .hover-bg:hover { background-color: #f9fafb; }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white sidebar-shadow">
+            <div class="p-4">
+                <div class="flex items-center mb-6">
+                    <button class="mr-3 p-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                    <h2 class="text-lg font-semibold text-gray-900">Items & services</h2>
+                </div>
+                
+                <nav class="space-y-1">
+                    <div class="mb-4">
+                        <button class="flex items-center w-full text-left px-2 py-2 text-sm font-medium text-gray-900 hover-bg rounded-md">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                            Items
+                        </button>
+                        
+                        <div class="ml-6 space-y-1">
+                            <button class="block w-full text-left px-2 py-2 text-sm bg-blue-50 text-blue-700 font-medium rounded-md">
+                                Item library
+                            </button>
+                            <button class="block w-full text-left px-2 py-2 text-sm text-gray-700 hover-bg rounded-md">
+                                Channel listings
+                            </button>
+                            <button class="block w-full text-left px-2 py-2 text-sm text-gray-700 hover-bg rounded-md">
+                                Service library
+                            </button>
+                            <button class="block w-full text-left px-2 py-2 text-sm text-gray-700 hover-bg rounded-md">
+                                Image library
+                            </button>
+                            <button class="block w-full text-left px-2 py-2 text-sm text-gray-700 hover-bg rounded-md">
+                                Modifiers
+                            </button>
+                            <button class="block w-full text-left px-2 py-2 text-sm bg-gray-100 text-gray-900 font-medium rounded-md">
+                                Categories
+                            </button>
+                            <button class="block w-full text-left px-2 py-2 text-sm text-gray-700 hover-bg rounded-md">
+                                Discounts
+                            </button>
+                            <button class="block w-full text-left px-2 py-2 text-sm text-gray-700 hover-bg rounded-md">
+                                Options
+                            </button>
+                            <button class="block w-full text-left px-2 py-2 text-sm text-gray-700 hover-bg rounded-md">
+                                Units
+                            </button>
+                            <button class="block w-full text-left px-2 py-2 text-sm text-gray-700 hover-bg rounded-md">
+                                Custom attributes
+                            </button>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            
+            <!-- Bottom sections -->
+            <div class="absolute bottom-0 w-64 p-4 space-y-2">
+                <div class="space-y-1">
+                    <button class="flex items-center w-full text-left px-2 py-2 text-sm text-gray-700 hover-bg rounded-md">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                        Settings
+                    </button>
+                    <button class="flex items-center w-full text-left px-2 py-2 text-sm text-gray-700 hover-bg rounded-md">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                        Inventory management
+                    </button>
+                    <button class="flex items-center w-full text-left px-2 py-2 text-sm text-gray-700 hover-bg rounded-md">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                        Gift Cards
+                    </button>
+                    <button class="block w-full text-left px-2 py-2 text-sm text-gray-700 hover-bg rounded-md">
+                        Subscription plans
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="flex-1 flex flex-col">
+            <!-- Header -->
+            <div class="bg-white border-b border-gray-200 px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            <input type="text" placeholder="Search" class="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm text-gray-600">Category</span>
+                            <select class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
+                                <option>All</option>
+                                <option>Grocery</option>
+                                <option>Household</option>
+                                <option>Liquor</option>
+                                <option>Menu</option>
+                                <option>Merchandise</option>
+                            </select>
+                        </div>
+                        
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm text-gray-600">Locations</span>
+                            <select class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
+                                <option>All</option>
+                                <option>Redstone General Store</option>
+                            </select>
+                        </div>
+                        
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm text-gray-600">Status</span>
+                            <select class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
+                                <option>Active</option>
+                                <option>Inactive</option>
+                                <option>All</option>
+                            </select>
+                        </div>
+                        
+                        <button class="flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm hover-bg">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                            </svg>
+                            All filters
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <button class="flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm hover-bg">
+                            Actions
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <button class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                            Create Item
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories Table -->
+            <div class="flex-1 overflow-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-50 border-b border-gray-200 sticky top-0">
+                        <tr>
+                            <th class="px-6 py-3 text-left">
+                                <input type="checkbox" class="rounded border-gray-300">
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Initiator</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Size</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <!-- Grocery Category -->
+                        <tr class="hover-bg">
+                            <td class="px-6 py-4">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center">
+                                    <input type="checkbox" class="rounded border-gray-300 mr-3">
+                                    <div class="w-8 h-8 bg-gray-200 rounded mr-3 flex items-center justify-center">
+                                        <span class="text-xs">📁</span>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-900">Grocery</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-900">200</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">document</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">Redstone General Store</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">0</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">421 ms</td>
+                        </tr>
+                        
+                        <!-- Household Category -->
+                        <tr class="hover-bg">
+                            <td class="px-6 py-4">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center">
+                                    <input type="checkbox" class="rounded border-gray-300 mr-3">
+                                    <div class="w-8 h-8 bg-gray-200 rounded mr-3 flex items-center justify-center">
+                                        <span class="text-xs">📁</span>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-900">Household</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-900">200</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">script</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">Redstone General Store</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">1</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">424 ms</td>
+                        </tr>
+                        
+                        <!-- Merchandise Category (Expanded) -->
+                        <tr class="hover-bg">
+                            <td class="px-6 py-4">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center">
+                                    <input type="checkbox" class="rounded border-gray-300 mr-3">
+                                    <div class="w-8 h-8 bg-gray-200 rounded mr-3 flex items-center justify-center">
+                                        <span class="text-xs">📁</span>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-900">Merchandise</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-900">200</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">stylesheet</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">Redstone General Store</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">0</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">386 ms</td>
+                        </tr>
+                        
+                        <!-- Merchandise Subcategories -->
+                        <tr class="hover-bg bg-gray-50">
+                            <td class="px-6 py-4"></td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center ml-8">
+                                    <input type="checkbox" class="rounded border-gray-300 mr-3">
+                                    <div class="w-8 h-8 bg-gray-200 rounded mr-3 flex items-center justify-center">
+                                        <span class="text-xs">👕</span>
+                                    </div>
+                                    <span class="text-sm text-gray-600">MERCHANDISE_Apparel</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500">Hidden from all sites</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">1</td>
+                            <td class="px-6 py-4"></td>
+                            <td class="px-6 py-4"></td>
+                            <td class="px-6 py-4"></td>
+                        </tr>
+                        
+                        <tr class="hover-bg bg-gray-50">
+                            <td class="px-6 py-4"></td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center ml-8">
+                                    <input type="checkbox" class="rounded border-gray-300 mr-3">
+                                    <div class="w-8 h-8 bg-gray-200 rounded mr-3 flex items-center justify-center">
+                                        <span class="text-xs">🎁</span>
+                                    </div>
+                                    <span class="text-sm text-gray-600">MERCHANDISE_Artisan/Gifts</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500">Hidden from all sites</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">1</td>
+                            <td class="px-6 py-4"></td>
+                            <td class="px-6 py-4"></td>
+                            <td class="px-6 py-4"></td>
+                        </tr>
+                        
+                        <tr class="hover-bg bg-gray-50">
+                            <td class="px-6 py-4"></td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center ml-8">
+                                    <input type="checkbox" class="rounded border-gray-300 mr-3">
+                                    <div class="w-8 h-8 bg-gray-200 rounded mr-3 flex items-center justify-center">
+                                        <span class="text-xs">📚</span>
+                                    </div>
+                                    <span class="text-sm text-gray-600">MERCHANDISE_Books</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500">Hidden from all sites</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">1</td>
+                            <td class="px-6 py-4"></td>
+                            <td class="px-6 py-4"></td>
+                            <td class="px-6 py-4"></td>
+                        </tr>
+                        
+                        <tr class="hover-bg bg-gray-50">
+                            <td class="px-6 py-4"></td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center ml-8">
+                                    <input type="checkbox" class="rounded border-gray-300 mr-3">
+                                    <div class="w-8 h-8 bg-gray-200 rounded mr-3 flex items-center justify-center">
+                                        <span class="text-xs">🎄</span>
+                                    </div>
+                                    <span class="text-sm text-gray-600">MERCHANDISE_Holiday</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500">Hidden from all sites</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">1</td>
+                            <td class="px-6 py-4"></td>
+                            <td class="px-6 py-4"></td>
+                            <td class="px-6 py-4"></td>
+                        </tr>
+                        
+                        <tr class="hover-bg bg-gray-50">
+                            <td class="px-6 py-4"></td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center ml-8">
+                                    <input type="checkbox" class="rounded border-gray-300 mr-3">
+                                    <div class="w-8 h-8 bg-gray-200 rounded mr-3 flex items-center justify-center">
+                                        <span class="text-xs">🏠</span>
+                                    </div>
+                                    <span class="text-sm text-gray-600">MERCHANDISE_Home Goods</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500">Hidden from all sites</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">1</td>
+                            <td class="px-6 py-4"></td>
+                            <td class="px-6 py-4"></td>
+                            <td class="px-6 py-4"></td>
+                        </tr>
+                        
+                        <tr class="hover-bg bg-gray-50">
+                            <td class="px-6 py-4"></td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center ml-8">
+                                    <input type="checkbox" class="rounded border-gray-300 mr-3">
+                                    <div class="w-8 h-8 bg-gray-200 rounded mr-3 flex items-center justify-center">
+                                        <span class="text-xs">💎</span>
+                                    </div>
+                                    <span class="text-sm text-gray-600">MERCHANDISE_Jewelry</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500">Redstone General Store</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">1</td>
+                            <td class="px-6 py-4"></td>
+                            <td class="px-6 py-4"></td>
+                            <td class="px-6 py-4"></td>
+                        </tr>
+                        
+                        <!-- Kitchen Category -->
+                        <tr class="hover-bg">
+                            <td class="px-6 py-4">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center">
+                                    <input type="checkbox" class="rounded border-gray-300 mr-3">
+                                    <div class="w-8 h-8 bg-gray-200 rounded mr-3 flex items-center justify-center">
+                                        <span class="text-xs">🍳</span>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-900">Kitchen</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500">Hidden from all sites</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">1</td>
+                            <td class="px-6 py-4"></td>
+                            <td class="px-6 py-4"></td>
+                            <td class="px-6 py-4"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

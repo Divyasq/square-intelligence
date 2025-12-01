@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Library - Merchandise Category - Financial Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .sidebar-shadow { box-shadow: 2px 0 4px rgba(0,0,0,0.1); }
+        .hover-bg:hover { background-color: #f9fafb; }
+        .nav-active { background-color: #dbeafe; color: #1d4ed8; }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white sidebar-shadow">
+            <div class="p-4">
+                <!-- User Profile -->
+                <div class="flex items-center mb-6 pb-4 border-b border-gray-200">
+                    <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center mr-3">
+                        <span class="text-white text-sm font-medium">R</span>
+                    </div>
+                    <div>
+                        <div class="text-sm font-medium text-gray-900">Ruby of the Rockies</div>
+                        <div class="text-xs text-gray-500">Store Owner</div>
+                    </div>
+                    <svg class="w-4 h-4 ml-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </div>
+                
+                <!-- Search -->
+                <div class="relative mb-6">
+                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    <input type="text" placeholder="Search" class="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                
+                <!-- Navigation -->
+                <nav class="space-y-1">
+                    <a href="home.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover-bg">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
+                        </svg>
+                        Home
+                    </a>
+                    
+                    <!-- Items & services Section (Active) -->
+                    <div class="nav-active rounded-md">
+                        <a href="index.html" class="flex items-center px-3 py-2 text-sm font-medium">
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                            </svg>
+                            Items & services
+                        </a>
+                        <!-- Sub-navigation for Items -->
+                        <div class="ml-8 mt-1 space-y-1">
+                            <a href="item-library-merchandise.html" class="block px-3 py-1 text-xs text-blue-800 font-medium bg-blue-100 rounded">Item library</a>
+                            <a href="channel-listings.html" class="block px-3 py-1 text-xs text-blue-600 hover:text-blue-800">Channel listings</a>
+                            <a href="service-library.html" class="block px-3 py-1 text-xs text-blue-600 hover:text-blue-800">Service library</a>
+                            <a href="image-library.html" class="block px-3 py-1 text-xs text-blue-600 hover:text-blue-800">Image library</a>
+                            <a href="modifiers.html" class="block px-3 py-1 text-xs text-blue-600 hover:text-blue-800">Modifiers</a>
+                            <a href="index.html" class="block px-3 py-1 text-xs text-blue-600 hover:text-blue-800">Categories</a>
+                        </div>
+                    </div>
+                    
+                    <a href="custom-item-sales.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover-bg">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        Reports
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col">
+            <!-- Header -->
+            <div class="bg-white border-b border-gray-200 px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            <input type="text" placeholder="Search" class="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm text-gray-600">Category</span>
+                            <select class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 bg-blue-50 text-blue-700 font-medium">
+                                <option selected>10</option>
+                                <option>All</option>
+                                <option>5</option>
+                                <option>25</option>
+                                <option>50</option>
+                            </select>
+                        </div>
+                        
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm text-gray-600">Status</span>
+                            <select class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 bg-green-50 text-green-700 font-medium">
+                                <option selected>Active</option>
+                                <option>Inactive</option>
+                                <option>All</option>
+                            </select>
+                        </div>
+                        
+                        <button class="flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm hover-bg">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                            </svg>
+                            All filters
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <button class="flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm hover-bg">
+                            Actions
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <button class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                            Create Item
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Items Table -->
+            <div class="flex-1 overflow-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-50 border-b border-gray-200 sticky top-0">
+                        <tr>
+                            <th class="px-6 py-3 text-left w-12">
+                                <input type="checkbox" class="rounded border-gray-300">
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-48">Item</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-56">Reporting category</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-40">Locations</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-20">Sold by</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">Stock on hand</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-28">Available to sell</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-40">Price</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32">Default vendor</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-12">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                </svg>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <!-- Apparel Row -->
+                        <tr class="hover-bg">
+                            <td class="px-6 py-4">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center">
+                                    <input type="checkbox" class="rounded border-gray-300 mr-3">
+                                    <div class="w-8 h-8 bg-gray-200 rounded mr-3 flex items-center justify-center">
+                                        <span class="text-xs">👕</span>
+                                    </div>
+                                    <span class="text-sm font-medium text-blue-600 hover:text-blue-800 cursor-pointer">Apparel</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-900">MERCHANDISE_Apparel</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">Ruby of the Rockies</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">ea</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">84</td>
+                            <td class="px-6 py-4"><span class="text-sm text-red-600 bg-red-50 rounded px-2 py-1">84</span></td>
+                            <td class="px-6 py-4 text-sm text-gray-900">$1.00 - $42.00/ea</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">3 Vendors</td>
+                            <td class="px-6 py-4">
+                                <button class="text-gray-400 hover:text-gray-600">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Artisan/Gifts Row -->
+                        <tr class="hover-bg">
+                            <td class="px-6 py-4">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center">
+                                    <input type="checkbox" class="rounded border-gray-300 mr-3">
+                                    <div class="w-8 h-8 bg-gray-200 rounded mr-3 flex items-center justify-center">
+                                        <span class="text-xs">🎁</span>
+                                    </div>
+                                    <span class="text-sm font-medium text-blue-600 hover:text-blue-800 cursor-pointer">Artisan/Gifts</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-900">MERCHANDISE_Artisan/Gifts</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">Ruby of the Rockies</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">ea</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">1093</td>
+                            <td class="px-6 py-4"><span class="text-sm text-red-600 bg-red-50 rounded px-2 py-1">1093</span></td>
+                            <td class="px-6 py-4 text-sm text-gray-900">$1.00 - $50.00/ea</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">29 Vendors</td>
+                            <td class="px-6 py-4">
+                                <button class="text-gray-400 hover:text-gray-600">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Books Row -->
+                        <tr class="hover-bg">
+                            <td class="px-6 py-4">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center">
+                                    <input type="checkbox" class="rounded border-gray-300 mr-3">
+                                    <div class="w-8 h-8 bg-gray-200 rounded mr-3 flex items-center justify-center">
+                                        <span class="text-xs">📚</span>
+                                    </div>
+                                    <span class="text-sm font-medium text-blue-600 hover:text-blue-800 cursor-pointer">Books</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-900">MERCHANDISE_Books</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">Ruby of the Rockies</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">ea</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">205</td>
+                            <td class="px-6 py-4"><span class="text-sm text-red-600 bg-red-50 rounded px-2 py-1">205</span></td>
+                            <td class="px-6 py-4 text-sm text-gray-900">$12.00 - $45.95/ea</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">27 Vendors</td>
+                            <td class="px-6 py-4">
+                                <button class="text-gray-400 hover:text-gray-600">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Holiday Row -->
+                        <tr class="hover-bg">
+                            <td class="px-6 py-4">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center">
+                                    <input type="checkbox" class="rounded border-gray-300 mr-3">
+                                    <div class="w-8 h-8 bg-gray-200 rounded mr-3 flex items-center justify-center">
+                                        <span class="text-xs">🎄</span>
+                                    </div>
+                                    <span class="text-sm font-medium text-blue-600 hover:text-blue-800 cursor-pointer">Holiday</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-900">MERCHANDISE_Holiday</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">Ruby of the Rockies</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">ea</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">177</td>
+                            <td class="px-6 py-4"><span class="text-sm text-blue-600 bg-blue-50 rounded px-2 py-1">177</span></td>
+                            <td class="px-6 py-4 text-sm text-gray-900">$4.00 - $13.00/ea</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">2 Vendors</td>
+                            <td class="px-6 py-4">
+                                <button class="text-gray-400 hover:text-gray-600">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Home Goods Row -->
+                        <tr class="hover-bg">
+                            <td class="px-6 py-4">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center">
+                                    <input type="checkbox" class="rounded border-gray-300 mr-3">
+                                    <div class="w-8 h-8 bg-gray-200 rounded mr-3 flex items-center justify-center">
+                                        <span class="text-xs">🏠</span>
+                                    </div>
+                                    <span class="text-sm font-medium text-blue-600 hover:text-blue-800 cursor-pointer">Home Goods</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-900">MERCHANDISE_Home Goods</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">Ruby of the Rockies</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">ea</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">280</td>
+                            <td class="px-6 py-4"><span class="text-sm text-red-600 bg-red-50 rounded px-2 py-1">280</span></td>
+                            <td class="px-6 py-4 text-sm text-gray-900">$3.00 - $88.00/ea</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">9 Vendors</td>
+                            <td class="px-6 py-4">
+                                <button class="text-gray-400 hover:text-gray-600">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Jewelry Row -->
+                        <tr class="hover-bg">
+                            <td class="px-6 py-4">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center">
+                                    <input type="checkbox" class="rounded border-gray-300 mr-3">
+                                    <div class="w-8 h-8 bg-gray-200 rounded mr-3 flex items-center justify-center">
+                                        <span class="text-xs">💎</span>
+                                    </div>
+                                    <span class="text-sm font-medium text-blue-600 hover:text-blue-800 cursor-pointer">Jewelry</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-900">MERCHANDISE_Jewelry</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">Ruby of the Rockies</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">ea</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">117</td>
+                            <td class="px-6 py-4"><span class="text-sm text-red-600 bg-red-50 rounded px-2 py-1">117</span></td>
+                            <td class="px-6 py-4 text-sm text-gray-900">$11.00 - $100.00/ea</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">8 Vendors</td>
+                            <td class="px-6 py-4">
+                                <button class="text-gray-400 hover:text-gray-600">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Stickers/Magnets/Posters/Cards Row -->
+                        <tr class="hover-bg">
+                            <td class="px-6 py-4">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center">
+                                    <input type="checkbox" class="rounded border-gray-300 mr-3">
+                                    <div class="w-8 h-8 bg-gray-200 rounded mr-3 flex items-center justify-center">
+                                        <span class="text-xs">🏷️</span>
+                                    </div>
+                                    <span class="text-sm font-medium text-blue-600 hover:text-blue-800 cursor-pointer">Stickers/Magnets/Posters/Cards</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-900">MERCHANDISE_Stickers/Magnets/Posters</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">Ruby of the Rockies</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">ea</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">3594</td>
+                            <td class="px-6 py-4"><span class="text-sm text-red-600 bg-red-50 rounded px-2 py-1">3594</span></td>
+                            <td class="px-6 py-4 text-sm text-gray-900">$3.00 - $50.00/ea</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">2 Vendors</td>
+                            <td class="px-6 py-4">
+                                <button class="text-gray-400 hover:text-gray-600">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Toys/Games Row -->
+                        <tr class="hover-bg">
+                            <td class="px-6 py-4">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center">
+                                    <input type="checkbox" class="rounded border-gray-300 mr-3">
+                                    <div class="w-8 h-8 bg-gray-200 rounded mr-3 flex items-center justify-center">
+                                        <span class="text-xs">🎮</span>
+                                    </div>
+                                    <span class="text-sm font-medium text-blue-600 hover:text-blue-800 cursor-pointer">Toys/Games</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-900">MERCHANDISE_Toys/Games</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">Ruby of the Rockies</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">ea</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">506</td>
+                            <td class="px-6 py-4"><span class="text-sm text-red-600 bg-red-50 rounded px-2 py-1">506</span></td>
+                            <td class="px-6 py-4 text-sm text-gray-900">$0.25 - $30.00/ea</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">15 Vendors</td>
+                            <td class="px-6 py-4">
+                                <button class="text-gray-400 hover:text-gray-600">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

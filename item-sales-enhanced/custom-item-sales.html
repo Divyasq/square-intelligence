@@ -1,0 +1,2108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Item Sales Builder - Financial Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .sidebar-shadow { box-shadow: 2px 0 4px rgba(0,0,0,0.1); }
+        .hover-bg:hover { background-color: #f9fafb; }
+        .nav-active { background-color: #dbeafe; color: #1d4ed8; }
+        .metric-card { transition: all 0.2s ease; }
+        .metric-card:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .category-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .selected-metric { border-color: #3b82f6 !important; background-color: #eff6ff !important; }
+        .tab-active { border-color: #3b82f6 !important; color: #3b82f6 !important; }
+        .drop-zone { border: 2px dashed #d1d5db; transition: all 0.2s ease; }
+        .drop-zone.active { border-color: #3b82f6; background-color: #eff6ff; }
+        .kpi-widget { background: linear-gradient(135deg, #f3f4f6 0%, #ffffff 100%); }
+        .chart-container { height: 300px; }
+        .ai-search-box { 
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); 
+            border: 2px solid #0ea5e9; 
+        }
+        .ai-search-box:focus-within { 
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1); 
+        }
+        .kpi-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .yoy-positive { color: #10b981; }
+        .yoy-negative { color: #ef4444; }
+        .ai-suggestion {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 4px solid #f59e0b;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white sidebar-shadow">
+            <div class="p-4">
+                <!-- User Profile -->
+                <div class="flex items-center mb-6 pb-4 border-b border-gray-200">
+                    <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center mr-3">
+                        <span class="text-white text-sm font-medium">R</span>
+                    </div>
+                    <div>
+                        <div class="text-sm font-medium text-gray-900">Ruby of the Rockies</div>
+                        <div class="text-xs text-gray-500">Store Owner</div>
+                    </div>
+                    <svg class="w-4 h-4 ml-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </div>
+                
+                <!-- Search -->
+                <div class="relative mb-6">
+                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    <input type="text" placeholder="Search" class="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                
+                <!-- Navigation -->
+                <nav class="space-y-1">
+                    <a href="home.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover-bg">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
+                        </svg>
+                        Home
+                    </a>
+                    
+                    <a href="index.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover-bg">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                        </svg>
+                        Items & services
+                    </a>
+                    
+                    <!-- Reports Section -->
+                    <a href="reports.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover-bg">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        Reports
+                    </a>
+
+                    <!-- Custom Reports Section (Active) -->
+                    <div class="nav-active rounded-md">
+                        <a href="custom-reports.html" class="flex items-center px-3 py-2 text-sm font-medium">
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
+                            </svg>
+                            Custom Reports
+                        </a>
+                        <!-- Sub-navigation for Custom Reports -->
+                        <div class="ml-8 mt-1 space-y-1">
+                            <a href="custom-item-reports.html" class="block px-3 py-1 text-xs text-blue-800 font-medium bg-blue-100 rounded">Custom Item Reports</a>
+                            <a href="custom-sales-reports.html" class="block px-3 py-1 text-xs text-blue-600 hover:text-blue-800">Custom Sales Reports</a>
+                            <a href="custom-financial-reports.html" class="block px-3 py-1 text-xs text-blue-600 hover:text-blue-800">Custom Financial Reports</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col">
+            <!-- Header -->
+            <div class="bg-white border-b border-gray-200 px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="text-2xl font-semibold text-gray-900">Custom Item Sales Builder</h1>
+                        <p class="text-sm text-gray-600 mt-1">Build a custom report with your preferred metrics, filters, and visualizations</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button class="flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm hover-bg">
+                            Cancel
+                        </button>
+                        <button class="flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm hover-bg">
+                            Preview
+                        </button>
+                        <button class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700">
+                            Save Report
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-1">
+                <!-- Report Builder Area -->
+                <div class="flex-1 p-6">
+                    <!-- Report Details -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+                        <h2 class="text-lg font-medium text-gray-900 mb-4">Report Details</h2>
+                        
+                        <!-- AI-Powered Search Box -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                </svg>
+                                AI Report Assistant
+                            </label>
+                            <div class="relative ai-search-box rounded-lg p-1">
+                                <input 
+                                    type="text" 
+                                    id="aiSearchInput"
+                                    placeholder="Ask AI to build your report... (e.g., 'add KPI widget for average order value' or 'show me all discounts for january')"
+                                    class="w-full px-4 py-3 text-sm bg-transparent border-0 focus:ring-0 focus:outline-none placeholder-gray-500"
+                                >
+                                <button 
+                                    id="aiSearchBtn"
+                                    class="absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-2 bg-blue-600 text-white text-xs rounded-md hover:bg-blue-700 transition-colors"
+                                >
+                                    <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                    Ask AI
+                                </button>
+                            </div>
+                            <!-- AI Suggestions Panel -->
+                            <div id="aiSuggestions" class="hidden mt-2 p-3 ai-suggestion rounded-lg">
+                                <div class="flex items-start">
+                                    <svg class="w-5 h-5 text-amber-600 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <div>
+                                        <p class="text-sm font-medium text-amber-800">AI Suggestion</p>
+                                        <p id="aiSuggestionText" class="text-sm text-amber-700 mt-1"></p>
+                                        <div class="flex space-x-2 mt-2">
+                                            <button id="applySuggestionBtn" class="px-3 py-1 text-xs bg-amber-600 text-white rounded hover:bg-amber-700">Apply</button>
+                                            <button id="dismissSuggestionBtn" class="px-3 py-1 text-xs bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Dismiss</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Report Name -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Report Name</label>
+                            <input type="text" placeholder="Enter report name..." class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+
+                        <!-- Description -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                            <textarea placeholder="Describe what this report shows..." rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Report Builder Canvas -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-lg font-medium text-gray-900">Report Canvas</h2>
+                            <div class="flex items-center space-x-2">
+                                <button id="clearAllBtn" class="text-sm text-gray-600 hover:text-gray-800 px-3 py-1 border border-gray-300 rounded">Clear All</button>
+                                <button class="text-sm text-blue-600 hover:text-blue-800 px-3 py-1 border border-blue-300 rounded">Auto Layout</button>
+                            </div>
+                        </div>
+
+                        <!-- Report Canvas Content -->
+                        <div id="reportCanvasContent">
+                            <!-- KPI Widgets Row -->
+                            <div class="mb-8" id="kpiSection">
+                                <h3 class="text-sm font-medium text-gray-700 mb-3">Key Performance Indicators</h3>
+                                <div class="grid grid-cols-4 gap-4" id="kpiWidgets">
+                                    <!-- KPI Widget 1 - Gross Sales -->
+                                    <div class="kpi-widget p-4 rounded-lg border border-gray-200 text-center">
+                                        <div class="text-2xl font-bold text-green-600">$24,580</div>
+                                        <div class="text-sm text-gray-600">Gross Sales</div>
+                                        <div class="text-xs text-green-600 mt-1">↗ +12.5%</div>
+                                    </div>
+                                    
+                                    <!-- KPI Widget 2 - Net Sales -->
+                                    <div class="kpi-widget p-4 rounded-lg border border-gray-200 text-center">
+                                        <div class="text-2xl font-bold text-blue-600">$22,340</div>
+                                        <div class="text-sm text-gray-600">Net Sales</div>
+                                        <div class="text-xs text-blue-600 mt-1">↗ +8.3%</div>
+                                    </div>
+                                    
+                                    <!-- KPI Widget 3 - Items Sold -->
+                                    <div class="kpi-widget p-4 rounded-lg border border-gray-200 text-center">
+                                        <div class="text-2xl font-bold text-purple-600">1,247</div>
+                                        <div class="text-sm text-gray-600">Items Sold</div>
+                                        <div class="text-xs text-purple-600 mt-1">↗ +15.2%</div>
+                                    </div>
+                                    
+                                    <!-- KPI Widget 4 - Transaction Count -->
+                                    <div class="kpi-widget p-4 rounded-lg border border-gray-200 text-center">
+                                        <div class="text-2xl font-bold text-orange-600">342</div>
+                                        <div class="text-sm text-gray-600">Transactions</div>
+                                        <div class="text-xs text-orange-600 mt-1">↗ +6.7%</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Charts Section -->
+                            <div class="mb-8" id="chartsSection">
+                                <h3 class="text-sm font-medium text-gray-700 mb-3">Charts & Visualizations</h3>
+                                <div class="grid grid-cols-2 gap-6">
+                                    <!-- Sales Trend Chart -->
+                                    <div class="border border-gray-200 rounded-lg p-4">
+                                        <h4 class="text-sm font-medium text-gray-900 mb-3">Sales Trend (Last 7 Days)</h4>
+                                        <div class="chart-container">
+                                            <canvas id="salesTrendChart"></canvas>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Category Breakdown -->
+                                    <div class="border border-gray-200 rounded-lg p-4">
+                                        <h4 class="text-sm font-medium text-gray-900 mb-3">Sales by Category</h4>
+                                        <div class="chart-container">
+                                            <canvas id="categoryChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Data Table Section -->
+                            <div class="mb-6" id="tableSection">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h3 class="text-sm font-medium text-gray-700">Detailed Item Sales</h3>
+                                    <div class="flex items-center space-x-2">
+                                        <button id="addColumnBtn" class="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 border border-blue-300 rounded">+ Add Column</button>
+                                        <button id="editTableBtn" class="text-xs text-gray-600 hover:text-gray-800 px-2 py-1 border border-gray-300 rounded">Edit Table</button>
+                                    </div>
+                                </div>
+                                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                                    <table class="min-w-full divide-y divide-gray-200" id="reportTable">
+                                        <thead class="bg-gray-50" id="tableHeader">
+                                            <tr>
+                                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item Name</th>
+                                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Qty Sold</th>
+                                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Gross Sales</th>
+                                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Net Sales</th>
+                                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Discounts</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white divide-y divide-gray-200" id="tableBody">
+                                            <tr>
+                                                <td class="px-4 py-3 text-sm text-gray-900">Espresso</td>
+                                                <td class="px-4 py-3 text-sm text-gray-600">Beverages</td>
+                                                <td class="px-4 py-3 text-sm text-gray-900">156</td>
+                                                <td class="px-4 py-3 text-sm text-gray-900">$468.00</td>
+                                                <td class="px-4 py-3 text-sm text-gray-900">$445.60</td>
+                                                <td class="px-4 py-3 text-sm text-red-600">-$22.40</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-3 text-sm text-gray-900">Croissant</td>
+                                                <td class="px-4 py-3 text-sm text-gray-600">Pastries</td>
+                                                <td class="px-4 py-3 text-sm text-gray-900">89</td>
+                                                <td class="px-4 py-3 text-sm text-gray-900">$267.00</td>
+                                                <td class="px-4 py-3 text-sm text-gray-900">$267.00</td>
+                                                <td class="px-4 py-3 text-sm text-gray-600">$0.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-3 text-sm text-gray-900">Latte</td>
+                                                <td class="px-4 py-3 text-sm text-gray-600">Beverages</td>
+                                                <td class="px-4 py-3 text-sm text-gray-900">234</td>
+                                                <td class="px-4 py-3 text-sm text-gray-900">$1,170.00</td>
+                                                <td class="px-4 py-3 text-sm text-gray-900">$1,111.50</td>
+                                                <td class="px-4 py-3 text-sm text-red-600">-$58.50</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-3 text-sm text-gray-900">Sandwich - Turkey</td>
+                                                <td class="px-4 py-3 text-sm text-gray-600">Food</td>
+                                                <td class="px-4 py-3 text-sm text-gray-900">67</td>
+                                                <td class="px-4 py-3 text-sm text-gray-900">$603.00</td>
+                                                <td class="px-4 py-3 text-sm text-gray-900">$603.00</td>
+                                                <td class="px-4 py-3 text-sm text-gray-600">$0.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-3 text-sm text-gray-900">Muffin - Blueberry</td>
+                                                <td class="px-4 py-3 text-sm text-gray-600">Pastries</td>
+                                                <td class="px-4 py-3 text-sm text-gray-900">43</td>
+                                                <td class="px-4 py-3 text-sm text-gray-900">$129.00</td>
+                                                <td class="px-4 py-3 text-sm text-gray-900">$116.10</td>
+                                                <td class="px-4 py-3 text-sm text-red-600">-$12.90</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Drop Zones for Additional Widgets -->
+                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center drop-zone">
+                                <svg class="h-12 w-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                </svg>
+                                <h3 class="text-lg font-medium text-gray-900 mb-2">Add More Widgets</h3>
+                                <p class="text-gray-600">Drag and drop metrics from the right panel to add more visualizations</p>
+                            </div>
+                        </div>
+
+                        <!-- Empty Canvas State -->
+                        <div id="emptyCanvasState" class="hidden text-center py-16">
+                            <svg class="h-16 w-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                            <h3 class="text-xl font-medium text-gray-900 mb-2">Start Building Your Report</h3>
+                            <p class="text-gray-600 mb-6">Select metrics from the right panel to automatically build your custom data table.</p>
+                        </div>
+
+                        <!-- Dynamic Table Container -->
+                        <div id="dynamicTableContainer" class="hidden">
+                            <div class="mb-6" id="dynamicTableSection">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h3 class="text-sm font-medium text-gray-700">Custom Report Data</h3>
+                                    <div class="flex items-center space-x-2">
+                                        <button id="editDynamicTableBtn" class="text-xs text-gray-600 hover:text-gray-800 px-2 py-1 border border-gray-300 rounded">Edit Table</button>
+                                    </div>
+                                </div>
+                                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                                    <table class="min-w-full divide-y divide-gray-200" id="dynamicReportTable">
+                                        <thead class="bg-gray-50" id="dynamicTableHeader">
+                                            <tr>
+                                                <!-- Dynamic columns will be added here -->
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white divide-y divide-gray-200" id="dynamicTableBody">
+                                            <!-- Dynamic rows will be added here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel - Metrics Selection -->
+                <div class="w-80 bg-white border-l border-gray-200 overflow-auto">
+                    <div class="p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold text-gray-900">Build Your Report</h3>
+                            <span class="text-xs text-gray-500">0 selected</span>
+                        </div>
+
+                        <!-- Enhanced Tab Navigation - REORDERED -->
+                        <div class="flex space-x-1 mt-4 bg-gray-100 p-1 rounded-lg">
+                            <button class="tab-btn flex-1 px-3 py-2 text-xs font-medium text-gray-700 rounded-md tab-active" data-tab="Group By">
+                                Group By
+                            </button>
+                            <button class="tab-btn flex-1 px-3 py-2 text-xs font-medium text-gray-700 rounded-md" data-tab="Metrics">
+                                Metrics
+                            </button>
+                            <button class="tab-btn flex-1 px-3 py-2 text-xs font-medium text-gray-700 rounded-md" data-tab="Filters">
+                                Filters
+                            </button>
+                            <button class="tab-btn flex-1 px-3 py-2 text-xs font-medium text-gray-700 rounded-md" data-tab="KPIs">
+                                KPIs
+                            </button>
+                            <button class="tab-btn flex-1 px-3 py-2 text-xs font-medium text-gray-700 rounded-md" data-tab="Charts">
+                                Charts
+                            </button>
+                        </div>
+
+                        <!-- Metrics Panel -->
+                        <div id="metricsPanel" class="space-y-4 max-h-96 overflow-y-auto">
+                            <!-- Item Info Category -->
+                            <div class="category-section">
+                                <div class="category-header text-white px-3 py-2 rounded-t-lg">
+                                    <h4 class="font-medium text-sm">📦 Item Info</h4>
+                                </div>
+                                <div class="bg-white border border-t-0 rounded-b-lg p-3 space-y-2">
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Itemization Type</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Type of item</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Item Name</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Name of the item</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">GTIN</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Global Trade Item Number</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">SKU</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Stock Keeping Unit</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Location</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Store location</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Menu</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Menu category</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Categories -->
+                            <div class="category-section">
+                                <div class="category-header text-white px-3 py-2 rounded-t-lg">
+                                    <h4 class="font-medium text-sm">📂 Categories</h4>
+                                </div>
+                                <div class="bg-white border border-t-0 rounded-b-lg p-3 space-y-2">
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Categories</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Item categories</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Reporting Category</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Category for reporting</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Category Rollup</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Rolled up categories</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sales Metrics -->
+                            <div class="category-section">
+                                <div class="category-header text-white px-3 py-2 rounded-t-lg">
+                                    <h4 class="font-medium text-sm">💰 Sales Metrics</h4>
+                                </div>
+                                <div class="bg-white border border-t-0 rounded-b-lg p-3 space-y-2">
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Gross Sales</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Total sales before deductions</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Net Sales</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Sales after returns and discounts</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Tax</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Tax amount</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-blue-500 bg-blue-50 rounded cursor-pointer">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium text-blue-900">Qty</span>
+                                            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Sales</span>
+                                        </div>
+                                        <p class="text-xs text-blue-700 mt-1">Quantity</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-blue-500 bg-blue-50 rounded cursor-pointer">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium text-blue-900">Channel</span>
+                                            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Sales</span>
+                                        </div>
+                                        <p class="text-xs text-blue-700 mt-1">Sales channel</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-blue-500 bg-blue-50 rounded cursor-pointer">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium text-blue-900">Transaction Count</span>
+                                            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Sales</span>
+                                        </div>
+                                        <p class="text-xs text-blue-700 mt-1">Number of transactions</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Items Sold</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Number of items sold</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Discounts -->
+                            <div class="category-section">
+                                <div class="category-header text-white px-3 py-2 rounded-t-lg">
+                                    <h4 class="font-medium text-sm">🏷️ Discounts</h4>
+                                </div>
+                                <div class="bg-white border border-t-0 rounded-b-lg p-3 space-y-2">
+                                    <div class="metric-card p-2 border border-blue-500 bg-blue-50 rounded cursor-pointer">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium text-blue-900">Amount Discounted</span>
+                                            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Sales</span>
+                                        </div>
+                                        <p class="text-xs text-blue-700 mt-1">Total amount discounted</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Discounts Applied</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Number of discounts applied</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Discount Rate</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Percentage of sales discounted</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Performance Metrics -->
+                            <div class="category-section">
+                                <div class="category-header text-white px-3 py-2 rounded-t-lg">
+                                    <h4 class="font-medium text-sm">📈 Performance</h4>
+                                </div>
+                                <div class="bg-white border border-t-0 rounded-b-lg p-3 space-y-2">
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Average Order Value</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Average value per transaction</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Items per Transaction</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Average items per order</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Sales Growth</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Period over period growth</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Market Share</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Item's share of category sales</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Returns & Refunds -->
+                            <div class="category-section">
+                                <div class="category-header text-white px-3 py-2 rounded-t-lg">
+                                    <h4 class="font-medium text-sm">↩️ Returns</h4>
+                                </div>
+                                <div class="bg-white border border-t-0 rounded-b-lg p-3 space-y-2">
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Returns Amount</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Total value of returns</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Return Rate</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Percentage of items returned</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Refunds Processed</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Number of refunds issued</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Inventory Metrics -->
+                            <div class="category-section">
+                                <div class="category-header text-white px-3 py-2 rounded-t-lg">
+                                    <h4 class="font-medium text-sm">📦 Inventory</h4>
+                                </div>
+                                <div class="bg-white border border-t-0 rounded-b-lg p-3 space-y-2">
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Stock Level</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Current inventory count</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Turnover Rate</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">How quickly inventory moves</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Days of Supply</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Days until stock runs out</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sales Trend Chart
+            const salesTrendCtx = document.getElementById('salesTrendChart').getContext('2d');
+            new Chart(salesTrendCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Daily Sales',
+                        data: [3200, 2800, 3600, 4100, 3800, 4500, 3900],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: '#f3f4f6'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Category Chart
+            const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+            new Chart(categoryCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Beverages', 'Food', 'Pastries', 'Merchandise'],
+                    datasets: [{
+                        data: [45, 30, 20, 5],
+                        backgroundColor: [
+                            '#3b82f6',
+                            '#10b981',
+                            '#f59e0b',
+                            '#ef4444'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Enhanced Tab switching functionality for new tab structure
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            tabBtns.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    tabBtns.forEach(t => {
+                        t.classList.remove('tab-active');
+                    });
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('tab-active');
+                    
+                    // Show/hide panels based on tab
+                    const tabText = this.dataset.tab;
+                    showPanel(tabText);
+                });
+            });
+
+            // AI Search functionality
+            const aiSearchBtn = document.getElementById('aiSearchBtn');
+            const aiSearchInput = document.getElementById('aiSearchInput');
+            const aiSuggestions = document.getElementById('aiSuggestions');
+            const aiSuggestionText = document.getElementById('aiSuggestionText');
+            const applySuggestionBtn = document.getElementById('applySuggestionBtn');
+            const dismissSuggestionBtn = document.getElementById('dismissSuggestionBtn');
+
+            let currentSuggestion = null;
+
+            aiSearchBtn.addEventListener('click', function() {
+                const query = aiSearchInput.value.trim().toLowerCase();
+                if (query) {
+                    processAIQuery(query);
+                }
+            });
+
+            aiSearchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const query = this.value.trim().toLowerCase();
+                    if (query) {
+                        processAIQuery(query);
+                    }
+                }
+            });
+
+            applySuggestionBtn.addEventListener('click', function() {
+                if (currentSuggestion) {
+                    applySuggestion(currentSuggestion);
+                    aiSuggestions.classList.add('hidden');
+                }
+            });
+
+            dismissSuggestionBtn.addEventListener('click', function() {
+                aiSuggestions.classList.add('hidden');
+                currentSuggestion = null;
+            });
+
+            function processAIQuery(query) {
+                // AI Query processing patterns
+                if (query.includes('add kpi') || query.includes('kpi widget')) {
+                    if (query.includes('average order value') || query.includes('aov')) {
+                        showAISuggestion('I\'ll add an Average Order Value KPI widget to your report canvas.', 'add_kpi_aov');
+                    } else if (query.includes('average cover') || query.includes('cover count')) {
+                        showAISuggestion('I\'ll add an Average Cover Count KPI widget to your report canvas.', 'add_kpi_cover');
+                    } else if (query.includes('returning customer') || query.includes('customer rate')) {
+                        showAISuggestion('I\'ll add a Returning Customer Rate KPI widget to your report canvas.', 'add_kpi_returning');
+                    } else if (query.includes('items per transaction')) {
+                        showAISuggestion('I\'ll add an Items per Transaction KPI widget to your report canvas.', 'add_kpi_items');
+                    } else {
+                        showAISuggestion('I\'ll navigate to the KPIs tab where you can select from business insight metrics.', 'show_kpis_tab');
+                    }
+                } else if (query.includes('discount') && query.includes('january')) {
+                    showAISuggestion('I\'ll create a custom report showing discounts for January with item details. This will set Group By to "Discount Name" and "Item Name", add filters for January, and include relevant metrics.', 'discount_january_report');
+                } else if (query.includes('group by') || query.includes('group')) {
+                    showAISuggestion('I\'ll navigate to the Group By tab where you can select how to organize your data.', 'show_groupby_tab');
+                } else if (query.includes('chart') || query.includes('visualization')) {
+                    showAISuggestion('I\'ll navigate to the Charts tab where you can add visualizations to your report.', 'show_charts_tab');
+                } else {
+                    showAISuggestion('I can help you build reports, add KPI widgets, set up grouping, or create custom reports. Try asking me to "add KPI widget for average order value" or "show me discounts for January".', 'general_help');
+                }
+            }
+
+            function showAISuggestion(text, action) {
+                aiSuggestionText.textContent = text;
+                currentSuggestion = action;
+                aiSuggestions.classList.remove('hidden');
+            }
+
+            function applySuggestion(action) {
+                switch(action) {
+                    case 'add_kpi_aov':
+                        addKPIWidget('Average Order Value', '$65.43', '+12.8%', 'positive');
+                        break;
+                    case 'add_kpi_cover':
+                        addKPIWidget('Average Cover Count', '2.3', '+5.2%', 'positive');
+                        break;
+                    case 'add_kpi_returning':
+                        addKPIWidget('Returning Customer Rate', '34.5%', '-2.1%', 'negative');
+                        break;
+                    case 'add_kpi_items':
+                        addKPIWidget('Items per Transaction', '3.6', '+8.7%', 'positive');
+                        break;
+                    case 'show_kpis_tab':
+                        switchToTab('KPIs');
+                        break;
+                    case 'show_groupby_tab':
+                        switchToTab('Group By');
+                        break;
+                    case 'show_charts_tab':
+                        switchToTab('Charts');
+                        break;
+                    case 'discount_january_report':
+                        createDiscountJanuaryReport();
+                        break;
+                }
+            }
+
+            function switchToTab(tabName) {
+                // Remove active class from all tabs
+                tabBtns.forEach(t => {
+                    t.classList.remove('tab-active');
+                });
+                
+                // Find and activate the target tab
+                const targetTab = Array.from(tabBtns).find(tab => tab.dataset.tab === tabName);
+                if (targetTab) {
+                    targetTab.classList.add('tab-active');
+                    showPanel(tabName);
+                }
+            }
+
+            function addKPIWidget(name, value, change, trend) {
+                const kpiContainer = document.getElementById('kpiWidgets');
+                const newKPI = document.createElement('div');
+                const trendClass = trend === 'positive' ? 'yoy-positive' : 'yoy-negative';
+                const trendIcon = trend === 'positive' ? '↗' : '↘';
+                
+                newKPI.className = 'kpi-card p-4 rounded-lg text-center';
+                newKPI.innerHTML = `
+                    <div class="text-2xl font-bold text-blue-600">${value}</div>
+                    <div class="text-sm text-gray-600">${name}</div>
+                    <div class="text-xs ${trendClass} mt-1">${trendIcon} ${change} vs Prior Year</div>
+                `;
+                
+                kpiContainer.appendChild(newKPI);
+                
+                // Show success message
+                showSuccessMessage(`Added ${name} KPI widget to your report!`);
+            }
+
+            function createDiscountJanuaryReport() {
+                // This would implement the discount January report creation
+                switchToTab('Group By');
+                showSuccessMessage('Setting up discount report for January with item details...');
+                
+                // Simulate the report setup
+                setTimeout(() => {
+                    buildCustomDiscountReport();
+                }, 1000);
+            }
+
+            function buildCustomDiscountReport() {
+                // Hide existing content
+                document.getElementById('reportCanvasContent').classList.add('hidden');
+                document.getElementById('emptyCanvasState').classList.add('hidden');
+                document.getElementById('dynamicTableContainer').classList.add('hidden');
+                
+                // Create custom discount report container
+                let discountContainer = document.getElementById('discountContainer');
+                if (!discountContainer) {
+                    discountContainer = document.createElement('div');
+                    discountContainer.id = 'discountContainer';
+                    discountContainer.className = 'bg-white rounded-lg shadow-sm border border-gray-200 p-6';
+                    document.querySelector('.flex-1.p-6').appendChild(discountContainer);
+                }
+                
+                discountContainer.classList.remove('hidden');
+                discountContainer.innerHTML = `
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-lg font-medium text-gray-900">January Discounts & Items Report</h2>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm text-green-600 bg-green-100 px-2 py-1 rounded">✓ AI Generated</span>
+                        </div>
+                    </div>
+                    
+                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Discount Name</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item Name</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item Count</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Discount Amount</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date Applied</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">New Year Special</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Firewood 6 Logs</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">8</td>
+                                    <td class="px-4 py-3 text-sm text-red-600">-$15.99</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Jan 2-15, 2024</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">New Year Special</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Holiday Candles</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">12</td>
+                                    <td class="px-4 py-3 text-sm text-red-600">-$8.50</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Jan 2-15, 2024</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">Winter Clearance</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Outdoor Blanket</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">6</td>
+                                    <td class="px-4 py-3 text-sm text-red-600">-$12.00</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Jan 16-31, 2024</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-900">Coffee Bundle</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Camping Coffee</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">24</td>
+                                    <td class="px-4 py-3 text-sm text-red-600">-$3.25</td>
+                                    <td class="px-4 py-3 text-sm text-gray-600">Jan 1-31, 2024</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                        <div class="flex items-start">
+                            <svg class="w-5 h-5 text-green-600 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <div class="text-sm text-green-800">
+                                <strong>AI Generated Report:</strong> This report shows all discounts applied in January with the items that received those discounts, including item counts and discount amounts.
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            function showSuccessMessage(message) {
+                // Create and show a temporary success message
+                const successDiv = document.createElement('div');
+                successDiv.className = 'fixed top-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg z-50';
+                successDiv.textContent = message;
+                document.body.appendChild(successDiv);
+                
+                setTimeout(() => {
+                    document.body.removeChild(successDiv);
+                }, 3000);
+            }
+
+            // Metric card selection - Enhanced for dynamic table building
+            const metricCards = document.querySelectorAll('.metric-card');
+            let selectedCount = 0;
+            let selectedMetrics = [];
+            
+            metricCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const metricName = this.querySelector('.text-sm.font-medium').textContent;
+                    
+                    if (this.classList.contains('selected-metric')) {
+                        // Deselect
+                        this.classList.remove('selected-metric');
+                        selectedCount--;
+                        selectedMetrics = selectedMetrics.filter(m => m !== metricName);
+                        removeColumnFromDynamicTable(metricName);
+                    } else {
+                        // Select
+                        this.classList.add('selected-metric');
+                        selectedCount++;
+                        selectedMetrics.push(metricName);
+                        addColumnToDynamicTable(metricName);
+                    }
+                    
+                    // Update counter
+                    document.querySelector('.text-xs.text-gray-500').textContent = `${selectedCount} selected`;
+                    
+                    // Show/hide dynamic table based on selections
+                    if (selectedCount > 0) {
+                        document.getElementById('emptyCanvasState').classList.add('hidden');
+                        document.getElementById('dynamicTableContainer').classList.remove('hidden');
+                        document.getElementById('reportCanvasContent').classList.add('hidden');
+                    } else {
+                        document.getElementById('emptyCanvasState').classList.remove('hidden');
+                        document.getElementById('dynamicTableContainer').classList.add('hidden');
+                        document.getElementById('reportCanvasContent').classList.add('hidden');
+                    }
+                });
+            });
+
+            // Drop zone interactions
+            const dropZone = document.querySelector('.drop-zone');
+            
+            dropZone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('active');
+            });
+            
+            dropZone.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                this.classList.remove('active');
+            });
+            
+            dropZone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('active');
+                // Add widget logic here
+                addWidget();
+            });
+
+            // Make metric cards draggable
+            metricCards.forEach(card => {
+                card.draggable = true;
+                card.addEventListener('dragstart', function(e) {
+                    e.dataTransfer.setData('text/plain', this.querySelector('.text-sm.font-medium').textContent);
+                });
+            });
+
+            // Clear All functionality
+            document.getElementById('clearAllBtn').addEventListener('click', function() {
+                // Hide current canvas content
+                document.getElementById('reportCanvasContent').classList.add('hidden');
+                // Hide dynamic table
+                document.getElementById('dynamicTableContainer').classList.add('hidden');
+                // Show empty canvas state
+                document.getElementById('emptyCanvasState').classList.remove('hidden');
+                // Reset all selections
+                selectedCount = 0;
+                selectedMetrics = [];
+                document.querySelector('.text-xs.text-gray-500').textContent = '0 selected';
+                // Clear all selected metrics
+                document.querySelectorAll('.metric-card').forEach(card => {
+                    card.classList.remove('selected-metric');
+                });
+                // Clear dynamic table
+                document.getElementById('dynamicTableHeader').querySelector('tr').innerHTML = '';
+                document.getElementById('dynamicTableBody').innerHTML = '';
+            });
+
+            // Add Column functionality
+            document.getElementById('addColumnBtn').addEventListener('click', function() {
+                showColumnSelector();
+            });
+
+            // Edit Table functionality
+            document.getElementById('editTableBtn').addEventListener('click', function() {
+                toggleTableEditMode();
+            });
+        });
+
+        function showPanel(tabName) {
+            const metricsPanel = document.getElementById('metricsPanel');
+            
+            if (tabName === 'Metrics') {
+                // Don't replace the metrics panel content, it should stay as is
+                return;
+            } else if (tabName === 'Filters') {
+                metricsPanel.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="p-4 border border-gray-200 rounded-lg">
+                            <h4 class="font-medium text-sm mb-3">Date Range</h4>
+                            <div class="space-y-2">
+                                <input type="date" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm">
+                                <input type="date" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm">
+                            </div>
+                        </div>
+                        <div class="p-4 border border-gray-200 rounded-lg">
+                            <h4 class="font-medium text-sm mb-3">Categories</h4>
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="mr-2" checked>
+                                    <span class="text-sm">Beverages</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="mr-2" checked>
+                                    <span class="text-sm">Food</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="mr-2" checked>
+                                    <span class="text-sm">Pastries</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (tabName === 'Group By') {
+                metricsPanel.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="p-4 border border-gray-200 rounded-lg">
+                            <h4 class="font-medium text-sm mb-3">Group By Options (Select Multiple)</h4>
+                            <div class="space-y-3">
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" name="groupBy" value="category" class="mr-3" id="categoryFlat">
+                                    <div>
+                                        <div class="text-sm font-medium">Category (Flat View)</div>
+                                        <div class="text-xs text-gray-600">Shows each category level as separate rows - easy to add additional columns</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" name="groupBy" value="reportingCategory" class="mr-3">
+                                    <div>
+                                        <div class="text-sm font-medium">Reporting Category</div>
+                                        <div class="text-xs text-gray-600">Groups by primary reporting category only</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" name="groupBy" value="itemName" class="mr-3">
+                                    <div>
+                                        <div class="text-sm font-medium">Item Name</div>
+                                        <div class="text-xs text-gray-600">Individual item breakdown</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" name="groupBy" value="location" class="mr-3">
+                                    <div>
+                                        <div class="text-sm font-medium">Location</div>
+                                        <div class="text-xs text-gray-600">Group by store location</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Metrics Selection for Group By -->
+                        <div class="space-y-4 max-h-96 overflow-y-auto" id="groupByMetricsPanel">
+                            <!-- Item Info Category -->
+                            <div class="category-section">
+                                <div class="category-header text-white px-3 py-2 rounded-t-lg">
+                                    <h4 class="font-medium text-sm">📦 Item Info</h4>
+                                </div>
+                                <div class="bg-white border border-t-0 rounded-b-lg p-3 space-y-2">
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg" data-metric="itemName">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Item Name</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Name of the item</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg" data-metric="location">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Location</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Store location</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Categories -->
+                            <div class="category-section">
+                                <div class="category-header text-white px-3 py-2 rounded-t-lg">
+                                    <h4 class="font-medium text-sm">📂 Categories</h4>
+                                </div>
+                                <div class="bg-white border border-t-0 rounded-b-lg p-3 space-y-2">
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg" data-metric="categories" data-hierarchy="true">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Categories</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Build hierarchical category view</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg" data-metric="reportingCategory">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Reporting Category</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Category for reporting</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sales Metrics -->
+                            <div class="category-section">
+                                <div class="category-header text-white px-3 py-2 rounded-t-lg">
+                                    <h4 class="font-medium text-sm">💰 Sales Metrics</h4>
+                                </div>
+                                <div class="bg-white border border-t-0 rounded-b-lg p-3 space-y-2">
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg" data-metric="grossSales">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Gross Sales</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Total sales before deductions</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg" data-metric="netSales">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Net Sales</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Sales after returns and discounts</p>
+                                    </div>
+                                    <div class="metric-card p-2 border border-gray-200 rounded cursor-pointer hover-bg" data-metric="qty">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-medium">Qty</span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                        </div>
+                                        <p class="text-xs text-gray-600 mt-1">Quantity sold</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Add event listeners for Group By metrics
+                setTimeout(() => {
+                    const groupByMetricCards = document.querySelectorAll('#groupByMetricsPanel .metric-card');
+                    groupByMetricCards.forEach(card => {
+                        card.addEventListener('click', function() {
+                            const metricName = this.dataset.metric;
+                            const isHierarchy = this.dataset.hierarchy === 'true';
+                            
+                            if (isHierarchy && metricName === 'categories') {
+                                buildHierarchicalView();
+                            } else {
+                                buildGroupedView(metricName);
+                            }
+                        });
+                    });
+
+                    // Add event listeners for the checkboxes at the top
+                    const groupByCheckboxes = document.querySelectorAll('input[name="groupBy"]');
+                    console.log('Found checkboxes:', groupByCheckboxes.length);
+                    groupByCheckboxes.forEach(checkbox => {
+                        checkbox.addEventListener('change', function() {
+                            console.log('Checkbox changed:', this.value, 'checked:', this.checked);
+                            if (this.checked) {
+                                const value = this.value;
+                                if (value === 'category') {
+                                    console.log('Building hierarchical view...');
+                                    buildHierarchicalView();
+                                } else {
+                                    console.log('Building grouped view for:', value);
+                                    buildGroupedView(value);
+                                }
+                            }
+                        });
+                    });
+                }, 100);
+            } else if (tabName === 'KPIs') {
+                metricsPanel.innerHTML = `
+                    <div class="space-y-4">
+                        <h4 class="font-medium text-sm mb-3">Business Insight Metrics</h4>
+                        <p class="text-xs text-gray-600 mb-4">Add KPI widgets with YoY comparisons to your report canvas.</p>
+                        
+                        <div class="space-y-3">
+                            <div class="kpi-option p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-blue-300" data-kpi="aov">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <div class="font-medium text-sm">Average Order Value</div>
+                                        <div class="text-xs text-gray-600">Average value per transaction</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-lg font-bold text-blue-600">$65.43</div>
+                                        <div class="text-xs text-green-600">↗ +12.8%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="kpi-option p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-blue-300" data-kpi="cover">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <div class="font-medium text-sm">Average Cover Count</div>
+                                        <div class="text-xs text-gray-600">Average customers per transaction</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-lg font-bold text-green-600">2.3</div>
+                                        <div class="text-xs text-green-600">↗ +5.2%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="kpi-option p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-blue-300" data-kpi="returning">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <div class="font-medium text-sm">Returning Customer Rate</div>
+                                        <div class="text-xs text-gray-600">Percentage of repeat customers</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-lg font-bold text-purple-600">34.5%</div>
+                                        <div class="text-xs text-red-600">↘ -2.1%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="kpi-option p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-blue-300" data-kpi="items">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <div class="font-medium text-sm">Items per Transaction</div>
+                                        <div class="text-xs text-gray-600">Average items sold per order</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-lg font-bold text-orange-600">3.6</div>
+                                        <div class="text-xs text-green-600">↗ +8.7%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                            <div class="flex items-start">
+                                <svg class="w-5 h-5 text-blue-600 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <div class="text-sm text-blue-800">
+                                    <strong>KPI Widgets:</strong> Click any KPI above to add it as a widget to your report canvas. Each KPI includes year-over-year comparison data.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Add event listeners for KPI options
+                setTimeout(() => {
+                    const kpiOptions = document.querySelectorAll('.kpi-option');
+                    kpiOptions.forEach(option => {
+                        option.addEventListener('click', function() {
+                            const kpiType = this.dataset.kpi;
+                            const kpiData = {
+                                'aov': { name: 'Average Order Value', value: '$65.43', change: '+12.8%', trend: 'positive' },
+                                'cover': { name: 'Average Cover Count', value: '2.3', change: '+5.2%', trend: 'positive' },
+                                'returning': { name: 'Returning Customer Rate', value: '34.5%', change: '-2.1%', trend: 'negative' },
+                                'items': { name: 'Items per Transaction', value: '3.6', change: '+8.7%', trend: 'positive' }
+                            };
+                            
+                            const kpi = kpiData[kpiType];
+                            if (kpi) {
+                                addKPIWidget(kpi.name, kpi.value, kpi.change, kpi.trend);
+                            }
+                        });
+                    });
+                }, 100);
+            } else if (tabName === 'Charts') {
+                metricsPanel.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="p-4 border border-gray-200 rounded-lg cursor-pointer hover-bg">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 bg-blue-100 rounded mr-3 flex items-center justify-center">
+                                    📊
+                                </div>
+                                <div>
+                                    <div class="font-medium text-sm">Bar Chart</div>
+                                    <div class="text-xs text-gray-600">Compare values across categories</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4 border border-gray-200 rounded-lg cursor-pointer hover-bg">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 bg-green-100 rounded mr-3 flex items-center justify-center">
+                                    📈
+                                </div>
+                                <div>
+                                    <div class="font-medium text-sm">Line Chart</div>
+                                    <div class="text-xs text-gray-600">Show trends over time</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4 border border-gray-200 rounded-lg cursor-pointer hover-bg">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 bg-purple-100 rounded mr-3 flex items-center justify-center">
+                                    🥧
+                                </div>
+                                <div>
+                                    <div class="font-medium text-sm">Pie Chart</div>
+                                    <div class="text-xs text-gray-600">Show proportions</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function addWidget() {
+            // Simulate adding a new widget
+            const kpiWidgets = document.getElementById('kpiWidgets');
+            const newWidget = document.createElement('div');
+            newWidget.className = 'kpi-widget p-4 rounded-lg border border-gray-200 text-center';
+            newWidget.innerHTML = `
+                <div class="text-2xl font-bold text-indigo-600">$1,234</div>
+                <div class="text-sm text-gray-600">New Metric</div>
+                <div class="text-xs text-indigo-600 mt-1">↗ +5.0%</div>
+            `;
+            
+            // Replace drop zone with new widget temporarily
+            const dropZone = document.querySelector('.drop-zone');
+            dropZone.innerHTML = `
+                <div class="text-center py-4">
+                    <div class="text-green-600 mb-2">✓ Widget Added!</div>
+                    <p class="text-sm text-gray-600">Drag more metrics to add additional widgets</p>
+                </div>
+            `;
+            
+            setTimeout(() => {
+                dropZone.innerHTML = `
+                    <svg class="h-12 w-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">Add More Widgets</h3>
+                    <p class="text-gray-600">Drag and drop metrics from the right panel to add more visualizations</p>
+                `;
+            }, 2000);
+        }
+        function showColumnSelector() {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Add Column to Table</h3>
+                    <div class="space-y-3">
+                        <div class="metric-selector p-3 border border-gray-200 rounded cursor-pointer hover:bg-gray-50" data-metric="tax">
+                            <div class="font-medium text-sm">Tax</div>
+                            <div class="text-xs text-gray-600">Tax amount</div>
+                        </div>
+                        <div class="metric-selector p-3 border border-gray-200 rounded cursor-pointer hover:bg-gray-50" data-metric="returns">
+                            <div class="font-medium text-sm">Returns Amount</div>
+                            <div class="text-xs text-gray-600">Total value of returns</div>
+                        </div>
+                        <div class="metric-selector p-3 border border-gray-200 rounded cursor-pointer hover:bg-gray-50" data-metric="location">
+                            <div class="font-medium text-sm">Location</div>
+                            <div class="text-xs text-gray-600">Store location</div>
+                        </div>
+                        <div class="metric-selector p-3 border border-gray-200 rounded cursor-pointer hover:bg-gray-50" data-metric="sku">
+                            <div class="font-medium text-sm">SKU</div>
+                            <div class="text-xs text-gray-600">Stock Keeping Unit</div>
+                        </div>
+                    </div>
+                    <div class="flex justify-end space-x-3 mt-6">
+                        <button id="cancelColumnBtn" class="px-4 py-2 text-gray-700 border border-gray-300 rounded hover:bg-gray-50">Cancel</button>
+                        <button id="addColumnConfirmBtn" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" disabled>Add Column</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            let selectedMetric = null;
+            
+            // Handle metric selection
+            modal.querySelectorAll('.metric-selector').forEach(selector => {
+                selector.addEventListener('click', function() {
+                    // Remove selection from others
+                    modal.querySelectorAll('.metric-selector').forEach(s => s.classList.remove('bg-blue-50', 'border-blue-500'));
+                    // Add selection to clicked
+                    this.classList.add('bg-blue-50', 'border-blue-500');
+                    selectedMetric = this.dataset.metric;
+                    document.getElementById('addColumnConfirmBtn').disabled = false;
+                    document.getElementById('addColumnConfirmBtn').classList.remove('opacity-50');
+                });
+            });
+            
+            // Handle cancel
+            document.getElementById('cancelColumnBtn').addEventListener('click', function() {
+                document.body.removeChild(modal);
+            });
+            
+            // Handle add column
+            document.getElementById('addColumnConfirmBtn').addEventListener('click', function() {
+                if (selectedMetric) {
+                    addColumnToTable(selectedMetric);
+                    document.body.removeChild(modal);
+                }
+            });
+        }
+
+        function addColumnToTable(metric) {
+            const tableHeader = document.getElementById('tableHeader').querySelector('tr');
+            const tableBody = document.getElementById('tableBody');
+            
+            // Add header
+            const newHeader = document.createElement('th');
+            newHeader.className = 'px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider';
+            
+            const metricData = {
+                tax: 'Tax',
+                returns: 'Returns',
+                location: 'Location',
+                sku: 'SKU'
+            };
+            
+            newHeader.textContent = metricData[metric] || metric;
+            tableHeader.appendChild(newHeader);
+            
+            // Add data to each row
+            const rows = tableBody.querySelectorAll('tr');
+            rows.forEach((row, index) => {
+                const newCell = document.createElement('td');
+                newCell.className = 'px-4 py-3 text-sm text-gray-900';
+                
+                // Sample data based on metric
+                const sampleData = {
+                    tax: ['$23.40', '$13.35', '$58.50', '$30.15', '$6.45'],
+                    returns: ['$0.00', '$0.00', '$25.00', '$0.00', '$0.00'],
+                    location: ['Main Store', 'Main Store', 'Main Store', 'Main Store', 'Main Store'],
+                    sku: ['ESP001', 'CRO001', 'LAT001', 'SAN001', 'MUF001']
+                };
+                
+                newCell.textContent = sampleData[metric][index] || 'N/A';
+                row.appendChild(newCell);
+            });
+        }
+
+        function addColumnToDynamicTable(metricName) {
+            const tableHeader = document.getElementById('dynamicTableHeader').querySelector('tr');
+            const tableBody = document.getElementById('dynamicTableBody');
+            
+            // Add header
+            const newHeader = document.createElement('th');
+            newHeader.className = 'px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider';
+            newHeader.textContent = metricName;
+            newHeader.dataset.metric = metricName;
+            tableHeader.appendChild(newHeader);
+            
+            // Enhanced sample data with realistic item categories
+            const sampleData = {
+                'Item Name': ['Firewood 6 Logs', 'Holiday Candles', 'Camping Coffee', 'Kitchen Towels', 'Outdoor Blanket'],
+                'Categories': [
+                    'Household, Household Outdoor/Camping',
+                    'Merchandise, Merchandise_Holiday, Household', 
+                    'Grocery, Grocery Beverages, Household Outdoor/Camping',
+                    'Household, Household Kitchen, Merchandise_Home Goods',
+                    'Merchandise, Merchandise_Apparel, Household Outdoor/Camping'
+                ],
+                'Reporting Category': [
+                    'Household Outdoor/Camping',
+                    'Merchandise_Holiday', 
+                    'Grocery Beverages',
+                    'Household Kitchen',
+                    'Merchandise_Apparel'
+                ],
+                'Category Rollup': [
+                    'Household',
+                    'Merchandise, Household', 
+                    'Grocery, Household',
+                    'Household, Merchandise',
+                    'Merchandise, Household'
+                ],
+                'Gross Sales': ['$89.99', '$24.99', '$12.99', '$15.99', '$45.99'],
+                'Net Sales': ['$85.49', '$23.74', '$12.34', '$15.19', '$43.69'],
+                'Qty': ['12', '8', '24', '15', '6'],
+                'Channel': ['In-Store', 'Online', 'In-Store', 'In-Store', 'Online'],
+                'Transaction Count': ['8', '6', '18', '12', '4'],
+                'Amount Discounted': ['-$4.50', '-$1.25', '-$0.65', '-$0.80', '-$2.30'],
+                'Tax': ['$7.20', '$2.00', '$1.04', '$1.28', '$3.68'],
+                'Location': ['Main Store', 'Main Store', 'Main Store', 'Main Store', 'Main Store'],
+                'SKU': ['FW001', 'HC002', 'CC003', 'KT004', 'OB005'],
+                'GTIN': ['1234567890123', '1234567890124', '1234567890125', '1234567890126', '1234567890127'],
+                'Returns Amount': ['$0.00', '$0.00', '$12.99', '$0.00', '$0.00']
+            };
+            
+            // Create rows if they don't exist
+            if (tableBody.children.length === 0) {
+                for (let i = 0; i < 5; i++) {
+                    const row = document.createElement('tr');
+                    tableBody.appendChild(row);
+                }
+            }
+            
+            // Add data to each row
+            const rows = tableBody.querySelectorAll('tr');
+            rows.forEach((row, index) => {
+                const newCell = document.createElement('td');
+                newCell.className = 'px-4 py-3 text-sm text-gray-900';
+                newCell.dataset.metric = metricName;
+                
+                const data = sampleData[metricName] || [`Value ${index + 1}`, `Value ${index + 2}`, `Value ${index + 3}`, `Value ${index + 4}`, `Value ${index + 5}`];
+                newCell.textContent = data[index] || 'N/A';
+                
+                // Special styling for multi-category cells
+                if (metricName === 'Categories' || metricName === 'Category Rollup') {
+                    newCell.className += ' text-xs';
+                    if (data[index] && data[index].includes(',')) {
+                        newCell.innerHTML = data[index].split(',').map(cat => 
+                            `<span class="inline-block bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs mr-1 mb-1">${cat.trim()}</span>`
+                        ).join('');
+                    }
+                }
+                
+                row.appendChild(newCell);
+            });
+        }
+
+        function removeColumnFromDynamicTable(metricName) {
+            // Remove header
+            const headers = document.querySelectorAll('#dynamicTableHeader th[data-metric="' + metricName + '"]');
+            headers.forEach(header => header.remove());
+            
+            // Remove cells
+            const cells = document.querySelectorAll('#dynamicTableBody td[data-metric="' + metricName + '"]');
+            cells.forEach(cell => cell.remove());
+            
+            // Remove empty rows if no columns left
+            const tableBody = document.getElementById('dynamicTableBody');
+            const remainingHeaders = document.querySelectorAll('#dynamicTableHeader th').length;
+            if (remainingHeaders === 0) {
+                tableBody.innerHTML = '';
+            }
+        }
+
+        function buildHierarchicalView() {
+            // Hide existing content and show flat category view
+            document.getElementById('reportCanvasContent').classList.add('hidden');
+            document.getElementById('emptyCanvasState').classList.add('hidden');
+            document.getElementById('dynamicTableContainer').classList.add('hidden');
+            
+            // Create flat category view container
+            let hierarchicalContainer = document.getElementById('hierarchicalContainer');
+            if (!hierarchicalContainer) {
+                hierarchicalContainer = document.createElement('div');
+                hierarchicalContainer.id = 'hierarchicalContainer';
+                hierarchicalContainer.className = 'bg-white rounded-lg shadow-sm border border-gray-200 p-6';
+                document.querySelector('.flex-1.p-6').appendChild(hierarchicalContainer);
+            }
+            
+            hierarchicalContainer.classList.remove('hidden');
+            hierarchicalContainer.innerHTML = `
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-lg font-medium text-gray-900">Category Breakdown (Flat View)</h2>
+                    <div class="flex items-center space-x-2">
+                        <button id="addCategoryColumnBtn" class="text-sm text-blue-600 hover:text-blue-800 px-3 py-1 border border-blue-300 rounded">+ Add Column</button>
+                        <button id="editCategoryTableBtn" class="text-sm text-gray-600 hover:text-gray-800 px-3 py-1 border border-gray-300 rounded">Edit Table</button>
+                    </div>
+                </div>
+                
+                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                    <table class="min-w-full divide-y divide-gray-200" id="categoryTable">
+                        <thead class="bg-gray-50" id="categoryTableHeader">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Gross Sales</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Net Sales</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="categoryTableBody">
+                            <tr>
+                                <td class="px-4 py-3 text-sm text-gray-900">Household</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">$189.97</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">$180.45</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">27</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3 text-sm text-gray-900">Household Kitchen</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">$15.99</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">$15.19</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">15</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3 text-sm text-gray-900">Household Outdoor/Camping</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">$173.98</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">$165.26</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">12</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3 text-sm text-gray-900">Merchandise</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">$70.98</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">$67.43</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">14</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3 text-sm text-gray-900">Merchandise_Holiday</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">$24.99</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">$23.74</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">8</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3 text-sm text-gray-900">Merchandise_Apparel</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">$45.99</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">$43.69</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">6</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3 text-sm text-gray-900">Grocery</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">$12.99</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">$12.34</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">24</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3 text-sm text-gray-900">Grocery Beverages</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">$12.99</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">$12.34</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">24</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <div class="flex items-start">
+                        <svg class="w-5 h-5 text-blue-600 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div class="text-sm text-blue-800">
+                            <strong>Flat Category View:</strong> This view shows each category as a separate row entry, making it easy to see all category levels. You can add additional columns to maintain all your data when grouping by category.
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Add event listeners for the new buttons
+            setTimeout(() => {
+                document.getElementById('addCategoryColumnBtn').addEventListener('click', function() {
+                    showCategoryColumnSelector();
+                });
+                
+                document.getElementById('editCategoryTableBtn').addEventListener('click', function() {
+                    toggleCategoryTableEditMode();
+                });
+            }, 100);
+        }
+
+        function buildGroupedView(metricName) {
+            // Hide existing content
+            document.getElementById('reportCanvasContent').classList.add('hidden');
+            document.getElementById('emptyCanvasState').classList.add('hidden');
+            document.getElementById('dynamicTableContainer').classList.add('hidden');
+            
+            // Hide hierarchical container if it exists
+            const hierarchicalContainer = document.getElementById('hierarchicalContainer');
+            if (hierarchicalContainer) {
+                hierarchicalContainer.classList.add('hidden');
+            }
+            
+            // Create or show grouped view container
+            let groupedContainer = document.getElementById('groupedContainer');
+            if (!groupedContainer) {
+                groupedContainer = document.createElement('div');
+                groupedContainer.id = 'groupedContainer';
+                groupedContainer.className = 'bg-white rounded-lg shadow-sm border border-gray-200 p-6';
+                document.querySelector('.flex-1.p-6').appendChild(groupedContainer);
+            }
+            
+            groupedContainer.classList.remove('hidden');
+            
+            const metricDisplayNames = {
+                'itemName': 'Item Name',
+                'location': 'Location',
+                'reportingCategory': 'Reporting Category',
+                'grossSales': 'Gross Sales',
+                'netSales': 'Net Sales',
+                'qty': 'Quantity'
+            };
+            
+            groupedContainer.innerHTML = `
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-lg font-medium text-gray-900">Grouped by ${metricDisplayNames[metricName] || metricName}</h2>
+                    <button id="editGroupedTableBtn" class="text-sm text-gray-600 hover:text-gray-800 px-3 py-1 border border-gray-300 rounded">Edit Table</button>
+                </div>
+                
+                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">${metricDisplayNames[metricName] || metricName}</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Gross Sales</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Net Sales</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="groupedTableBody">
+                            ${generateGroupedTableRows(metricName)}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            
+            // Add event listener for the edit button
+            setTimeout(() => {
+                const editBtn = document.getElementById('editGroupedTableBtn');
+                if (editBtn) {
+                    editBtn.addEventListener('click', toggleTableEditMode);
+                }
+            }, 100);
+        }
+
+        function generateGroupedTableRows(metricName) {
+            const groupedData = {
+                'itemName': [
+                    ['Firewood 6 Logs', '$89.99', '$85.49', '12'],
+                    ['Holiday Candles', '$24.99', '$23.74', '8'],
+                    ['Camping Coffee', '$12.99', '$12.34', '24'],
+                    ['Kitchen Towels', '$15.99', '$15.19', '15'],
+                    ['Outdoor Blanket', '$45.99', '$43.69', '6']
+                ],
+                'location': [
+                    ['Main Store', '$189.95', '$180.45', '65']
+                ],
+                'reportingCategory': [
+                    ['Household Outdoor/Camping', '$89.99', '$85.49', '12'],
+                    ['Merchandise_Holiday', '$24.99', '$23.74', '8'],
+                    ['Grocery Beverages', '$12.99', '$12.34', '24'],
+                    ['Household Kitchen', '$15.99', '$15.19', '15'],
+                    ['Merchandise_Apparel', '$45.99', '$43.69', '6']
+                ],
+                'grossSales': [
+                    ['$89.99', '1 item', '$85.49', '12'],
+                    ['$45.99', '1 item', '$43.69', '6'],
+                    ['$24.99', '1 item', '$23.74', '8'],
+                    ['$15.99', '1 item', '$15.19', '15'],
+                    ['$12.99', '1 item', '$12.34', '24']
+                ],
+                'netSales': [
+                    ['$85.49', '1 item', '$89.99', '12'],
+                    ['$43.69', '1 item', '$45.99', '6'],
+                    ['$23.74', '1 item', '$24.99', '8'],
+                    ['$15.19', '1 item', '$15.99', '15'],
+                    ['$12.34', '1 item', '$12.99', '24']
+                ],
+                'qty': [
+                    ['24 units', '$12.99', '$12.34', 'Camping Coffee'],
+                    ['15 units', '$15.99', '$15.19', 'Kitchen Towels'],
+                    ['12 units', '$89.99', '$85.49', 'Firewood 6 Logs'],
+                    ['8 units', '$24.99', '$23.74', 'Holiday Candles'],
+                    ['6 units', '$45.99', '$43.69', 'Outdoor Blanket']
+                ]
+            };
+            
+            const data = groupedData[metricName] || groupedData['itemName'];
+            
+            return data.map(row => `
+                <tr>
+                    <td class="px-4 py-3 text-sm text-gray-900">${row[0]}</td>
+                    <td class="px-4 py-3 text-sm text-gray-900">${row[1]}</td>
+                    <td class="px-4 py-3 text-sm text-gray-900">${row[2]}</td>
+                    <td class="px-4 py-3 text-sm text-gray-900">${row[3]}</td>
+                </tr>
+            `).join('');
+        }
+
+        function showCategoryColumnSelector() {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Add Column to Category Table</h3>
+                    <div class="space-y-3">
+                        <div class="metric-selector p-3 border border-gray-200 rounded cursor-pointer hover:bg-gray-50" data-metric="itemName">
+                            <div class="font-medium text-sm">Item Name</div>
+                            <div class="text-xs text-gray-600">Individual item names</div>
+                        </div>
+                        <div class="metric-selector p-3 border border-gray-200 rounded cursor-pointer hover:bg-gray-50" data-metric="location">
+                            <div class="font-medium text-sm">Location</div>
+                            <div class="text-xs text-gray-600">Store location</div>
+                        </div>
+                        <div class="metric-selector p-3 border border-gray-200 rounded cursor-pointer hover:bg-gray-50" data-metric="tax">
+                            <div class="font-medium text-sm">Tax</div>
+                            <div class="text-xs text-gray-600">Tax amount</div>
+                        </div>
+                        <div class="metric-selector p-3 border border-gray-200 rounded cursor-pointer hover:bg-gray-50" data-metric="discounts">
+                            <div class="font-medium text-sm">Discounts</div>
+                            <div class="text-xs text-gray-600">Amount discounted</div>
+                        </div>
+                    </div>
+                    <div class="flex justify-end space-x-3 mt-6">
+                        <button id="cancelCategoryColumnBtn" class="px-4 py-2 text-gray-700 border border-gray-300 rounded hover:bg-gray-50">Cancel</button>
+                        <button id="addCategoryColumnConfirmBtn" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" disabled>Add Column</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            let selectedMetric = null;
+            
+            // Handle metric selection
+            modal.querySelectorAll('.metric-selector').forEach(selector => {
+                selector.addEventListener('click', function() {
+                    // Remove selection from others
+                    modal.querySelectorAll('.metric-selector').forEach(s => s.classList.remove('bg-blue-50', 'border-blue-500'));
+                    // Add selection to clicked
+                    this.classList.add('bg-blue-50', 'border-blue-500');
+                    selectedMetric = this.dataset.metric;
+                    document.getElementById('addCategoryColumnConfirmBtn').disabled = false;
+                    document.getElementById('addCategoryColumnConfirmBtn').classList.remove('opacity-50');
+                });
+            });
+            
+            // Handle cancel
+            document.getElementById('cancelCategoryColumnBtn').addEventListener('click', function() {
+                document.body.removeChild(modal);
+            });
+            
+            // Handle add column
+            document.getElementById('addCategoryColumnConfirmBtn').addEventListener('click', function() {
+                if (selectedMetric) {
+                    addColumnToCategoryTable(selectedMetric);
+                    document.body.removeChild(modal);
+                }
+            });
+        }
+
+        function addColumnToCategoryTable(metric) {
+            const tableHeader = document.getElementById('categoryTableHeader').querySelector('tr');
+            const tableBody = document.getElementById('categoryTableBody');
+            
+            // Add header
+            const newHeader = document.createElement('th');
+            newHeader.className = 'px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider';
+            
+            const metricData = {
+                itemName: 'Item Name',
+                location: 'Location',
+                tax: 'Tax',
+                discounts: 'Discounts'
+            };
+            
+            newHeader.textContent = metricData[metric] || metric;
+            tableHeader.appendChild(newHeader);
+            
+            // Add data to each row
+            const rows = tableBody.querySelectorAll('tr');
+            const sampleData = {
+                itemName: [
+                    'Firewood 6 Logs, Kitchen Towels',
+                    'Kitchen Towels',
+                    'Firewood 6 Logs, Camping Coffee, Outdoor Blanket',
+                    'Holiday Candles, Outdoor Blanket',
+                    'Holiday Candles',
+                    'Outdoor Blanket',
+                    'Camping Coffee',
+                    'Camping Coffee'
+                ],
+                location: Array(8).fill('Main Store'),
+                tax: ['$15.20', '$1.28', '$13.92', '$5.68', '$2.00', '$3.68', '$1.04', '$1.04'],
+                discounts: ['-$9.52', '-$0.80', '-$8.72', '-$3.55', '-$1.25', '-$2.30', '-$0.65', '-$0.65']
+            };
+            
+            rows.forEach((row, index) => {
+                const newCell = document.createElement('td');
+                newCell.className = 'px-4 py-3 text-sm text-gray-900';
+                newCell.textContent = sampleData[metric][index] || 'N/A';
+                row.appendChild(newCell);
+            });
+        }
+
+        function toggleCategoryTableEditMode() {
+            // This would implement table editing functionality
+            alert('Table edit mode would be implemented here - allowing users to modify the table structure and data');
+        }
+
+        function toggleTableEditMode() {
+            // Get the grouped table (first table in your screenshot)
+            const groupedContainer = document.getElementById('groupedContainer');
+            if (!groupedContainer || groupedContainer.classList.contains('hidden')) {
+                alert('Please select a grouping option first to enable table editing');
+                return;
+            }
+            
+            const table = groupedContainer.querySelector('table');
+            const editBtn = groupedContainer.querySelector('#editGroupedTableBtn');
+            
+            if (!table) {
+                alert('No table found to edit');
+                return;
+            }
+            
+            const isEditing = editBtn.textContent.trim() === 'Save Changes';
+            
+            if (isEditing) {
+                // Save mode - convert back to display
+                const cells = table.querySelectorAll('tbody td');
+                cells.forEach(cell => {
+                    const input = cell.querySelector('input');
+                    if (input) {
+                        cell.textContent = input.value;
+                        cell.classList.remove('p-0');
+                    }
+                });
+                editBtn.textContent = 'Edit Table';
+                editBtn.classList.remove('bg-green-600', 'text-white');
+                editBtn.classList.add('text-gray-600', 'border-gray-300');
+            } else {
+                // Edit mode - convert cells to inputs
+                const cells = table.querySelectorAll('tbody td');
+                cells.forEach(cell => {
+                    const currentText = cell.textContent.trim();
+                    cell.innerHTML = `<input type="text" value="${currentText}" class="w-full px-2 py-1 text-sm border-0 focus:ring-1 focus:ring-blue-500 bg-transparent">`;
+                    cell.classList.add('p-0');
+                });
+                editBtn.textContent = 'Save Changes';
+                editBtn.classList.remove('text-gray-600', 'border-gray-300');
+                editBtn.classList.add('bg-green-600', 'text-white');
+            }
+        }
+    </script>
+</body>
+</html>
